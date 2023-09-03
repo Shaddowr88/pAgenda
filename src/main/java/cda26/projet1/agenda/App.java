@@ -11,6 +11,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -32,7 +33,6 @@ public class App extends Application {
 
 /*******************************   Datas   **************************************************/    	
    
-    	// datas initial
     	 ObservableList<Stagiaire> datas= FXCollections.observableArrayList();  
          
          datas.add(new Stagiaire("pipo","alo", 78, "ET 34847", 2001));
@@ -76,16 +76,20 @@ public class App extends Application {
         
 /****************************************************************************************/    
        
-        // Contenaire du menu
+/*********************************   Contenaire du menu   *********************************/
+        
         HBox head = new HBox(30);
         
-        // contenaire du champ de recherche 
+/*********************************   contenaire du champ de recherche  *********************************/
+        
         HBox seachField = new HBox(0);
        
-        // champ de recherche 
-        TextField recherche = new TextField( " recherche ");
+/*************************************   champ de recherche  ******************************************/ 
+        
+        TextField recherche = new TextField( " rechercher ");
 
-     // contenaire du champ de recherche / parametres
+/*********************************   contenaire du champ de recherche / parametres  ********************************/
+        
         seachField.getChildren().addAll(recherche, Cercle );
         seachField.setAlignment(Pos.CENTER);
         seachField.setMaxHeight(15);
@@ -95,15 +99,45 @@ public class App extends Application {
         		"-fx-padding: 0.5em;"
         		);
 
-     // champ de recherche / parametres
+/*********************************   champ de recherche / parametres  *********************************/  
+        
         recherche.setPrefSize(450,10);
         recherche.setStyle(
         		"-fx-border: 0;"
         		+ "-fx-box-shadow: none;"
         		+ "-fx-background-color: white;"
-        		);
+        		);       
         
-    // bouton Login
+        recherche.setOnKeyPressed(e ->{
+        	
+        	if (e.getCode()== KeyCode.ENTER) {
+        		
+        		String search = recherche.getText();
+        		String[] terms = search.split(" ");
+
+        		StringBuilder formatReserch = new StringBuilder();
+
+                for (String term : terms) {
+                	
+                    if (formatReserch.length() > 0) {
+                    	formatReserch.append(",");
+                    }
+
+                    if (term.contains(" ")) {
+                        
+                    	formatReserch.append("\"").append(term).append("\"");
+                    } else {
+                    	formatReserch.append(term);
+                    }
+                 }
+                
+                System.out.println(formatReserch.toString());
+        		} 	
+        	}
+        ); 
+
+/*****************************************  bouton Login  *******************************************************/  
+        
         Button btnLog = new Button("| Log |"); 
         btnLog.setStyle(
                 "-fx-background-radius: 5em; " +
@@ -113,12 +147,13 @@ public class App extends Application {
                 "-fx-max-height: 30px;"
         );
         
-        // Contenaire du menu / parametres
+/************************************   Contenaire du menu / parametres  ********************************************/ 
+        
         head.getChildren().addAll(rectangle,seachField, btnLog);
         head.setAlignment(Pos.CENTER);
         head.setMinHeight(90);
         
-/*********************************  Tableau  *******************************************************/            
+/************************************  Tableau  *******************************************************/            
         
         TableView<Stagiaire> table = new TableView<Stagiaire>();
 
@@ -136,8 +171,7 @@ public class App extends Application {
                 = new TableColumn<Stagiaire, Integer>("Département");
                 DepCol.prefWidthProperty().bind(table.widthProperty().divide(5));
                 DepCol.setCellValueFactory(new PropertyValueFactory<Stagiaire,Integer>("departement"));
-                
-                
+                          
         TableColumn<Stagiaire, String> promoNameCol//
                 = new TableColumn<Stagiaire, String>("Promotion");
                 promoNameCol.prefWidthProperty().bind(table.widthProperty().divide(5));               
@@ -157,15 +191,14 @@ public class App extends Application {
         table.getColumns().addAll(userlastNameCol,userNameCol, DepCol, promoNameCol,YearCol);
         
     	table.setItems(datas);
-
     	
-/*********************************  Sections template *******************************************************/    
+/*********************************  Sections template *******************************************************/  
+    	
         root.setTop(head);
    
         root.setCenter(table);
  
         root.setBottom(lblBottom);
-       
 
         Scene scene = new Scene(root, 800, 600);
         stage.setTitle("Caller");
