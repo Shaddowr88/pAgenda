@@ -1,5 +1,7 @@
 package cda26.projet1.agenda;
 
+import javafx.beans.property.StringProperty;
+
 public class Stagiaire {
 	// attributs
 	
@@ -49,6 +51,7 @@ public class Stagiaire {
 	public void setAnnee(int annee) {
 		this.annee = annee;
 	}
+	
 	
 	
 	
