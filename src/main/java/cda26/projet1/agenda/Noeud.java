@@ -2,12 +2,13 @@ package cda26.projet1.agenda;
 
 public class Noeud {
 	
+	//attributs
 	private Stagiaire stagiaire;
 	private Noeud filsGauche;
 	private Noeud filsDroit;
 	
 	
-	
+	//Contructeur
 	public Noeud(Stagiaire stagiaire, Noeud filsGauche, Noeud filsDroit) {
 		
 		this.stagiaire = stagiaire;
@@ -16,7 +17,7 @@ public class Noeud {
 	}
 
 
-
+	//Getters & Setters
 	public Stagiaire getStagiaire() {
 		return stagiaire;
 	}

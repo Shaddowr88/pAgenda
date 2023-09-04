@@ -19,6 +19,8 @@ public class Stagiaire {
 		this.promotion = promotion;
 		this.annee = annee;
 	}
+	
+	//Getters & Setters
 	public String getNom() {
 		return nom;
 	}

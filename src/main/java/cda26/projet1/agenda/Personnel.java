@@ -11,6 +11,8 @@ public class Personnel {
 		this.login = login;
 		this.motDePasse = motDePasse;
 	}
+	
+	//Getters & Setters
 	public String getLogin() {
 		return login;
 	}
