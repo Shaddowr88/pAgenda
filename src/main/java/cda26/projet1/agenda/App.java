@@ -31,11 +31,10 @@ public class App extends Application {
     @Override
     public void start(Stage stage)throws Exception  {
 
-/*******************************   Datas   **************************************************/   
-    	
-    	
-    	
-   
+/**
+ * Datas
+ */   
+
     	 ObservableList<Stagiaire> datas= FXCollections.observableArrayList();  
          
          datas.add(new Stagiaire("pipo","alo", 78, "ET 34847", 2001));
@@ -47,7 +46,10 @@ public class App extends Application {
          datas.add(new Stagiaire("Fredo","Mongolo", 75, "ET 34847", 1984));
          datas.add(new Stagiaire("tyipo","Dingo", 93, "ERE 234", 2001));
          
-/****************************************************************************************/              	
+/**
+ * fin datas
+ */
+           	
  
         BorderPane root = new BorderPane();
         
@@ -61,85 +63,96 @@ public class App extends Application {
         Pane leftPannel = new Pane();
         leftPannel.setPrefSize(100, 700);
         
- /******************************** Subs ********************************************************/    
+        
+ /**
+  * Subs
+  */    
         
         // Substitue logo Isika
-        
         Rectangle rectangle = new Rectangle(90, 30);
         rectangle.setFill(Color.GREEN);
         rectangle.setStroke(Color.DARKGREEN);
         rectangle.relocate(0, 5000);
         
         // substitue Picto loupe 
-        
         Circle Cercle = new Circle(10);
         Cercle.setFill(Color.GREEN);
         Cercle.setStroke(Color.DARKGREEN);
         Cercle.relocate(1000, 5333);
-        
-/****************************************************************************************/    
-       
-/*********************************   Contenaire du menu   *********************************/
+ 
+/**
+ * Contenaire du menu
+ */
         
         HBox head = new HBox(30);
         
-/*********************************   contenaire du champ de recherche  *********************************/
+/**
+ * contenaire du champ de recherche
+ */
         
-        HBox seachField = new HBox(0);
+        HBox searchContainer = new HBox(0);
        
-/*************************************   champ de recherche  ******************************************/ 
+/**
+ * champ de recherche 
+ */ 
         
-        TextField recherche = new TextField( " rechercher ");
+        TextField searchField = new TextField( " rechercher ");
 
-/*********************************   contenaire du champ de recherche / parametres  ********************************/
+/*
+ * contenaire du champ de recherche parametres 
+ */
         
-        seachField.getChildren().addAll(recherche, Cercle );
-        seachField.setAlignment(Pos.CENTER);
-        seachField.setMaxHeight(15);
-        seachField.setStyle(
+        searchContainer.getChildren().addAll(searchField, Cercle );
+        searchContainer.setAlignment(Pos.CENTER);
+        searchContainer.setMaxHeight(15);
+        searchContainer.setStyle(
         		"-fx-background-radius: 5em; "+ 
         		"-fx-background-color: white;"+
         		"-fx-padding: 0.5em;"
         		);
 
-/*********************************   champ de recherche / parametres  *********************************/  
+/**
+ * champ de recherche / parametres
+ */  
         
-        recherche.setPrefSize(450,10);
-        recherche.setStyle(
+        searchField.setPrefSize(450,10);
+        searchField.setStyle(
         		"-fx-border: 0;"
         		+ "-fx-box-shadow: none;"
         		+ "-fx-background-color: white;"
         		);       
         
-        recherche.setOnKeyPressed(e ->{
+        searchField.setOnKeyPressed(e ->{
         	
         	if (e.getCode()== KeyCode.ENTER) {
         		
-        		String search = recherche.getText();
+        		String search = searchField.getText();
         		String[] terms = search.split(" ");
 
-        		StringBuilder formatReserch = new StringBuilder();
+        		StringBuilder formatResearch = new StringBuilder();
 
                 for (String term : terms) {
                 	
-                    if (formatReserch.length() > 0) {
-                    	formatReserch.append(",");
+                    if (formatResearch.length() > 0) {
+                    	formatResearch.append(",");
                     }
 
                     if (term.contains(" ")) {
                         
-                    	formatReserch.append("\"").append(term).append("\"");
+                    	formatResearch.append("\"").append(term).append("\"");
                     } else {
-                    	formatReserch.append(term);
+                    	formatResearch.append(term);
                     }
                  }
                 
-                System.out.println(formatReserch.toString());
+                System.out.println(formatResearch.toString());
         		} 	
         	}
         ); 
 
-/*****************************************  bouton Login  *******************************************************/  
+/**
+ * bouton Login
+ */  
         
         Button btnLog = new Button("| Log |"); 
         btnLog.setStyle(
@@ -150,13 +163,17 @@ public class App extends Application {
                 "-fx-max-height: 30px;"
         );
         
-/************************************   Contenaire du menu / parametres  ********************************************/ 
+/**
+ * Contenaire du menu-parametres
+ */ 
         
-        head.getChildren().addAll(rectangle,seachField, btnLog);
+        head.getChildren().addAll(rectangle,searchContainer, btnLog);
         head.setAlignment(Pos.CENTER);
         head.setMinHeight(90);
         
-/************************************  Tableau  *******************************************************/            
+/**
+ * Tableau
+ */            
         
         TableView<Stagiaire> table = new TableView<Stagiaire>();
 
@@ -195,7 +212,9 @@ public class App extends Application {
         
     	table.setItems(datas);
     	
-/*********************************  Sections template *******************************************************/  
+/**
+ * Sections template
+ */  
     	
         root.setTop(head);
    
