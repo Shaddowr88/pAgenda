@@ -5,13 +5,13 @@ public class Stagiaire {
 	
 	public String nom;
 	public String prenom;
-	public int departement;
+	public String departement;
 	public String promotion;
 	public int annee;
 	
 	//contructeur
 	
-	public Stagiaire(String nom, String prenom, int departement, String promotion, int annee) {
+	public Stagiaire(String nom, String prenom, String departement, String promotion, int annee) {
 		
 		this.nom = nom;
 		this.prenom = prenom;
@@ -33,10 +33,10 @@ public class Stagiaire {
 	public void setPrenom(String prenom) {
 		this.prenom = prenom;
 	}
-	public int getDepartement() {
+	public String getDepartement() {
 		return departement;
 	}
-	public void setDepartement(int departement) {
+	public void setDepartement(String departement) {
 		this.departement = departement;
 	}
 	public String getPromotion() {

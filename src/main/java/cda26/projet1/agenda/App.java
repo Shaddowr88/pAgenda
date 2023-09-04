@@ -37,14 +37,14 @@ public class App extends Application {
 
     	 ObservableList<Stagiaire> datas= FXCollections.observableArrayList();  
          
-         datas.add(new Stagiaire("pipo","alo", 78, "ET 34847", 2001));
-         datas.add(new Stagiaire("Tiago","delo", 972, "ET 34847", 1998));
-         datas.add(new Stagiaire("finalo","Zellot", 60, "ET 34847", 1998));
-         datas.add(new Stagiaire("groco","ralto", 78, "ET 34847", 2001));
-         datas.add(new Stagiaire("Glyphto","malhermao", 78, "ET 34847", 2003));
-         datas.add(new Stagiaire("minetto","walpo", 93, "ET 34847", 2003));
-         datas.add(new Stagiaire("Fredo","Mongolo", 75, "ET 34847", 1984));
-         datas.add(new Stagiaire("tyipo","Dingo", 93, "ERE 234", 2001));
+         datas.add(new Stagiaire("pipo","alo", "78", "ET 34847", 2001));
+         datas.add(new Stagiaire("Tiago","delo", "972", "ET 34847", 1998));
+         datas.add(new Stagiaire("finalo","Zellot", "60", "ET 34847", 1998));
+         datas.add(new Stagiaire("groco","ralto", "78", "ET 34847", 2001));
+         datas.add(new Stagiaire("Glyphto","malhermao", "78", "ET 34847", 2003));
+         datas.add(new Stagiaire("minetto","walpo", "93", "ET 34847", 2003));
+         datas.add(new Stagiaire("Fredo","Mongolo", "75", "ET 34847", 1984));
+         datas.add(new Stagiaire("tyipo","Dingo", "93", "ERE 234", 2001));
          
 /**
  * fin datas
