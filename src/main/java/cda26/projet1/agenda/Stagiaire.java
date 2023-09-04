@@ -1,7 +1,5 @@
 package cda26.projet1.agenda;
 
-import javafx.beans.property.StringProperty;
-
 public class Stagiaire {
 	// attributs
 	

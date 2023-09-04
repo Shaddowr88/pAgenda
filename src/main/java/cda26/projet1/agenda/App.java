@@ -31,7 +31,10 @@ public class App extends Application {
     @Override
     public void start(Stage stage)throws Exception  {
 
-/*******************************   Datas   **************************************************/    	
+/*******************************   Datas   **************************************************/   
+    	
+    	
+    	
    
     	 ObservableList<Stagiaire> datas= FXCollections.observableArrayList();  
          
