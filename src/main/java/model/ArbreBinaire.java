@@ -1,4 +1,7 @@
-package cda26.projet1.agenda;
+package model;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ArbreBinaire {
 	//attributs
@@ -72,6 +75,23 @@ public class ArbreBinaire {
 			return this.premierNoeud.hauteur();
 		}
 	}
+	
+
+	 public List<Stagiaire> convertirEnArrayList() {
+	        List<Stagiaire> arrayList = new ArrayList<>();
+	        convertirEnArrayList(premierNoeud, arrayList);
+	        return arrayList;
+	    }
+	
+	private void convertirEnArrayList(Noeud courant, List<Stagiaire> arrayList) {
+       if (courant == null) {
+           return;
+       }
+
+       arrayList.add(courant.getStagiaire());
+       convertirEnArrayList(courant.getFilsGauche(), arrayList);
+       convertirEnArrayList(courant.getFilsDroit(), arrayList);
+   }
 	
 }
 	

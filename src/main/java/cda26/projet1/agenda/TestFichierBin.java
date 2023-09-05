@@ -1,5 +1,10 @@
 package cda26.projet1.agenda;
 
+import metier.EcritureFichierBin;
+import metier.LectureFichier;
+import model.Noeud;
+import model.Stagiaire;
+
 public class TestFichierBin {
 
 	public static void main(String[] args) {
