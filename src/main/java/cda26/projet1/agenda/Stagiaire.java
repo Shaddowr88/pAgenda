@@ -3,6 +3,19 @@ package cda26.projet1.agenda;
 public class Stagiaire {
 	// attributs
 	
+	//constantes pour le fichier binaire :
+	public final static int TAILLE_MAX_NOM = 20 ; //20 char 
+	public final static int TAILLE_MAX_PRENOM = 20 ; 
+	public final static int TAILLE_MAX_DPT = 3 ;
+	public final static int TAILLE_MAX_PROMO = 10 ;
+		
+	public final static int TAILLE_OCTET_NOM = 2 * TAILLE_MAX_NOM ; //20 char * 2 octets 
+	public final static int TAILLE_OCTET_PRENOM = 2 * TAILLE_MAX_PRENOM ; 
+	public final static int TAILLE_OCTET_DPT = 2 * TAILLE_MAX_DPT ;
+	public final static int TAILLE_OCTET_PROMO = 2 * TAILLE_MAX_PROMO ;
+	public final static int TAILLE_OCTET_ANNEE = 4 ;
+	public final static int TAILLE_OCTET_STAGIAIRE = TAILLE_OCTET_NOM + TAILLE_OCTET_PRENOM + TAILLE_OCTET_DPT + TAILLE_OCTET_PROMO + TAILLE_OCTET_ANNEE;
+	
 	public String nom;
 	public String prenom;
 	public String departement;
