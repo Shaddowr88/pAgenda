@@ -1,7 +1,11 @@
-package cda26.projet1.agenda;
+package metier;
 
 import java.io.IOException;
 import java.io.RandomAccessFile;
+
+import model.ArbreBinaire;
+import model.Noeud;
+import model.Stagiaire;
 
 public class EcritureFichierBin 
 {

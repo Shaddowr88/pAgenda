@@ -4,6 +4,8 @@ package cda26.projet1.agenda;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import views.HomePan;
+import views.ListUserPan;
 
 
 /**
@@ -14,7 +16,7 @@ public class App extends Application {
     @Override
     public void start(Stage stage)throws Exception  {
     	
-    	HomePan root = new HomePan();
+    	ListUserPan root = new ListUserPan();
         Scene scene = new Scene(root, 800, 600);
         stage.setTitle("Caller");
         stage.setScene(scene);

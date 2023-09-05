@@ -1,4 +1,4 @@
-package cda26.projet1.agenda;
+package model;
 
 public class Personnel {
 	
