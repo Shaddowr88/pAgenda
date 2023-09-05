@@ -5,7 +5,7 @@ import java.nio.file.Path;
 
 public class LectureFichier {
 
-	public static void main(String[] args) throws IOException {
+	//public static void main(String[] args) throws IOException {
 
 		String nom = "";
 		String prenom= "";
@@ -17,13 +17,15 @@ public class LectureFichier {
 
 		//On cree un arbre binaire vide qui sera notre annuaire
 		ArbreBinaire arbreAnnuaire = new ArbreBinaire() ; 
-
-
+		
 		BufferedReader reader;
+		
+		public ArbreBinaire lectureFichierDon()
+		{
 
 		try {
 
-			reader = new BufferedReader(new FileReader(".\\src\\Files\\STAGIAIRES.DON"));
+			reader = new BufferedReader(new FileReader(".\\src\\Files\\STAGIAIRESTEST.DON"));
 
 			String line = reader.readLine();
 
@@ -74,17 +76,20 @@ public class LectureFichier {
 				line = reader.readLine();
 			}
 
-
+			
 			reader.close();
+			
 
 		} catch (IOException e) {
 			e.printStackTrace();
 
 
 		}
-		System.out.println("Nombre de stagiaires : " + compteurStagiaire);
-		System.out.println(arbreAnnuaire); //test affichage arbre lu en GND
-		System.out.println("Taille de l'arbre : " + arbreAnnuaire.tailleArbre());
-		System.out.println("Hauteur de l'arbre : " + arbreAnnuaire.hauteurArbre());
+		return arbreAnnuaire;
+		}
+//		System.out.println("Nombre de stagiaires : " + compteurStagiaire);
+//		System.out.println(arbreAnnuaire); //test affichage arbre lu en GND
+//		System.out.println("Taille de l'arbre : " + arbreAnnuaire.tailleArbre());
+//		System.out.println("Hauteur de l'arbre : " + arbreAnnuaire.hauteurArbre());
 	}
-}
+

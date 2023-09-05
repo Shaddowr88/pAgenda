@@ -8,6 +8,8 @@ public class Noeud {
 	private Noeud filsGauche;
 	private Noeud filsDroit;
 	
+	public final static int TAILLE_MAX_FILS = 4 ; //pour le fichier binaire
+	public final static int TAILLE_MAX_NOEUD = Stagiaire.TAILLE_OCTET_STAGIAIRE + 2 * TAILLE_MAX_FILS ;
 	
 	//Contructeur
 	public Noeud(Stagiaire stagiaire, Noeud filsGauche, Noeud filsDroit) {
