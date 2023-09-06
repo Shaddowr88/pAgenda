@@ -7,6 +7,7 @@ import java.io.RandomAccessFile;
 import model.ArbreBinaire;
 import model.Noeud;
 import model.Stagiaire;
+
 public class EcritureFichierBin 
 {
 	static int compteur = 0 ;
@@ -417,3 +418,4 @@ public class EcritureFichierBin
 	}
 	}
 	}
+	//TO DO creer methode qui regroupe les appels aux methodes precedentes pour le main quand ca marchera
