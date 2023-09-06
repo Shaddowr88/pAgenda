@@ -1,19 +1,19 @@
 package metier;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 
 import model.ArbreBinaire;
 import model.Noeud;
 import model.Stagiaire;
-
 public class EcritureFichierBin 
 {
-	static int compteur = 1 ;
+	static int compteur = 0 ;
 	
 	
 	
-	public String getNomLong(Noeud noeud)
+	public static String getNomLong(Noeud noeud)
 	{
 		String nomLong = "" ; 
 		
@@ -39,7 +39,7 @@ public class EcritureFichierBin
 	}
 	
 	
-	public String getPrenomLong(Noeud noeud)
+	public static String getPrenomLong(Noeud noeud)
 	{
 		String prenomLong = "" ; 
 		
@@ -65,7 +65,7 @@ public class EcritureFichierBin
 	}
 	
 	
-	public String getDepartementLong(Noeud noeud)
+	public static String getDepartementLong(Noeud noeud)
 	{
 		String dptLong = "" ; 
 		
@@ -91,7 +91,7 @@ public class EcritureFichierBin
 	
 	
 	
-	public String getPromoLong(Noeud noeud)
+	public static String getPromoLong(Noeud noeud)
 	{
 		String promoLong = "" ; 
 		String promoStagiaire = noeud.getStagiaire().getPromotion() ;
@@ -115,7 +115,7 @@ public class EcritureFichierBin
 	}
 	
 	
-	public void creerFichierBinaire(Noeud premierNoeud)
+	public static void creerFichierBinaire(Noeud premierNoeud)
 	{
 		try 
 		{
@@ -132,6 +132,9 @@ public class EcritureFichierBin
 			raf.writeInt(premierNoeud.getStagiaire().getAnnee());
 			raf.writeInt(-1);
 			raf.writeInt(-1);
+			compteur++ ;
+			
+			System.out.println("Creation premier noeud faite : Noeud " + premierNoeud.getStagiaire().getNom()); //DEBUG
 			
 			raf.close();
 		} 
@@ -243,47 +246,57 @@ public class EcritureFichierBin
 	{
 		try 
 		{
-		
+			
 			RandomAccessFile raf = new RandomAccessFile(".\\src\\Files\\annuaire.bin", "rw");
-			//je pars a gauche
-			int indexTest = 0 ; 
+//			
+//			//si le compteur est à 0, on cree la racine
+//			if (compteur == 0)
+//			{
+//				creerFichierBinaire(noeudAEcrire);
+//			}
+//			
+//			else if (compteur > 0)
+//			{
 			
-			raf.seek((indexTest * 118) + 110) ; //TO DO mettre en constantes
-			//je regarde si j'ai la place d'inserer a gauche
-			int indexFilsGauche = raf.readInt() ;
-
-			System.out.println("Index fils gauche : " + indexFilsGauche);
-
-			if (indexFilsGauche == -1)
-			{
-				//il y a la place : j'ajoute le nouveau Noeud
-				//je change l'index de filsGauche avec le nouveau fils
-				raf.writeInt(compteur);
-				//je me place à la fin du fichier bin
-				raf.seek(raf.length());
-				//j'ajoute le fils à la fin du fichier 
-				raf.writeChars(getNomLong(noeudAEcrire));
-				raf.writeChars(getPrenomLong(noeudAEcrire));
-				raf.writeChars(getDepartementLong(noeudAEcrire));
-				raf.writeChars(getPromoLong(noeudAEcrire));
-				raf.writeInt(noeudAEcrire.getStagiaire().getAnnee());
-				raf.writeInt(-1);
-				raf.writeInt(-1);
-				compteur = compteur + 1 ;
-				System.out.println("Compteur dans if fils gauche: " + compteur);
-
+				//je pars a gauche
+				//int indexTest = 0 ; 
 				
-			}
+				raf.seek(((index - 1) * 118) + 110) ; //TO DO mettre en constantes
+				//je regarde si j'ai la place d'inserer a gauche
+				int indexFilsGauche = raf.readInt() ;
+	
+				System.out.println("Index fils gauche : " + indexFilsGauche);
+	
+				if (indexFilsGauche == -1)
+				{
+					//il y a la place : j'ajoute le nouveau Noeud
+					//je change l'index de filsGauche avec le nouveau fils
+					raf.writeInt(compteur);
+					//je me place à la fin du fichier bin
+					raf.seek(raf.length());
+					//j'ajoute le fils à la fin du fichier 
+					raf.writeChars(getNomLong(noeudAEcrire));
+					raf.writeChars(getPrenomLong(noeudAEcrire));
+					raf.writeChars(getDepartementLong(noeudAEcrire));
+					raf.writeChars(getPromoLong(noeudAEcrire));
+					raf.writeInt(noeudAEcrire.getStagiaire().getAnnee());
+					raf.writeInt(-1);
+					raf.writeInt(-1);
+					compteur = compteur + 1 ;
+					System.out.println("Compteur dans if fils gauche: " + compteur);
+	
+					
+				}
+				
+				else //il y a deja un filsGauche
+				{
+					//pas de place : je fais un appel recursif sur le noeud suivant
+					//this.filsGauche.ajouterNoeud(noeud.getStagiaire()); //je demande au fils gauche de s'en occuper
+					ajouterStagiaireFilsGaucheDansFichierBin(indexFilsGauche, noeudAEcrire);
+				}
+				
+				raf.close();
 			
-			else //il y a deja un filsGauche
-			{
-				//pas de place : je fais un appel recursif sur le noeud suivant
-				//this.filsGauche.ajouterNoeud(noeud.getStagiaire()); //je demande au fils gauche de s'en occuper
-				ajouterStagiaireFilsGaucheDansFichierBin(indexFilsGauche, noeudAEcrire);
-			}
-			
-			raf.close();
-		
 		} 
 		catch (IOException e) 
 		{
@@ -292,48 +305,59 @@ public class EcritureFichierBin
 	
 	}
 	
-	public void ajouterStagiaireFilsDroiteDansFichierBin(int index, Noeud noeudAEcrire) 	
+	public static void ajouterStagiaireFilsDroiteDansFichierBin(int index, Noeud noeudAEcrire) 	
 	{
 		try 
 		{
 		
 			RandomAccessFile raf = new RandomAccessFile(".\\src\\Files\\annuaire.bin", "rw");
-			//je pars a droite
-			int indexTest = 0 ; 
 			
-			raf.seek((indexTest * 118) + 114) ; //TO DO mettre en constantes
-			//je regarde si j'ai la place d'inserer a droite
-			int indexFilsDroit = raf.readInt() ;
-
-			System.out.println("Index fils droit : " + indexFilsDroit);
-
-			if (indexFilsDroit == -1)
-			{
-				//il y a la place : j'ajoute le nouveau Noeud
+//			//si le compteur est à 0, on cree la racine
+//			if (compteur == 0)
+//			{
+//				creerFichierBinaire(noeudAEcrire);
+//			}
+//			
+//			else if (compteur > 0)
+//			{
+			
+				//je pars a droite
+				//int indexTest = 0 ; 
 				
-				//je change l'index de filsDroit avec le nouveau fils
-				raf.writeInt(compteur);
-				//je me place à la fin du fichier bin
-				raf.seek(raf.length());
-				//j'ajoute le fils à la fin du fichier 
-				raf.writeChars(getNomLong(noeudAEcrire));
-				raf.writeChars(getPrenomLong(noeudAEcrire));
-				raf.writeChars(getDepartementLong(noeudAEcrire));
-				raf.writeChars(getPromoLong(noeudAEcrire));
-				raf.writeInt(noeudAEcrire.getStagiaire().getAnnee());
-				raf.writeInt(-1);
-				raf.writeInt(-1);
-				compteur = compteur + 1 ;
-				System.out.println("Compteur dans if fils droit : " + compteur);
-			}
-			else
-			{
-				//pas de place : je fais un appel recursif sur le noeud suivant
-				//je demande au fils droit de s'en occuper
-				ajouterStagiaireFilsDroiteDansFichierBin(indexFilsDroit, noeudAEcrire);
-			}	
-			raf.close();
-
+				raf.seek(((index - 1) * 118) + 114) ; //TO DO mettre en constantes
+				
+				//je regarde si j'ai la place d'inserer a droite
+				int indexFilsDroit = raf.readInt() ;
+	
+				System.out.println("Index fils droit : " + indexFilsDroit);
+	
+				if (indexFilsDroit == -1)
+				{
+					//il y a la place : j'ajoute le nouveau Noeud
+					
+					//je change l'index de filsDroit avec le nouveau fils
+					raf.writeInt(compteur);
+					//je me place à la fin du fichier bin
+					raf.seek(raf.length());
+					//j'ajoute le fils à la fin du fichier 
+					raf.writeChars(getNomLong(noeudAEcrire));
+					raf.writeChars(getPrenomLong(noeudAEcrire));
+					raf.writeChars(getDepartementLong(noeudAEcrire));
+					raf.writeChars(getPromoLong(noeudAEcrire));
+					raf.writeInt(noeudAEcrire.getStagiaire().getAnnee());
+					raf.writeInt(-1);
+					raf.writeInt(-1);
+					compteur = compteur + 1 ;
+					System.out.println("Compteur dans if fils droit : " + compteur);
+				}
+				else
+				{
+					//pas de place : je fais un appel recursif sur le noeud suivant
+					//je demande au fils droit de s'en occuper
+					ajouterStagiaireFilsDroiteDansFichierBin(indexFilsDroit, noeudAEcrire);
+				}	
+				raf.close();
+			
 	} 
 	catch (IOException e) 
 		{
@@ -343,23 +367,33 @@ public class EcritureFichierBin
 	}
 	
 	
-	public void creerArbreFichierBin(ArbreBinaire arbre, Noeud noeud)
+	public void creerArbreFichierBin(ArbreBinaire arbre, Noeud noeud) throws IOException
 	{
-		
+		//DEBUG
 		System.out.println("Compteur methode creer arbre: " + compteur);
 		
-		if ((noeud.getFilsGauche() == null) && (noeud.getFilsDroit() == null)) // si il n'a pas de fils gauche ou droit
+
+		try {
+			RandomAccessFile raf = new RandomAccessFile(".\\src\\Files\\annuaire.bin", "rw");
+		
+		//si le compteur est à 0, on cree la racine
+		if (compteur == 0)
 		{
-			System.out.println("Feuille - pas d'enfants");
+			creerFichierBinaire(arbre.getPremierNoeud());
+		}
+		
+		if ((noeud.getFilsGauche()) == null && (noeud.getFilsDroit() == null)) // si il n'a pas de fils gauche ou droit
+		{
+			System.out.println("Feuille - pas d'enfants, noeud " + noeud.getStagiaire().getNom() ); 
 		}
 			
-		
 		else 
 		{
 			//on regarde dans l'arbre binaire qu'on a deja créé s'il a un fils gauche
 			if (noeud.getFilsGauche() != null)
 			{
-				System.out.println("Fils gauche");
+				//DEBUG
+				System.out.println("Fils gauche non null : noeud " + noeud.getStagiaire().getNom() + ", fils gauche = " + noeud.getFilsGauche().getStagiaire().getNom());
 				//s'il a un fils gauche, alors on appelle la methode pour l'ajouter dans le fichier binaire
 				ajouterStagiaireFilsGaucheDansFichierBin(compteur, noeud.getFilsGauche());
 				
@@ -368,18 +402,18 @@ public class EcritureFichierBin
 			}
 			if (noeud.getFilsDroit() != null)
 			{
-				System.out.println("Fils droit");
+				System.out.println("Fils droit non null : noeud " + noeud.getStagiaire().getNom() + ", fils droit = " + noeud.getFilsDroit().getStagiaire().getNom());
 				//s'il a un fils droit, alors on appelle la methode pour l'ajouter dans le fichier binaire
 				ajouterStagiaireFilsDroiteDansFichierBin(compteur, noeud.getFilsDroit());
 				creerArbreFichierBin(arbre, noeud.getFilsDroit());
 			}
 		
 		}
+		raf.close() ;
 		
-		
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 	}
-	
-	//TO DO creer methode qui regroupe les 3 methodes precedentes
-
-	
-}
+	}
+	}
