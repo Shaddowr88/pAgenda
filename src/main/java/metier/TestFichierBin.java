@@ -8,7 +8,7 @@ import model.Stagiaire;
 
 public class TestFichierBin {
 
-public static void main(String[] args) throws IOException {
+	public static void main(String[] args) throws IOException {
 		
 		
 		EcritureFichierBin ecritureFichierBin = new EcritureFichierBin();
