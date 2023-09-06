@@ -1,24 +1,32 @@
-package cda26.projet1.agenda;
+package model;
 
-
-public class Noeud {
+public class Noeud extends ArbreBinaire {
 	
 	//attributs
 	private Stagiaire stagiaire;
 	private Noeud filsGauche;
+<<<<<<< HEAD:src/main/java/cda26/projet1/agenda/Noeud.java
 	private Noeud filsDroit;
 	
 	public final static int TAILLE_MAX_FILS = 4 ; //pour le fichier binaire
 	public final static int TAILLE_MAX_NOEUD = Stagiaire.TAILLE_OCTET_STAGIAIRE + 2 * TAILLE_MAX_FILS ;
+=======
+	private Noeud filsDroit;	
+>>>>>>> 9826d86 ( Recherche implémenter mais pas encore visible et ajout d'une transition):src/main/java/model/Noeud.java
 	
 	//Contructeur
 	public Noeud(Stagiaire stagiaire, Noeud filsGauche, Noeud filsDroit) {
-		
+		super();
 		this.stagiaire = stagiaire;
 		this.filsGauche = filsGauche;
 		this.filsDroit = filsDroit;
 	}
-	
+
+	public Noeud(Noeud premierNoeud) {
+		super(premierNoeud);
+		
+	}
+
 	public Noeud(Stagiaire stagiaire) {
 			
 			this.stagiaire = stagiaire;
@@ -26,38 +34,26 @@ public class Noeud {
 			this.filsDroit = null;
 		}
 
-
 	//Getters & Setters
 	public Stagiaire getStagiaire() {
 		return stagiaire;
 	}
 
-	
-
-
 	public void setStagiaire(Stagiaire stagiaire) {
 		this.stagiaire = stagiaire;
 	}
-
-
 
 	public Noeud getFilsGauche() {
 		return filsGauche;
 	}
 
-
-
 	public void setFilsGauche(Noeud filsGauche) {
 		this.filsGauche = filsGauche;
 	}
 
-
-
 	public Noeud getFilsDroit() {
 		return filsDroit;
 	}
-
-
 
 	public void setFilsDroit(Noeud filsDroit) {
 		this.filsDroit = filsDroit;
@@ -84,9 +80,7 @@ public class Noeud {
 		
 		return resultat;
 	}
-	
-	
-	
+
 	public void ajouterNoeud(Stagiaire stagiaire) 
 	{
 		if (stagiaire.getNom().compareTo(this.stagiaire.getNom()) < 0) //compare les 2 string dans l'ordre alphabetique 
@@ -122,7 +116,6 @@ public class Noeud {
 		}
 	}
 	
-	
 	public int taille() 
 	{
 		int resultat = 0 ; 
@@ -142,9 +135,7 @@ public class Noeud {
 		
 		return resultat;
 	}
-	
-	
-	
+
 	public int hauteur()
 	{
 		//je suis une feuille -> cas de terminaison

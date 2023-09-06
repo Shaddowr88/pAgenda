@@ -1,7 +1,9 @@
-package cda26.projet1.agenda;
+package view;
 
 import java.util.ArrayList;
+import java.util.List;
 
+import controller.Recherhe;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -22,11 +24,19 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
+import model.ArbreBinaire;
+import model.Noeud;
+import model.Stagiaire;
+
 
 public class HomePan extends BorderPane {
 	
 	private Button btn = new Button("Changer de scene");
-
+	ArrayList<String> finds;
+	List<Stagiaire> arrayList ;
+	
+	
+	
 	public HomePan() {
 		
 		super();
@@ -34,32 +44,37 @@ public class HomePan extends BorderPane {
 		setPrefSize(400, 200); 
 		
  ObservableList<Stagiaire> datas= FXCollections.observableArrayList();  
+ 
+ ArbreBinaire stagiaires = new ArbreBinaire(new Noeud(new Stagiaire("Doe", "John", "65", "ATL200", 1985)));
+
+	stagiaires.ajouterNoeudDansArbre(new Stagiaire("Smith", "Alice", "93", "AOB L200", 2000));
+	stagiaires.ajouterNoeudDansArbre (new Stagiaire("Johnson", "Bob", "95", "ATL 200", 2500));
+	stagiaires.ajouterNoeudDansArbre(new Stagiaire("Doe", "Eva", "60", "Zalt 200", 542));
+	stagiaires.ajouterNoeudDansArbre(new Stagiaire("AUGEREAU","Kevin"," 76", "AI 78", 2010));
+	stagiaires.ajouterNoeudDansArbre(new Stagiaire("AKHIAD","Brahim", "92", "AI 60", 2003));
+	stagiaires.ajouterNoeudDansArbre(new Stagiaire("BOUAMAMA","Yahya", "93", "AROBAS", 2008));
+	stagiaires.ajouterNoeudDansArbre(new Stagiaire("BOUCHET","Laurent", "91", "ET 34847", 1998));
+	stagiaires.ajouterNoeudDansArbre(new Stagiaire("CHAVENEAU","Kim Anh", "92", "ATOD 2", 2014));
+	stagiaires.ajouterNoeudDansArbre(new Stagiaire("CHONE","Martin", "92", "ATOD 24 cp", 2015));
+	stagiaires.ajouterNoeudDansArbre(new Stagiaire("GARIJO","Rosie", "79", "AI 79", 2011));
+	stagiaires.ajouterNoeudDansArbre(new Stagiaire("LACROIX","Pascale", "91", "BOBI 5", 2008));
+	stagiaires.ajouterNoeudDansArbre(new Stagiaire("LECLERC","Dominique", "75", "ATOD 12", 2011));
+	stagiaires.ajouterNoeudDansArbre(new Stagiaire("NOUAR","Adel", "94", "ATOD 5", 2009));
+	stagiaires.ajouterNoeudDansArbre(new Stagiaire("POTIN","Thomas", "75", "ATOD 21", 2014));
+	stagiaires.ajouterNoeudDansArbre(new Stagiaire("PUCELLE","David", "75", "ERE 234", 2001));
+	stagiaires.ajouterNoeudDansArbre(new Stagiaire("ROIGNANT","Pierre-Yves", "77", "ATOD 26 cp", 2015));
+	stagiaires.ajouterNoeudDansArbre(new Stagiaire("ROIGNANT","Pierre-Yves", "93", "AI 95", 2015));
+	stagiaires.ajouterNoeudDansArbre(new Stagiaire("UNG","Jet-Ming", "75", "ATOD 16 cp", 2012));
+	
+	// String[] finds = {"Johnson"};
+	List<Stagiaire> arrayList = stagiaires.convertirEnArrayList();
+	
+	/* for (Stagiaire stagiaire : arrayList) {
+         System.out.println(stagiaire.nom + " " + stagiaire.prenom + " " + stagiaire.annee);
+     }*/
          
- datas.add(new Stagiaire("AUGEREAU","Kevin"," 76", "AI 78", 2010));
- datas.add(new Stagiaire("AKHIAD","Brahim", "92", "AI 60", 2003));
-
- datas.add(new Stagiaire("BOUAMAMA","Yahya", "93", "AROBAS", 2008));
- datas.add(new Stagiaire("BOUCHET","Laurent", "91", "ET 34847", 1998));
-
- datas.add(new Stagiaire("CHAVENEAU","Kim Anh", "92", "ATOD 2", 2014));
- datas.add(new Stagiaire("CHONE","Martin", "92", "ATOD 24 cp", 2015));
- 
- datas.add(new Stagiaire("GARIJO","Rosie", "79", "AI 79", 2011));
-
- datas.add(new Stagiaire("LACROIX","Pascale", "91", "BOBI 5", 2008));
- datas.add(new Stagiaire("LECLERC","Dominique", "75", "ATOD 12", 2011));
- 
- datas.add(new Stagiaire("NOUAR","Adel", "94", "ATOD 5", 2009));
- 
- datas.add(new Stagiaire("POTIN","Thomas", "75", "ATOD 21", 2014));
- datas.add(new Stagiaire("PUCELLE","David", "75", "ERE 234", 2001));
- 
- datas.add(new Stagiaire("ROIGNANT","Pierre-Yves", "77", "ATOD 26 cp", 2015));
- datas.add(new Stagiaire("ROIGNANT","Pierre-Yves", "93", "AI 95", 2015));
- 
- datas.add(new Stagiaire("UNG","Jet-Ming", "75", "ATOD 16 cp", 2012));
+		datas.setAll(arrayList);
 		
-        
     	Label lblBottom = new Label(" ");
     	Label lblRight = new Label (" ");
     	Label lblCenter = new Label(" ");
@@ -157,7 +172,31 @@ public class HomePan extends BorderPane {
                     }
                  }
                 
-                System.out.println(formatResearch2.toString());
+               // System.out.println(formatResearch2.toString());
+                
+                ArrayList<String> finds = formatResearch2;
+                //arrayList = stagiaires.convertirEnArrayList();
+                
+                //System.out.println(stringArray.toString());
+                Recherhe r = new Recherhe();
+    	        List<Stagiaire> resultList = r.search(stagiaires,finds);
+
+    	        if (!resultList.isEmpty()) {
+    	        	
+    	        	String response = resultList.size() >= 2 ? "Contacts trouvés":"Contact trouvé";
+    	        	System.out.println(response);
+    	        	           
+    	            for (Stagiaire stagiaire : resultList) {
+    	                System.out.println(
+    	                		"Nom: " + stagiaire.nom 
+    	                		+ ", Prénom: "+ stagiaire.prenom+
+    	                		", Promotion: "+ stagiaire.promotion +
+    	                		", Département: "+ stagiaire.departement +
+    	                		", Année: " + stagiaire.annee);
+    	            }
+    	        } else {
+    	            System.out.println("Aucun élément trouvé");
+    	        }
         		} 	
         	}
         ); 
@@ -193,16 +232,17 @@ public class HomePan extends BorderPane {
         		= new TableColumn<Stagiaire, String>("Nom");
         		userlastNameCol.prefWidthProperty().bind(table.widthProperty().divide(5));
         		userlastNameCol.setCellValueFactory(new PropertyValueFactory<Stagiaire,String>("nom"));
+        		System.out.println(new PropertyValueFactory<Stagiaire,String>("nom"));
 
         TableColumn<Stagiaire, String> userNameCol //
         		= new TableColumn<Stagiaire, String>("Prénom");
         		userNameCol.prefWidthProperty().bind(table.widthProperty().divide(5));
         		userNameCol.setCellValueFactory(new PropertyValueFactory<Stagiaire,String>("prenom"));
         
-        TableColumn<Stagiaire, Integer> DepCol//
-                = new TableColumn<Stagiaire, Integer>("Département");
+        TableColumn<Stagiaire, String> DepCol//
+                = new TableColumn<Stagiaire, String>("Département");
                 DepCol.prefWidthProperty().bind(table.widthProperty().divide(5));
-                DepCol.setCellValueFactory(new PropertyValueFactory<Stagiaire,Integer>("departement"));
+                DepCol.setCellValueFactory(new PropertyValueFactory<Stagiaire,String>("departement"));
                           
         TableColumn<Stagiaire, String> promoNameCol//
                 = new TableColumn<Stagiaire, String>("Promotion");
@@ -225,7 +265,18 @@ public class HomePan extends BorderPane {
     	
 /**
  * Sections template
+ * 
+ * 
+ * 
+ * 
  */  
+    	
+    	
+    	
+	        
+	        
+    	
+    	
     	
         setTop(head);
         setCenter(table);

@@ -1,7 +1,10 @@
-package cda26.projet1.agenda;
+package view;
 
 import java.io.*;
 import java.nio.file.Path;
+
+import model.ArbreBinaire;
+import model.Stagiaire;
 
 public class LectureFichier {
 

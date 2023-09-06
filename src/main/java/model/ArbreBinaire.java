@@ -1,9 +1,13 @@
-package cda26.projet1.agenda;
+package model;
 
-public class ArbreBinaire {
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
+public  class ArbreBinaire {
 	//attributs
 	
-	private Noeud premierNoeud;
+	private static Noeud premierNoeud;
 	
 	//contructeur
 
@@ -24,7 +28,6 @@ public class ArbreBinaire {
 	public void setPremierNoeud(Noeud premierNoeud) {
 		this.premierNoeud = premierNoeud;
 	}
-	
 	
 	@Override
 	public String toString() 
@@ -51,7 +54,6 @@ public class ArbreBinaire {
 		}
 	}
 	
-	
 	public int tailleArbre() {
 		if (this.premierNoeud == null) {//cas où l'arbre est vide
 			return 0;
@@ -59,7 +61,6 @@ public class ArbreBinaire {
 			return this.premierNoeud.taille();
 		}
 	}
-	
 	
 	public int hauteurArbre()
 	{
@@ -72,6 +73,22 @@ public class ArbreBinaire {
 			return this.premierNoeud.hauteur();
 		}
 	}
+	
+	 public List<Stagiaire> convertirEnArrayList() {
+	        List<Stagiaire> arrayList = new ArrayList<>();
+	        convertirEnArrayList(premierNoeud, arrayList);
+	        return arrayList;
+	    }
+	
+	private void convertirEnArrayList(Noeud courant, List<Stagiaire> arrayList) {
+        if (courant == null) {
+            return;
+        }
+
+        arrayList.add(courant.getStagiaire());
+        convertirEnArrayList(courant.getFilsGauche(), arrayList);
+        convertirEnArrayList(courant.getFilsDroit(), arrayList);
+    }
 	
 }
 	
