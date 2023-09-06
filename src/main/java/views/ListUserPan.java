@@ -6,6 +6,7 @@ import java.util.List;
 
 import metier.Recherche;
 import javafx.animation.ScaleTransition;
+import javafx.animation.TranslateTransition;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -278,28 +279,33 @@ public class ListUserPan extends BorderPane {
     	
     	
      	
-    	VBox root = new VBox();
-       
-    	Scale scale = new Scale();
-   	 ScaleTransition scaleTransition = new ScaleTransition(Duration.seconds(2),root);
-   	 root.getTransforms().add(scale);
-   	 scaleTransition.setByX(1); // Augmente le facteur d'échelle X
-       scaleTransition.setByY(1); // Augmente le facteur d'échelle Y
-     root.getChildren().addAll(el);
-     root.relocate(1000, 5333);
+    	Card root = new Card();
+    	root.setPrefWidth(1);
     	
+   	 	TranslateTransition scaleTransition = new TranslateTransition(Duration.seconds(1),root); 
+   	 	
+   	   
+     
+   	
         
     	table.setOnMouseClicked(event -> {
     	    if (event.getClickCount() == 1) { // Clic simple
     	        Stagiaire stagiaire = table.getSelectionModel().getSelectedItem();
     	        if (stagiaire != null) {
     	        	
-    	        	el.setPrefWidth(400);
-    	        	el.setText( stagiaire.getNom() + " " + stagiaire.getPrenom());
-    	        	scaleTransition.play();
     	        	
-    	        	scaleTransition.setByX(0); // Augmente le facteur d'échelle X
-    	            scaleTransition.setByY(0);
+    	        	root.afficher( 
+    	        			stagiaire.getNom(),
+    	        			stagiaire.getPrenom(),
+    	        			stagiaire.getDepartement(),
+    	        			stagiaire.getPromotion(),
+    	        			stagiaire.getAnnee()
+    	        			);
+    	        	 scaleTransition.setToX(40);
+    	        	scaleTransition.play();
+    	        	root.setPrefWidth(400);
+    	        	//scaleTransition.setByX(0); // Augmente le facteur d'échelle X
+    	            //scaleTransition.setByY(0);
     	        // System.out.println("Stagiaire sélectionné : " + stagiaire.getNom() + " " + stagiaire.getPrenom());
 
     	            sizeParam = 1;
@@ -317,7 +323,7 @@ public class ListUserPan extends BorderPane {
  */  
         setTop(head);
         setCenter(table);
-        setRight(el);
+        setRight(root);
         setBottom(lblBottom);
 
 		btn.setOnAction(new EventHandler<ActionEvent>() { 
