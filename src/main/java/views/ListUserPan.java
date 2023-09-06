@@ -22,6 +22,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
@@ -38,7 +39,7 @@ public class ListUserPan extends BorderPane {
 	List<Stagiaire> arrayList ;
 	
 	private Label label = new Label(" liste d'utilisateur");
-
+	private int sizeParam = 5;
 	public ListUserPan() {
 		super();
 		setPrefSize(400, 200);
@@ -92,8 +93,6 @@ public class ListUserPan extends BorderPane {
         Label el = new Label("ici");
         el.setPrefWidth(0);
         
-        
-        StackPane root = new StackPane();
         
         
  /**
@@ -154,6 +153,7 @@ public class ListUserPan extends BorderPane {
         		+ "-fx-background-color: white;"
         		);       
  
+        
         searchField.setOnKeyPressed(e ->{
         	
         	ArrayList<String>  formatResearch2= new ArrayList<>();
@@ -205,7 +205,8 @@ public class ListUserPan extends BorderPane {
     	                		", Année: " + stagiaire.annee);
     	            }
     	        } else {
-    	            System.out.println("Aucun élément trouvé");
+    	            //System.out.println("Aucun élément trouvé");
+    	            searchField.setText("Aucun élément trouvé");
     	        }
         		} 	
         	}
@@ -235,33 +236,33 @@ public class ListUserPan extends BorderPane {
 /**
  * Tableau
  */            
-        
+      
         TableView<Stagiaire> table = new TableView<Stagiaire>();
 
         TableColumn<Stagiaire, String> userlastNameCol //
         		= new TableColumn<Stagiaire, String>("Nom");
-        		userlastNameCol.prefWidthProperty().bind(table.widthProperty().divide(5));
+        		userlastNameCol.prefWidthProperty().bind(table.widthProperty().divide(sizeParam ));
         		userlastNameCol.setCellValueFactory(new PropertyValueFactory<Stagiaire,String>("nom"));
         		System.out.println(new PropertyValueFactory<Stagiaire,String>("nom"));
 
         TableColumn<Stagiaire, String> userNameCol //
         		= new TableColumn<Stagiaire, String>("Prénom");
-        		userNameCol.prefWidthProperty().bind(table.widthProperty().divide(5));
+        		userNameCol.prefWidthProperty().bind(table.widthProperty().divide(sizeParam ));
         		userNameCol.setCellValueFactory(new PropertyValueFactory<Stagiaire,String>("prenom"));
         
         TableColumn<Stagiaire, String> DepCol//
                 = new TableColumn<Stagiaire, String>("Département");
-                DepCol.prefWidthProperty().bind(table.widthProperty().divide(5));
+                DepCol.prefWidthProperty().bind(table.widthProperty().divide(sizeParam ));
                 DepCol.setCellValueFactory(new PropertyValueFactory<Stagiaire,String>("departement"));
                           
         TableColumn<Stagiaire, String> promoNameCol//
                 = new TableColumn<Stagiaire, String>("Promotion");
-                promoNameCol.prefWidthProperty().bind(table.widthProperty().divide(5));               
+                promoNameCol.prefWidthProperty().bind(table.widthProperty().divide(sizeParam ));               
                 promoNameCol.setCellValueFactory(new PropertyValueFactory<Stagiaire,String>("promotion"));
                 
         TableColumn<Stagiaire, Integer> YearCol//
                 = new TableColumn<Stagiaire, Integer>("Année");
-                YearCol.prefWidthProperty().bind(table.widthProperty().divide(5));
+                YearCol.prefWidthProperty().bind(table.widthProperty().divide(sizeParam ));
                 YearCol.setCellValueFactory(new PropertyValueFactory<Stagiaire,Integer>("annee"));    
                 YearCol.setStyle(
                 		"-fx-border: 0;"
@@ -275,33 +276,34 @@ public class ListUserPan extends BorderPane {
         table.getColumns().addAll(userlastNameCol,userNameCol, DepCol, promoNameCol,YearCol); 
     	table.setItems(datas);
     	
+    	
+     	
+    	VBox root = new VBox();
+       
     	Scale scale = new Scale();
-   	 ScaleTransition scaleTransition = new ScaleTransition(Duration.seconds(2),el);
-   	 el.getTransforms().add(scale);
+   	 ScaleTransition scaleTransition = new ScaleTransition(Duration.seconds(2),root);
+   	 root.getTransforms().add(scale);
    	 scaleTransition.setByX(1); // Augmente le facteur d'échelle X
-        scaleTransition.setByY(1); // Augmente le facteur d'échelle Y
-   	
+       scaleTransition.setByY(1); // Augmente le facteur d'échelle Y
+     root.getChildren().addAll(el);
+     root.relocate(1000, 5333);
     	
         
     	table.setOnMouseClicked(event -> {
     	    if (event.getClickCount() == 1) { // Clic simple
-    	    	
-    	    	int count=0;
     	        Stagiaire stagiaire = table.getSelectionModel().getSelectedItem();
     	        if (stagiaire != null) {
-
+    	        	
     	        	el.setPrefWidth(400);
     	        	el.setText( stagiaire.getNom() + " " + stagiaire.getPrenom());
+    	        	scaleTransition.play();
     	        	
-    	        	if(count < 1) {
-    	        		scaleTransition.play();
-    	        		count=1;
-    	        		scaleTransition.setByX(0); // Augmente le facteur d'échelle X
-    	                scaleTransition.setByY(0);
-    	        		}
-    	        	
-    	        	
-    	           // System.out.println("Stagiaire sélectionné : " + stagiaire.getNom() + " " + stagiaire.getPrenom());
+    	        	scaleTransition.setByX(0); // Augmente le facteur d'échelle X
+    	            scaleTransition.setByY(0);
+    	        // System.out.println("Stagiaire sélectionné : " + stagiaire.getNom() + " " + stagiaire.getPrenom());
+
+    	            sizeParam = 1;
+    	            
     	        }
     	    }
     	});
