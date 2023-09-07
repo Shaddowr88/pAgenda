@@ -38,6 +38,14 @@ public class ArbreBinaire {
 			this.premierNoeud = premierNoeud;
 		}
 
+		public RandomAccessFile getRaf() {
+			return raf;
+		}
+
+		public void setRaf(RandomAccessFile raf) {
+			this.raf = raf;
+		}
+
 		@Override
 		public String toString() {
 			if (this.premierNoeud == null) {// cas où l'arbre est vide

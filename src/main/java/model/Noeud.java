@@ -87,6 +87,8 @@ public class Noeud {
 	
 	
 	
+	
+	
 	public void ajouterNoeud(Stagiaire stagiaire) 
 	{
 		if (stagiaire.getNom().compareTo(this.stagiaire.getNom()) < 0) //compare les 2 string dans l'ordre alphabetique 

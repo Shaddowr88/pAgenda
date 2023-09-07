@@ -1,5 +1,6 @@
 package views;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 import javafx.collections.FXCollections;
@@ -22,43 +23,37 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
-import model.Stagiaire;
+import metier.LectureFichier;
+import model.ArbreBinaire;
+import model.NoeudBinaire;
+import model.NoeudBinaire;
 
 public class HomePan extends BorderPane {
 	
 	private Button btn = new Button("Changer de scene");
 
-	public HomePan() {
+	public HomePan() throws IOException {
 		
 		super();
 		getChildren().add(btn); 
 		setPrefSize(400, 200); 
 		
- ObservableList<Stagiaire> datas= FXCollections.observableArrayList();  
+		
+		LectureFichier lectureFichier = new LectureFichier() ;
+		
+		//Attention, supprimer fichier bin des tests precedents avant de lancer ce main
+
+		ArbreBinaire arbreAnnuaire = new ArbreBinaire() ;
+		
+		lectureFichier.lectureFichierDon(arbreAnnuaire);
+		
+		arbreAnnuaire.testLecture();
+		
+		ArrayList<NoeudBinaire> listeStagiaires = new ArrayList<NoeudBinaire>();
+		listeStagiaires = arbreAnnuaire.getPremierNoeud().fichierBinVersArrayList(arbreAnnuaire.getRaf());
+		ObservableList<NoeudBinaire> obsListeStagiaires= FXCollections.observableArrayList(listeStagiaires);
          
- datas.add(new Stagiaire("AUGEREAU","Kevin"," 76", "AI 78", 2010));
- datas.add(new Stagiaire("AKHIAD","Brahim", "92", "AI 60", 2003));
-
- datas.add(new Stagiaire("BOUAMAMA","Yahya", "93", "AROBAS", 2008));
- datas.add(new Stagiaire("BOUCHET","Laurent", "91", "ET 34847", 1998));
-
- datas.add(new Stagiaire("CHAVENEAU","Kim Anh", "92", "ATOD 2", 2014));
- datas.add(new Stagiaire("CHONE","Martin", "92", "ATOD 24 cp", 2015));
  
- datas.add(new Stagiaire("GARIJO","Rosie", "79", "AI 79", 2011));
-
- datas.add(new Stagiaire("LACROIX","Pascale", "91", "BOBI 5", 2008));
- datas.add(new Stagiaire("LECLERC","Dominique", "75", "ATOD 12", 2011));
- 
- datas.add(new Stagiaire("NOUAR","Adel", "94", "ATOD 5", 2009));
- 
- datas.add(new Stagiaire("POTIN","Thomas", "75", "ATOD 21", 2014));
- datas.add(new Stagiaire("PUCELLE","David", "75", "ERE 234", 2001));
- 
- datas.add(new Stagiaire("ROIGNANT","Pierre-Yves", "77", "ATOD 26 cp", 2015));
- datas.add(new Stagiaire("ROIGNANT","Pierre-Yves", "93", "AI 95", 2015));
- 
- datas.add(new Stagiaire("UNG","Jet-Ming", "75", "ATOD 16 cp", 2012));
 		
         
     	Label lblBottom = new Label(" ");
@@ -188,32 +183,32 @@ public class HomePan extends BorderPane {
  * Tableau
  */            
         
-        TableView<Stagiaire> table = new TableView<Stagiaire>();
+        TableView<NoeudBinaire> table = new TableView<NoeudBinaire>();
 
-        TableColumn<Stagiaire, String> userlastNameCol //
-        		= new TableColumn<Stagiaire, String>("Nom");
+        TableColumn<NoeudBinaire, String> userlastNameCol //
+        		= new TableColumn<NoeudBinaire, String>("Nom");
         		userlastNameCol.prefWidthProperty().bind(table.widthProperty().divide(5));
-        		userlastNameCol.setCellValueFactory(new PropertyValueFactory<Stagiaire,String>("nom"));
+        		userlastNameCol.setCellValueFactory(new PropertyValueFactory<NoeudBinaire,String>("nom"));
 
-        TableColumn<Stagiaire, String> userNameCol //
-        		= new TableColumn<Stagiaire, String>("Prénom");
+        TableColumn<NoeudBinaire, String> userNameCol //
+        		= new TableColumn<NoeudBinaire, String>("Prénom");
         		userNameCol.prefWidthProperty().bind(table.widthProperty().divide(5));
-        		userNameCol.setCellValueFactory(new PropertyValueFactory<Stagiaire,String>("prenom"));
+        		userNameCol.setCellValueFactory(new PropertyValueFactory<NoeudBinaire,String>("prenom"));
         
-        TableColumn<Stagiaire, Integer> DepCol//
-                = new TableColumn<Stagiaire, Integer>("Département");
+        TableColumn<NoeudBinaire, Integer> DepCol//
+                = new TableColumn<NoeudBinaire, Integer>("Département");
                 DepCol.prefWidthProperty().bind(table.widthProperty().divide(5));
-                DepCol.setCellValueFactory(new PropertyValueFactory<Stagiaire,Integer>("departement"));
+                DepCol.setCellValueFactory(new PropertyValueFactory<NoeudBinaire,Integer>("departement"));
                           
-        TableColumn<Stagiaire, String> promoNameCol//
-                = new TableColumn<Stagiaire, String>("Promotion");
+        TableColumn<NoeudBinaire, String> promoNameCol//
+                = new TableColumn<NoeudBinaire, String>("Promotion");
                 promoNameCol.prefWidthProperty().bind(table.widthProperty().divide(5));               
-                promoNameCol.setCellValueFactory(new PropertyValueFactory<Stagiaire,String>("promotion"));
+                promoNameCol.setCellValueFactory(new PropertyValueFactory<NoeudBinaire,String>("promotion"));
                 
-        TableColumn<Stagiaire, Integer> YearCol//
-                = new TableColumn<Stagiaire, Integer>("Année");
+        TableColumn<NoeudBinaire, Integer> YearCol//
+                = new TableColumn<NoeudBinaire, Integer>("Année");
                 YearCol.prefWidthProperty().bind(table.widthProperty().divide(5));
-                YearCol.setCellValueFactory(new PropertyValueFactory<Stagiaire,Integer>("annee"));    
+                YearCol.setCellValueFactory(new PropertyValueFactory<NoeudBinaire,Integer>("annee"));    
                 YearCol.setStyle(
                 		"-fx-border: 0;"
                 		+ "-fx-box-shadow: none;"
@@ -222,7 +217,7 @@ public class HomePan extends BorderPane {
                 		);
 
         table.getColumns().addAll(userlastNameCol,userNameCol, DepCol, promoNameCol,YearCol); 
-    	table.setItems(datas);
+    	table.setItems(obsListeStagiaires);
     	
 /**
  * Sections template
@@ -236,7 +231,12 @@ public class HomePan extends BorderPane {
 			@Override
 		public void handle(ActionEvent arg0) {
 		        
-		ListUserPan secondPan = new ListUserPan();
+		try {
+			ListUserPan secondPan = new ListUserPan();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		Stage stage = (Stage) HomePan.this.getScene().getWindow(); 
 		stage.setScene(getScene());
