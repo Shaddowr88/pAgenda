@@ -68,7 +68,6 @@ public class ListUserPan extends BorderPane {
 		obsListeStagiaires.setAll(listeStagiaires);
 		//arbreAnnuaire.testLecture();
 		
-
 		
     	Label lblBottom = new Label(" ");
     	Label lblRight = new Label (" ");
@@ -234,7 +233,8 @@ public class ListUserPan extends BorderPane {
         		= new TableColumn<NoeudBinaire, String>("Nom");
         		userlastNameCol.prefWidthProperty().bind(table.widthProperty().divide(sizeParam ));
         		userlastNameCol.setCellValueFactory(new PropertyValueFactory<NoeudBinaire,String>("stagiaire"));
-        		System.out.println(new PropertyValueFactory<NoeudBinaire,String>("Nom"));
+
+        		System.out.println(new PropertyValueFactory<NoeudBinaire,String>("stagiaire"));
 
         TableColumn<NoeudBinaire, String> userNameCol //
         		= new TableColumn<NoeudBinaire, String>("Prénom");
