@@ -317,7 +317,7 @@ public class NoeudBinaire {
 			noeudFilsGauche = lireNoeudFichierBinVersObjetNoeudBinaire(raf);
 			//Je replace le curseur au début du noeud fils gauche.
 			raf.seek(TAILLE_MAX_NOEUD * noeudCourant.filsGauche);
-			//J'ajoute le noeud fils gauche récupéré à l'arrayList et initie la récursivité pour les fils Gauches du Noeud fis Gauche.
+			//J'ajoute le noeud fils gauche récupéré à l'arrayList et initie la récursivité pour les fils Gauches du Noeud fils Gauche.
 			listeAffichageFichierBin.addAll(noeudFilsGauche.fichierBinVersArrayList(raf));
 			
 		}

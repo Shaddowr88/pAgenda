@@ -58,13 +58,21 @@ public class ListUserPan extends BorderPane {
 
 		ArbreBinaire arbreAnnuaire = new ArbreBinaire() ;
 		
-		lectureFichier.lectureFichierDon(arbreAnnuaire);
+		arbreAnnuaire.lectureFichierDon(arbreAnnuaire);
 		
-		arbreAnnuaire.testLecture();
+//		ArrayList<NoeudBinaire> listeStagiaires = new ArrayList<NoeudBinaire>();
+//		listeStagiaires = arbreAnnuaire.getPremierNoeud().fichierBinVersArrayList(arbreAnnuaire.getRaf());
+//		
 		
 		ArrayList<NoeudBinaire> listeStagiaires = new ArrayList<NoeudBinaire>();
-		listeStagiaires = arbreAnnuaire.getPremierNoeud().fichierBinVersArrayList(arbreAnnuaire.getRaf());
-		ObservableList<NoeudBinaire> obsListeStagiaires= FXCollections.observableArrayList(listeStagiaires);  
+		NoeudBinaire noeudVersArrayList = new NoeudBinaire();
+		noeudVersArrayList = noeudVersArrayList.lireNoeudFichierBinVersObjetNoeudBinaire(arbreAnnuaire.getRaf());
+		listeStagiaires = noeudVersArrayList.fichierBinVersArrayList(arbreAnnuaire.getRaf());
+		ObservableList<NoeudBinaire> obsListeStagiaires= FXCollections.observableArrayList(listeStagiaires);
+		obsListeStagiaires.setAll(listeStagiaires);
+		//arbreAnnuaire.testLecture();
+		
+		
  
  //ArbreBinaire stagiaires = new ArbreBinaire(new Noeud(new Stagiaire("Doe", "John", "65", "ATL200", 1985)));
 
@@ -94,7 +102,7 @@ public class ListUserPan extends BorderPane {
          System.out.println(stagiaire.nom + " " + stagiaire.prenom + " " + stagiaire.annee);
      }*/
          
-	obsListeStagiaires.setAll(listeStagiaires);
+
 		
     	Label lblBottom = new Label(" ");
     	Label lblRight = new Label (" ");

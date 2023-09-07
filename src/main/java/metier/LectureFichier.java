@@ -15,11 +15,35 @@ public class LectureFichier {
 		int annee = 0;
 		int compteurLigne = 1;
 		int compteurStagiaire = 0;
+		public static boolean fichierBinExiste = false;
 
 		//On cree un arbre binaire vide qui sera notre annuaire
 		//ArbreBinaire arbreAnnuaire = new ArbreBinaire() ; 
 		
+		//La méthode permets de d'abord vérifier si le fichier Bin existe, puis de le créer à partir du fichier DON, si ce n'est pas le cas.
+		//public void verifierSiFichierBinExiste()
+		//{
+			//Je créé une variable qui stock le path du fichier Bin
+			//File annuaireBin = new File("src/Files/annuaire.bin");
+		//Je regarde si le chemin existe et si l'élement est bien un fichier
+		//if(annuaireBin.exists() && annuaireBin.isFile())	
+		//{ //Si la condition est remplie je passe le boléen à true
+		
+		//fichierBinExiste = true;
+		//appeller méthode lire fichier bin
+		//}
+		//else 
+		//{
+			
+		//}
+		//return fichierBinExiste;
+		//}
+		
+		
+		
 		BufferedReader reader;
+		
+
 		
 		public void lectureFichierDon(ArbreBinaire arbreAnnuaire)
 		{
