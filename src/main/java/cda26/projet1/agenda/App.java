@@ -16,7 +16,7 @@ public class App extends Application {
     @Override
     public void start(Stage stage)throws Exception  {
     	
-    	ListUserPan root = new ListUserPan();
+    	HomePan root = new HomePan();
         Scene scene = new Scene(root, 800, 600);
         stage.setTitle("Caller");
         stage.setScene(scene);

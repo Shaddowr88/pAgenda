@@ -5,76 +5,54 @@ import java.util.List;
 
 import model.ArbreBinaire;
 import model.Noeud;
+import model.NoeudBinaire;
 import model.Stagiaire;
 
 public class Recherche {
-	
 
-	public List<Stagiaire> search(ArbreBinaire stagiaires, ArrayList<String> termsToFind) {
-        List<Stagiaire> resultList = new ArrayList<>();
-        superSearchRecursive(stagiaires.getPremierNoeud(), termsToFind, resultList);
-        return resultList;
-    }
+	 public List<Stagiaire> search(ArbreBinaire stagiaires, ArrayList<String> termsToFind) {
+	        List<Stagiaire> resultList = new ArrayList<>();
+	        superSearchRecursive(stagiaires, stagiaires.getPremierNoeud(), termsToFind, resultList);
+	        return resultList;
+	    }
 
-    private static void searchRecursive(
-    		Noeud root, 
-    		String[] termsToFind, 
-    		List<Stagiaire> resultList) 
-    {
-        if (root == null) {
-            return;
-        }
-    
-        for (String term : termsToFind) {
-            if (
-            		root.getStagiaire().nom.contains(term) || 
-            		root.getStagiaire().prenom.contains(term) || 
-            		Integer.toString(root.getStagiaire().annee).contains(term)||
-            		root.getStagiaire().departement.contains(term)||
-            		root.getStagiaire().promotion.contains(term)) 
-        	{
-               resultList.add(root.getStagiaire());
-               break; // On ajoute le nœud une seule fois s'il correspond à au moins un terme.
-            }
-        }
-        searchRecursive(root.getFilsDroit(), termsToFind, resultList);
-        searchRecursive(root.getFilsGauche(), termsToFind, resultList);
-    }
+   
 
-    
     private static void superSearchRecursive(
-    		Noeud root, 
-    		ArrayList<String> termsToFind, 
-    		List<Stagiaire> resultList
-    		){
-        if (root == null) {
+            ArbreBinaire arbre,
+            NoeudBinaire noeudBinaire,
+            ArrayList<String> termsToFind,
+            List<Stagiaire> resultList) {
+        if (noeudBinaire == null) {
             return;
         }
-        
+
         boolean allTerms = true;
 
         for (String term : termsToFind) {
-           if (
-        		   !(
-        				   root.getStagiaire().nom.contains(term) || 
-        				   root.getStagiaire().prenom.contains(term) || 
-        				   Integer.toString(root.getStagiaire().annee).contains(term)||
-        				   root.getStagiaire().departement.contains(term)||
-        				   root.getStagiaire().promotion.contains(term))) 
-        	{
-                //resultList.add(root);
-            	allTerms = false;
-            	
-                break; // On ajoute le nœud une seule fois s'il correspond à au moins un terme.
+            if (
+                    !(
+                            noeudBinaire.getStagiaire().getNom().contains(term) ||
+                            noeudBinaire.getStagiaire().getPrenom().contains(term) ||
+                            Integer.toString(noeudBinaire.getStagiaire().getAnnee()).contains(term) ||
+                            noeudBinaire.getStagiaire().getDepartement().contains(term) ||
+                            noeudBinaire.getStagiaire().getPromotion().contains(term)))
+            {
+                allTerms = false;
+                break; // On ajoute le stagiaire une seule fois s'il correspond à au moins un terme.
             }
         }
-        
+
         if (allTerms) {
-        	resultList.add(root.getStagiaire());	
+            resultList.add(noeudBinaire.getStagiaire());
         }
 
-       superSearchRecursive(root.getFilsDroit(), termsToFind, resultList);
-       superSearchRecursive(root.getFilsGauche(), termsToFind, resultList);
+        // Parcours récursif des fils
+        if (noeudBinaire.getFilsGauche() != -1) {
+            superSearchRecursive(arbre, arbre.getNoeudBinaire(noeudBinaire.getFilsGauche()), termsToFind, resultList);
+        }
+        if (noeudBinaire.getFilsDroit() != -1) {
+            superSearchRecursive(arbre, arbre.getNoeudBinaire(noeudBinaire.getFilsDroit()), termsToFind, resultList);
+        }
     }
-
 }

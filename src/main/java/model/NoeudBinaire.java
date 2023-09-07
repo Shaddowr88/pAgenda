@@ -271,7 +271,6 @@ public class NoeudBinaire {
 			
 			for ( int i = promoStagiaire.length() ; i < Stagiaire.TAILLE_MAX_PROMO ; i++ )
 			{
-				//On ajoute des espaces au nom si le nom est en dessous de la taille max
 				promoLong += " " ;
 			}
 		}
@@ -282,53 +281,5 @@ public class NoeudBinaire {
 		
 		return promoLong ;
 	}
-	
-	
-	/*public int taille() 
-	{
-		int resultat = 0 ; 
-		
-		//regle parcours infixe GND
-		if (this.filsGauche != null)
-		{
-			resultat += this.filsGauche.taille() ; //G
-		}
-		
-		resultat += 1 ; //N
-		
-		if (this.filsDroit != null)
-		{
-			resultat += this.filsDroit.taille() ; //D
-		}
-		
-		return resultat;
-	}
-	
-	
-	
-	public int hauteur()
-	{
-		//je suis une feuille -> cas de terminaison
-		if (this.filsGauche == null && this.filsDroit == null)
-		{
-			return 0 ;
-		}
-		//je n'ai qu'un fils gauche
-		else if (filsDroit == null && this.filsGauche != null)
-		{
-			return 1 + this.filsGauche.hauteur() ;
-		}
-		//je n'ai qu'un fils droit
-		else if (filsGauche == null && this.filsDroit != null)
-		{
-			return 1 + this.filsDroit.hauteur() ;
-		}
-		//j'ai deux fils, je garde le maximum entre les deux
-		else
-		{
-			return 1 + Math.max(this.filsGauche.hauteur() , this.filsDroit.hauteur()); 
-		}
-	}*/
-	
 
 }

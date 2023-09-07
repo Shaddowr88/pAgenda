@@ -51,7 +51,7 @@ public class ListUserPan extends BorderPane {
 	
 		ObservableList<Stagiaire> datas= FXCollections.observableArrayList();  
  
- ArbreBinaire stagiaires = new ArbreBinaire(new Noeud(new Stagiaire("Doe", "John", "65", "ATL200", 1985)));
+ /*ArbreBinaire stagiaires = new ArbreBinaire(new Noeud(new Stagiaire("Doe", "John", "65", "ATL200", 1985)));
 
 	stagiaires.ajouterNoeudDansArbre(new Stagiaire("Smith", "Alice", "93", "AOB L200", 2000));
 	stagiaires.ajouterNoeudDansArbre (new Stagiaire("Johnson", "Bob", "95", "ATL 200", 2500));
@@ -73,7 +73,7 @@ public class ListUserPan extends BorderPane {
 	stagiaires.ajouterNoeudDansArbre(new Stagiaire("UNG","Jet-Ming", "75", "ATOD 16 cp", 2012));
 	
 	// String[] finds = {"Johnson"};
-	List<Stagiaire> arrayList = stagiaires.convertirEnArrayList();
+	List<Stagiaire> arrayList = stagiaires.convertirEnArrayList();*/
 	
 	/* for (Stagiaire stagiaire : arrayList) {
          System.out.println(stagiaire.nom + " " + stagiaire.prenom + " " + stagiaire.annee);
@@ -155,7 +155,7 @@ public class ListUserPan extends BorderPane {
         		);       
  
         
-        searchField.setOnKeyPressed(e ->{
+       /* searchField.setOnKeyPressed(e ->{
         	
         	ArrayList<String>  formatResearch2= new ArrayList<>();
         	
@@ -185,12 +185,12 @@ public class ListUserPan extends BorderPane {
                 
                // System.out.println(formatResearch2.toString());
                 
-                ArrayList<String> finds = formatResearch2;
+              //  ArrayList<String> finds = formatResearch2;
                 //arrayList = stagiaires.convertirEnArrayList();
                 
                 //System.out.println(stringArray.toString());
-                Recherche r = new Recherche();
-    	        List<Stagiaire> resultList = r.search(stagiaires,finds);
+              //  Recherche r = new Recherche();
+    	      /*  List<Stagiaire> resultList = r.search(stagiaires,finds);
 
     	        if (!resultList.isEmpty()) {
     	        	
@@ -211,7 +211,7 @@ public class ListUserPan extends BorderPane {
     	        }
         		} 	
         	}
-        ); 
+        ); */
 
 /**
  * bouton Login

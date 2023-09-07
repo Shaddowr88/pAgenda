@@ -89,6 +89,20 @@ public class ArbreBinaire {
 			}
 		
    }
+
+		public NoeudBinaire getNoeudBinaire(int index) throws IOException {
+		    if (index < 0 || index >= (raf.length() / NoeudBinaire.TAILLE_MAX_NOEUD)) {
+		        return null; // L'indice est invalide, retourne null ou gère l'erreur.
+		    }
+
+		    try {
+		        raf.seek(index * NoeudBinaire.TAILLE_MAX_NOEUD);
+		        return NoeudBinaire.lireNoeudFichierBinVersObjetNoeudBinaire(raf);
+		    } catch (IOException e) {
+		        e.printStackTrace(); // Gérer les exceptions selon vos besoins.
+		        return null; // Retourne null en cas d'erreur.
+		    }
+		}
 	
 }
 	
