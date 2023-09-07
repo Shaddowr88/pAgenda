@@ -1,6 +1,7 @@
 package metier;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import model.ArbreBinaire;
 import model.Noeud;
@@ -10,23 +11,33 @@ public class TestFichierBin {
 
 public static void main(String[] args) throws IOException {
 		
-		LectureFichier lectureFichier = new LectureFichier() ;
+		
 		
 		//Attention, supprimer fichier bin des tests precedents avant de lancer ce main
 
-		//ArbreBinaire arbreAnnuaire = new ArbreBinaire() ;
+		ArbreBinaire arbreAnnuaire = new ArbreBinaire() ;
 		
-		//lectureFichier.lectureFichierDon(arbreAnnuaire);
+		arbreAnnuaire.lectureFichierDon(arbreAnnuaire);
 		
-		//arbreAnnuaire.testLecture();
+		
+		arbreAnnuaire.testLecture();
 		
 		
 		//System.out.println(arbreAnnuaire.getPremierNoeud().fichierBinVersArrayList(arbreAnnuaire.getRaf()));
 	
-	
-	
-		System.out.println(lectureFichier.verifierSiFichierBinExiste());
 		
+		arbreAnnuaire.testLecture();
+	
+		ArrayList<String> stagiaireAChercher = new ArrayList() ; 
+		//stagiaireAChercher.add("ROIGNANT") ;
+		stagiaireAChercher.add("ROIGNANT") ;
+		stagiaireAChercher.add("Pierre-Yves") ;
+		stagiaireAChercher.add("77") ;
+		stagiaireAChercher.add("AI 95") ;
+		
+		Recherche recherche = new Recherche() ;
+		
+		System.out.println(recherche.search(arbreAnnuaire.getRaf(), stagiaireAChercher));
 		
 		
 		

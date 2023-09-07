@@ -42,26 +42,6 @@ public class ListUserPan extends BorderPane {
 	ArrayList<String> finds;
 	List<NoeudBinaire> arrayList ;
 	
-	//Methode qui permets de créer l'observable list à partir de l'array list 
-	//et du fichier binaire en vérifiant en première étape si le fichier binaire existe
-	public ObservableList<NoeudBinaire> creationObservableListSiFichierBinExiste() throws IOException
-	{
-	LectureFichier lectureFichier = new LectureFichier() ;
-	ArbreBinaire arbreAnnuaire = new ArbreBinaire() ;
-	ObservableList<NoeudBinaire> obsListeStagiaires = FXCollections.observableArrayList();
-	//Je vérifie si le fichier Bin existe avec la méthode adaptée, si il n'existe pas, la méthode s'occupe de le créer et passe le boléen à true.
-	if (lectureFichier.verifierSiFichierBinExiste() == true)
-	{
-	//une fois que le fichier binaire existe bet et bien, à partir du fichier binaire, on traduit les noeuds et on les ajoute à une arraylist.	
-	ArrayList<NoeudBinaire> listeStagiaires = new ArrayList<NoeudBinaire>();
-	listeStagiaires = arbreAnnuaire.getPremierNoeud().fichierBinVersArrayList(arbreAnnuaire.getRaf());
-	//Puis on ajoute les données traduites à l'observable list qui pourra être ajoutée au front.
-	obsListeStagiaires.setAll(listeStagiaires); 	
-	}
-	//On retourne l'observable List pour qu'elle puisse être utiliser ailleurs.
-	return obsListeStagiaires;
-	}
-	
 	private Label label = new Label(" liste d'utilisateur");
 	private int sizeParam = 5;
 	public ListUserPan() throws IOException {
@@ -72,16 +52,24 @@ public class ListUserPan extends BorderPane {
 		label.setTextFill(Color.WHITE);
 		getChildren().add(label);
 	
-		
+		LectureFichier lectureFichier = new LectureFichier() ;
 		
 		//Attention, supprimer fichier bin des tests precedents avant de lancer ce main
 
+		ArbreBinaire arbreAnnuaire = new ArbreBinaire() ;
 		
+		arbreAnnuaire.lectureFichierDon(arbreAnnuaire);
 		
-		//lectureFichier.lectureFichierDon(arbreAnnuaire);
+//		ArrayList<NoeudBinaire> listeStagiaires = new ArrayList<NoeudBinaire>();
+//		listeStagiaires = arbreAnnuaire.getPremierNoeud().fichierBinVersArrayList(arbreAnnuaire.getRaf());
+//		
 		
-		
-		
+		ArrayList<NoeudBinaire> listeStagiaires = new ArrayList<NoeudBinaire>();
+		NoeudBinaire noeudVersArrayList = new NoeudBinaire();
+		noeudVersArrayList = noeudVersArrayList.lireNoeudFichierBinVersObjetNoeudBinaire(arbreAnnuaire.getRaf());
+		listeStagiaires = noeudVersArrayList.fichierBinVersArrayList(arbreAnnuaire.getRaf());
+		ObservableList<NoeudBinaire> obsListeStagiaires= FXCollections.observableArrayList(listeStagiaires);
+		obsListeStagiaires.setAll(listeStagiaires);
 		//arbreAnnuaire.testLecture();
 		
 		
@@ -113,12 +101,8 @@ public class ListUserPan extends BorderPane {
 	/* for (Stagiaire stagiaire : arrayList) {
          System.out.println(stagiaire.nom + " " + stagiaire.prenom + " " + stagiaire.annee);
      }*/
-        
-		//Je vais chercher l'observable list à partir de la méthode creationObservableListSiFichierBinExiste()
-		ObservableList<NoeudBinaire> obsListeStagiaires = FXCollections.observableArrayList();
-		obsListeStagiaires = creationObservableListSiFichierBinExiste();
-		
-		
+         
+
 		
     	Label lblBottom = new Label(" ");
     	Label lblRight = new Label (" ");
