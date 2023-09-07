@@ -1,9 +1,11 @@
 package views;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 import java.util.List;
 
+import metier.LectureFichier;
 import metier.Recherche;
 import javafx.animation.ScaleTransition;
 import javafx.animation.TranslateTransition;
@@ -32,16 +34,17 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import model.ArbreBinaire;
 import model.Noeud;
-import model.Stagiaire;
+import model.NoeudBinaire;
+import model.NoeudBinaire;
 
 public class ListUserPan extends BorderPane {
 	private Button btn = new Button("Changer de scene");
 	ArrayList<String> finds;
-	List<Stagiaire> arrayList ;
+	List<NoeudBinaire> arrayList ;
 	
 	private Label label = new Label(" liste d'utilisateur");
 	private int sizeParam = 5;
-	public ListUserPan() {
+	public ListUserPan() throws IOException {
 		super();
 		setPrefSize(400, 200);
 		//setAlignment(Pos.CENTER);
@@ -49,11 +52,23 @@ public class ListUserPan extends BorderPane {
 		label.setTextFill(Color.WHITE);
 		getChildren().add(label);
 	
-		ObservableList<Stagiaire> datas= FXCollections.observableArrayList();  
- 
- ArbreBinaire stagiaires = new ArbreBinaire(new Noeud(new Stagiaire("Doe", "John", "65", "ATL200", 1985)));
+		LectureFichier lectureFichier = new LectureFichier() ;
+		
+		//Attention, supprimer fichier bin des tests precedents avant de lancer ce main
 
-	stagiaires.ajouterNoeudDansArbre(new Stagiaire("Smith", "Alice", "93", "AOB L200", 2000));
+		ArbreBinaire arbreAnnuaire = new ArbreBinaire() ;
+		
+		lectureFichier.lectureFichierDon(arbreAnnuaire);
+		
+		arbreAnnuaire.testLecture();
+		
+		ArrayList<NoeudBinaire> listeStagiaires = new ArrayList<NoeudBinaire>();
+		listeStagiaires = arbreAnnuaire.getPremierNoeud().fichierBinVersArrayList(arbreAnnuaire.getRaf());
+		ObservableList<NoeudBinaire> obsListeStagiaires= FXCollections.observableArrayList(listeStagiaires);  
+ 
+ //ArbreBinaire stagiaires = new ArbreBinaire(new Noeud(new Stagiaire("Doe", "John", "65", "ATL200", 1985)));
+
+	/*stagiaires.ajouterNoeudDansArbre(new Stagiaire("Smith", "Alice", "93", "AOB L200", 2000));
 	stagiaires.ajouterNoeudDansArbre (new Stagiaire("Johnson", "Bob", "95", "ATL 200", 2500));
 	stagiaires.ajouterNoeudDansArbre(new Stagiaire("Doe", "Eva", "60", "Zalt 200", 542));
 	stagiaires.ajouterNoeudDansArbre(new Stagiaire("AUGEREAU","Kevin"," 76", "AI 78", 2010));
@@ -71,15 +86,15 @@ public class ListUserPan extends BorderPane {
 	stagiaires.ajouterNoeudDansArbre(new Stagiaire("ROIGNANT","Pierre-Yves", "77", "ATOD 26 cp", 2015));
 	stagiaires.ajouterNoeudDansArbre(new Stagiaire("ROIGNANT","Pierre-Yves", "93", "AI 95", 2015));
 	stagiaires.ajouterNoeudDansArbre(new Stagiaire("UNG","Jet-Ming", "75", "ATOD 16 cp", 2012));
-	
+	*/
 	// String[] finds = {"Johnson"};
-	List<Stagiaire> arrayList = stagiaires.convertirEnArrayList();
+	
 	
 	/* for (Stagiaire stagiaire : arrayList) {
          System.out.println(stagiaire.nom + " " + stagiaire.prenom + " " + stagiaire.annee);
      }*/
          
-		datas.setAll(arrayList);
+	obsListeStagiaires.setAll(listeStagiaires);
 		
     	Label lblBottom = new Label(" ");
     	Label lblRight = new Label (" ");
@@ -190,9 +205,11 @@ public class ListUserPan extends BorderPane {
                 
                 //System.out.println(stringArray.toString());
                 Recherche r = new Recherche();
-    	        List<Stagiaire> resultList = r.search(stagiaires,finds);
+                
+                // TO DO : fonction recherche
+    	        //List<NoeudBinaire> resultList = r.search(arbreAnnuaire,finds);
 
-    	        if (!resultList.isEmpty()) {
+    	       /* if (!resultList.isEmpty()) {
     	        	
     	        	String response = resultList.size() >= 2 ? "Contacts trouvés":"Contact trouvé";
     	        	System.out.println(response);
@@ -208,7 +225,7 @@ public class ListUserPan extends BorderPane {
     	        } else {
     	            //System.out.println("Aucun élément trouvé");
     	            searchField.setText("Aucun élément trouvé");
-    	        }
+    	        }*/
         		} 	
         	}
         ); 
@@ -238,33 +255,33 @@ public class ListUserPan extends BorderPane {
  * Tableau
  */            
       
-        TableView<Stagiaire> table = new TableView<Stagiaire>();
+        TableView<NoeudBinaire> table = new TableView<NoeudBinaire>();
 
-        TableColumn<Stagiaire, String> userlastNameCol //
-        		= new TableColumn<Stagiaire, String>("Nom");
+        TableColumn<NoeudBinaire, String> userlastNameCol //
+        		= new TableColumn<NoeudBinaire, String>("Nom");
         		userlastNameCol.prefWidthProperty().bind(table.widthProperty().divide(sizeParam ));
-        		userlastNameCol.setCellValueFactory(new PropertyValueFactory<Stagiaire,String>("nom"));
-        		System.out.println(new PropertyValueFactory<Stagiaire,String>("nom"));
+        		userlastNameCol.setCellValueFactory(new PropertyValueFactory<NoeudBinaire,String>("stagiaire"));
+        		System.out.println(new PropertyValueFactory<NoeudBinaire,String>("stagiaire"));
 
-        TableColumn<Stagiaire, String> userNameCol //
-        		= new TableColumn<Stagiaire, String>("Prénom");
+        TableColumn<NoeudBinaire, String> userNameCol //
+        		= new TableColumn<NoeudBinaire, String>("Prénom");
         		userNameCol.prefWidthProperty().bind(table.widthProperty().divide(sizeParam ));
-        		userNameCol.setCellValueFactory(new PropertyValueFactory<Stagiaire,String>("prenom"));
+        		userNameCol.setCellValueFactory(new PropertyValueFactory<NoeudBinaire,String>("prenom"));
         
-        TableColumn<Stagiaire, String> DepCol//
-                = new TableColumn<Stagiaire, String>("Département");
+        TableColumn<NoeudBinaire, String> DepCol//
+                = new TableColumn<NoeudBinaire, String>("Département");
                 DepCol.prefWidthProperty().bind(table.widthProperty().divide(sizeParam ));
-                DepCol.setCellValueFactory(new PropertyValueFactory<Stagiaire,String>("departement"));
+                DepCol.setCellValueFactory(new PropertyValueFactory<NoeudBinaire,String>("departement"));
                           
-        TableColumn<Stagiaire, String> promoNameCol//
-                = new TableColumn<Stagiaire, String>("Promotion");
+        TableColumn<NoeudBinaire, String> promoNameCol//
+                = new TableColumn<NoeudBinaire, String>("Promotion");
                 promoNameCol.prefWidthProperty().bind(table.widthProperty().divide(sizeParam ));               
-                promoNameCol.setCellValueFactory(new PropertyValueFactory<Stagiaire,String>("promotion"));
+                promoNameCol.setCellValueFactory(new PropertyValueFactory<NoeudBinaire,String>("promotion"));
                 
-        TableColumn<Stagiaire, Integer> YearCol//
-                = new TableColumn<Stagiaire, Integer>("Année");
+        TableColumn<NoeudBinaire, Integer> YearCol//
+                = new TableColumn<NoeudBinaire, Integer>("Année");
                 YearCol.prefWidthProperty().bind(table.widthProperty().divide(sizeParam ));
-                YearCol.setCellValueFactory(new PropertyValueFactory<Stagiaire,Integer>("annee"));    
+                YearCol.setCellValueFactory(new PropertyValueFactory<NoeudBinaire,Integer>("annee"));    
                 YearCol.setStyle(
                 		"-fx-border: 0;"
                 		+ "-fx-box-shadow: none;"
@@ -275,7 +292,7 @@ public class ListUserPan extends BorderPane {
                
 
         table.getColumns().addAll(userlastNameCol,userNameCol, DepCol, promoNameCol,YearCol); 
-    	table.setItems(datas);
+    	table.setItems(obsListeStagiaires);
     	
     	
      	
@@ -290,16 +307,16 @@ public class ListUserPan extends BorderPane {
         
     	table.setOnMouseClicked(event -> {
     	    if (event.getClickCount() == 1) { // Clic simple
-    	        Stagiaire stagiaire = table.getSelectionModel().getSelectedItem();
+    	        NoeudBinaire stagiaire = table.getSelectionModel().getSelectedItem();
     	        if (stagiaire != null) {
     	        	
     	        	
     	        	root.afficher( 
-    	        			stagiaire.getNom(),
-    	        			stagiaire.getPrenom(),
-    	        			stagiaire.getDepartement(),
-    	        			stagiaire.getPromotion(),
-    	        			stagiaire.getAnnee()
+    	        			stagiaire.getStagiaire().getNom(),
+    	        			stagiaire.getStagiaire().getPrenom(),
+    	        			stagiaire.getStagiaire().getDepartement(),
+    	        			stagiaire.getStagiaire().getPromotion(),
+    	        			stagiaire.getStagiaire().getAnnee()
     	        			);
     	        	 scaleTransition.setToX(40);
     	        	scaleTransition.play();
@@ -330,7 +347,12 @@ public class ListUserPan extends BorderPane {
 			@Override
 		public void handle(ActionEvent arg0) {
 		        
-		ListUserPan secondPan = new ListUserPan();
+		try {
+			ListUserPan secondPan = new ListUserPan();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		Stage stage = (Stage) ListUserPan.this.getScene().getWindow(); 
 		stage.setScene(getScene());

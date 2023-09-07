@@ -21,6 +21,9 @@ public static void main(String[] args) throws IOException {
 		arbreAnnuaire.testLecture();
 		
 		
+		System.out.println(arbreAnnuaire.getPremierNoeud().fichierBinVersArrayList(arbreAnnuaire.getRaf()));
+		
+		
 	}
 	
 	
