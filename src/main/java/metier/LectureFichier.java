@@ -8,8 +8,6 @@ import model.Stagiaire;
 
 public class LectureFichier {
 
-	//public static void main(String[] args) throws IOException {
-
 		String nom = "";
 		String prenom= "";
 		String dpt = "";
@@ -19,11 +17,11 @@ public class LectureFichier {
 		int compteurStagiaire = 0;
 
 		//On cree un arbre binaire vide qui sera notre annuaire
-		ArbreBinaire arbreAnnuaire = new ArbreBinaire() ; 
+		//ArbreBinaire arbreAnnuaire = new ArbreBinaire() ; 
 		
 		BufferedReader reader;
 		
-		public ArbreBinaire lectureFichierDon()
+		public void lectureFichierDon(ArbreBinaire arbreAnnuaire)
 		{
 
 		try {
@@ -61,19 +59,15 @@ public class LectureFichier {
 
 					Stagiaire stagiaire = new Stagiaire(nom, prenom, dpt, promo, annee);
 
-
 					// 3)  Reset les variables et le compteur
 					compteurLigne = 0;
 					compteurStagiaire += 1;
 
-					//Ajouter le stagiaire en tant que noeud dans notre arbre annuaire : 
-					arbreAnnuaire.ajouterNoeudDansArbre(stagiaire);
+					//Ajouter le stagiaire en tant que noeud dans notre arbre annuaire 
+					//et ecrire le fichier bin
+					arbreAnnuaire.ajouterStagiaireDeFichierDonAFichierBin(stagiaire);
 
 				}
-
-				// si c'est une étoile ou compteur = 6, alors :
-				// 1)  Stocker les variables dans un objet Stagiaire (constructeur)
-				// 2)  Méthode ajouterNoeud(Stagiaire)
 
 				compteurLigne += 1;
 				line = reader.readLine();
@@ -88,11 +82,6 @@ public class LectureFichier {
 
 
 		}
-		return arbreAnnuaire;
-		}
-//		System.out.println("Nombre de stagiaires : " + compteurStagiaire);
-//		System.out.println(arbreAnnuaire); //test affichage arbre lu en GND
-//		System.out.println("Taille de l'arbre : " + arbreAnnuaire.tailleArbre());
-//		System.out.println("Hauteur de l'arbre : " + arbreAnnuaire.hauteurArbre());
+		
 	}
-
+}

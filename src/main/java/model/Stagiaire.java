@@ -65,8 +65,11 @@ public class Stagiaire {
 		this.annee = annee;
 	}
 	
-	
-	
+	@Override
+	public String toString() {
+		return "Stagiaire [nom=" + nom + ", prenom=" + prenom + ", departement=" + departement + ", promotion="
+				+ promotion + ", annee=" + annee + "]";
+	}
 	
 	
 
