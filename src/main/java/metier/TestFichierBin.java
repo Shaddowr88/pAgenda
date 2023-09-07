@@ -14,14 +14,21 @@ public static void main(String[] args) throws IOException {
 		
 		//Attention, supprimer fichier bin des tests precedents avant de lancer ce main
 
-		ArbreBinaire arbreAnnuaire = new ArbreBinaire() ;
+		//ArbreBinaire arbreAnnuaire = new ArbreBinaire() ;
 		
-		lectureFichier.lectureFichierDon(arbreAnnuaire);
+		//lectureFichier.lectureFichierDon(arbreAnnuaire);
 		
-		arbreAnnuaire.testLecture();
+		//arbreAnnuaire.testLecture();
 		
 		
-		System.out.println(arbreAnnuaire.getPremierNoeud().fichierBinVersArrayList(arbreAnnuaire.getRaf()));
+		//System.out.println(arbreAnnuaire.getPremierNoeud().fichierBinVersArrayList(arbreAnnuaire.getRaf()));
+	
+	
+	
+		System.out.println(lectureFichier.verifierSiFichierBinExiste());
+		
+		
+		
 		
 		
 	}
