@@ -1,6 +1,7 @@
 package model;
 import java.io.IOException;
 import java.io.RandomAccessFile;
+import java.util.ArrayList;
 
 
 public class NoeudBinaire {
@@ -9,6 +10,9 @@ public class NoeudBinaire {
 	private Stagiaire stagiaire;
 	private int filsGauche;
 	private int filsDroit;
+	
+	
+	private static boolean estDejaPasse = false;
 	
 	//constantes pour le fichier binaire
 	public final static int TAILLE_MAX_FILS = 4 ; 
@@ -102,7 +106,7 @@ public class NoeudBinaire {
 			if (filsDroit == -1 )
 			{
 				//je remonte mon curseur de - 4
-				raf.seek((raf.getFilePointer() - TAILLE_MAX_NOEUD));
+				raf.seek((raf.getFilePointer() - TAILLE_MAX_FILS));
 				//j'écris l'index du fils cad du stagiaire
 				raf.writeInt((int)raf.length()/TAILLE_MAX_NOEUD);
 				//j'écris le nouveau noeud 
@@ -271,6 +275,7 @@ public class NoeudBinaire {
 			
 			for ( int i = promoStagiaire.length() ; i < Stagiaire.TAILLE_MAX_PROMO ; i++ )
 			{
+				//On ajoute des espaces au nom si le nom est en dessous de la taille max
 				promoLong += " " ;
 			}
 		}
@@ -281,5 +286,105 @@ public class NoeudBinaire {
 		
 		return promoLong ;
 	}
+	
+	//Methode pour envoyer les informations du fichier binaire vers une arrayList transposable vers l'observableList (front)
+	public ArrayList<NoeudBinaire> fichierBinVersArrayList(RandomAccessFile raf) throws IOException 
+	{
+		//Je cree une nouvelle Arraylist de Noeud Binaires
+		ArrayList<NoeudBinaire> listeAffichageFichierBin = new ArrayList<NoeudBinaire>();
+		
+		// Si c'est la première fois que la méthode se lance, on remet le curseur à 0 dans le fichier binaire
+		if (estDejaPasse == false)
+		{
+			raf.seek(0);	
+			estDejaPasse = true;
+			
+		}
+		//Je cree un nouveau noeud binaire temporaire pour stocker les finroamtions du noeud courant.
+		NoeudBinaire noeudCourant = new NoeudBinaire();	
+		//j'utilise la méthode LireNoeud pour traduire les informations du noeud, du binaire, vers le noeud courant provisoire.
+		noeudCourant = lireNoeudFichierBinVersObjetNoeudBinaire(raf);
+		
+		//maintenant, il faut lire les fils gauche pour récupérer les noeuds par ordre alphabétique.
+		//regle de lecture en parcours infixe GND -> ordre alphabetique
+		if (noeudCourant.filsGauche !=-1)
+		{
+			//Je place le curseur au début du noeud filsGauche grâce à l'index récupéré sur le noeud courant
+			raf.seek(TAILLE_MAX_NOEUD * noeudCourant.filsGauche);
+			//Je cree un noeud temporaire qui va stocker les informations du filsGauche
+			NoeudBinaire noeudFilsGauche = new NoeudBinaire();
+			//Je lis et stocke les informations du fils Gauche
+			noeudFilsGauche = lireNoeudFichierBinVersObjetNoeudBinaire(raf);
+			//Je replace le curseur au début du noeud fils gauche.
+			raf.seek(TAILLE_MAX_NOEUD * noeudCourant.filsGauche);
+			//J'ajoute le noeud fils gauche récupéré à l'arrayList et initie la récursivité pour les fils Gauches du Noeud fils Gauche.
+			listeAffichageFichierBin.addAll(noeudFilsGauche.fichierBinVersArrayList(raf));
+			
+		}
+		
+		//Selon le parcours GND, j'ajoute maintenant le noeud courant à l'arrayList.
+		listeAffichageFichierBin.add(noeudCourant) ; //N
+		
+		//Puis je refais la même chose pour les fils Droits.
+		if (noeudCourant.filsDroit != -1)
+		{
+		
+			raf.seek(TAILLE_MAX_NOEUD* noeudCourant.filsDroit); //D
+			NoeudBinaire noeudFilsDroit = new NoeudBinaire();
+			noeudFilsDroit = lireNoeudFichierBinVersObjetNoeudBinaire(raf);
+			raf.seek(TAILLE_MAX_NOEUD* noeudCourant.filsDroit);
+			listeAffichageFichierBin.addAll(noeudFilsDroit.fichierBinVersArrayList(raf));
+			
+			
+		}
+		return listeAffichageFichierBin;
+	}
+	
+	/*public int taille() 
+	{
+		int resultat = 0 ; 
+		
+		//regle parcours infixe GND
+		if (this.filsGauche != null)
+		{
+			resultat += this.filsGauche.taille() ; //G
+		}
+		
+		resultat += 1 ; //N
+		
+		if (this.filsDroit != null)
+		{
+			resultat += this.filsDroit.taille() ; //D
+		}
+		
+		return resultat;
+	}
+	
+	
+	
+	public int hauteur()
+	{
+		//je suis une feuille -> cas de terminaison
+		if (this.filsGauche == null && this.filsDroit == null)
+		{
+			return 0 ;
+		}
+		//je n'ai qu'un fils gauche
+		else if (filsDroit == null && this.filsGauche != null)
+		{
+			return 1 + this.filsGauche.hauteur() ;
+		}
+		//je n'ai qu'un fils droit
+		else if (filsGauche == null && this.filsDroit != null)
+		{
+			return 1 + this.filsDroit.hauteur() ;
+		}
+		//j'ai deux fils, je garde le maximum entre les deux
+		else
+		{
+			return 1 + Math.max(this.filsGauche.hauteur() , this.filsDroit.hauteur()); 
+		}
+	}*/
+	
 
 }
