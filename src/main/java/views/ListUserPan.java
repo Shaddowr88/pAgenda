@@ -59,11 +59,7 @@ public class ListUserPan extends BorderPane {
 		ArbreBinaire arbreAnnuaire = new ArbreBinaire() ;
 		
 		arbreAnnuaire.lectureFichierDon(arbreAnnuaire);
-		
-//		ArrayList<NoeudBinaire> listeStagiaires = new ArrayList<NoeudBinaire>();
-//		listeStagiaires = arbreAnnuaire.getPremierNoeud().fichierBinVersArrayList(arbreAnnuaire.getRaf());
-//		
-		
+
 		ArrayList<NoeudBinaire> listeStagiaires = new ArrayList<NoeudBinaire>();
 		NoeudBinaire noeudVersArrayList = new NoeudBinaire();
 		noeudVersArrayList = noeudVersArrayList.lireNoeudFichierBinVersObjetNoeudBinaire(arbreAnnuaire.getRaf());
@@ -72,37 +68,6 @@ public class ListUserPan extends BorderPane {
 		obsListeStagiaires.setAll(listeStagiaires);
 		//arbreAnnuaire.testLecture();
 		
-		
- 
- //ArbreBinaire stagiaires = new ArbreBinaire(new Noeud(new Stagiaire("Doe", "John", "65", "ATL200", 1985)));
-
-	/*stagiaires.ajouterNoeudDansArbre(new Stagiaire("Smith", "Alice", "93", "AOB L200", 2000));
-	stagiaires.ajouterNoeudDansArbre (new Stagiaire("Johnson", "Bob", "95", "ATL 200", 2500));
-	stagiaires.ajouterNoeudDansArbre(new Stagiaire("Doe", "Eva", "60", "Zalt 200", 542));
-	stagiaires.ajouterNoeudDansArbre(new Stagiaire("AUGEREAU","Kevin"," 76", "AI 78", 2010));
-	stagiaires.ajouterNoeudDansArbre(new Stagiaire("AKHIAD","Brahim", "92", "AI 60", 2003));
-	stagiaires.ajouterNoeudDansArbre(new Stagiaire("BOUAMAMA","Yahya", "93", "AROBAS", 2008));
-	stagiaires.ajouterNoeudDansArbre(new Stagiaire("BOUCHET","Laurent", "91", "ET 34847", 1998));
-	stagiaires.ajouterNoeudDansArbre(new Stagiaire("CHAVENEAU","Kim Anh", "92", "ATOD 2", 2014));
-	stagiaires.ajouterNoeudDansArbre(new Stagiaire("CHONE","Martin", "92", "ATOD 24 cp", 2015));
-	stagiaires.ajouterNoeudDansArbre(new Stagiaire("GARIJO","Rosie", "79", "AI 79", 2011));
-	stagiaires.ajouterNoeudDansArbre(new Stagiaire("LACROIX","Pascale", "91", "BOBI 5", 2008));
-	stagiaires.ajouterNoeudDansArbre(new Stagiaire("LECLERC","Dominique", "75", "ATOD 12", 2011));
-	stagiaires.ajouterNoeudDansArbre(new Stagiaire("NOUAR","Adel", "94", "ATOD 5", 2009));
-	stagiaires.ajouterNoeudDansArbre(new Stagiaire("POTIN","Thomas", "75", "ATOD 21", 2014));
-	stagiaires.ajouterNoeudDansArbre(new Stagiaire("PUCELLE","David", "75", "ERE 234", 2001));
-	stagiaires.ajouterNoeudDansArbre(new Stagiaire("ROIGNANT","Pierre-Yves", "77", "ATOD 26 cp", 2015));
-	stagiaires.ajouterNoeudDansArbre(new Stagiaire("ROIGNANT","Pierre-Yves", "93", "AI 95", 2015));
-	stagiaires.ajouterNoeudDansArbre(new Stagiaire("UNG","Jet-Ming", "75", "ATOD 16 cp", 2012));
-	*/
-	// String[] finds = {"Johnson"};
-	
-	
-	/* for (Stagiaire stagiaire : arrayList) {
-         System.out.println(stagiaire.nom + " " + stagiaire.prenom + " " + stagiaire.annee);
-     }*/
-         
-
 		
     	Label lblBottom = new Label(" ");
     	Label lblRight = new Label (" ");
@@ -116,8 +81,7 @@ public class ListUserPan extends BorderPane {
         
         Label el = new Label("ici");
         el.setPrefWidth(0);
-        
-        
+
         
  /**
   * Subs
@@ -269,6 +233,7 @@ public class ListUserPan extends BorderPane {
         		= new TableColumn<NoeudBinaire, String>("Nom");
         		userlastNameCol.prefWidthProperty().bind(table.widthProperty().divide(sizeParam ));
         		userlastNameCol.setCellValueFactory(new PropertyValueFactory<NoeudBinaire,String>("stagiaire"));
+
         		System.out.println(new PropertyValueFactory<NoeudBinaire,String>("stagiaire"));
 
         TableColumn<NoeudBinaire, String> userNameCol //
