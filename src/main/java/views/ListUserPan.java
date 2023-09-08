@@ -5,7 +5,6 @@ import java.util.ArrayList;
 
 import java.util.List;
 
-import metier.LectureFichier;
 import metier.Recherche;
 import javafx.animation.ScaleTransition;
 import javafx.animation.TranslateTransition;
@@ -33,8 +32,8 @@ import javafx.scene.transform.Scale;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import model.ArbreBinaire;
-import model.Noeud;
 import model.NoeudBinaire;
+import model.Stagiaire;
 import model.NoeudBinaire;
 
 public class ListUserPan extends BorderPane {
@@ -52,7 +51,7 @@ public class ListUserPan extends BorderPane {
 		label.setTextFill(Color.WHITE);
 		getChildren().add(label);
 	
-		LectureFichier lectureFichier = new LectureFichier() ;
+		//LectureFichier lectureFichier = new LectureFichier() ;
 		
 		//Attention, supprimer fichier bin des tests precedents avant de lancer ce main
 
@@ -60,11 +59,11 @@ public class ListUserPan extends BorderPane {
 		
 		arbreAnnuaire.lectureFichierDon(arbreAnnuaire);
 
-		ArrayList<NoeudBinaire> listeStagiaires = new ArrayList<NoeudBinaire>();
+		ArrayList<Stagiaire> listeStagiaires = new ArrayList<Stagiaire>();
 		NoeudBinaire noeudVersArrayList = new NoeudBinaire();
 		noeudVersArrayList = noeudVersArrayList.lireNoeudFichierBinVersObjetNoeudBinaire(arbreAnnuaire.getRaf());
 		listeStagiaires = noeudVersArrayList.fichierBinVersArrayList(arbreAnnuaire.getRaf());
-		ObservableList<NoeudBinaire> obsListeStagiaires= FXCollections.observableArrayList(listeStagiaires);
+		ObservableList<Stagiaire> obsListeStagiaires= FXCollections.observableArrayList(listeStagiaires);
 		obsListeStagiaires.setAll(listeStagiaires);
 		//arbreAnnuaire.testLecture();
 		
@@ -227,34 +226,32 @@ public class ListUserPan extends BorderPane {
  * Tableau
  */            
       
-        TableView<NoeudBinaire> table = new TableView<NoeudBinaire>();
+        TableView<Stagiaire> table = new TableView<Stagiaire>();
 
-        TableColumn<NoeudBinaire, String> userlastNameCol //
-        		= new TableColumn<NoeudBinaire, String>("Nom");
+        TableColumn<Stagiaire, String> userlastNameCol //
+        		= new TableColumn<Stagiaire, String>("Nom");
         		userlastNameCol.prefWidthProperty().bind(table.widthProperty().divide(sizeParam ));
-        		userlastNameCol.setCellValueFactory(new PropertyValueFactory<NoeudBinaire,String>("stagiaire"));
+        		userlastNameCol.setCellValueFactory(new PropertyValueFactory<Stagiaire,String>("nom"));
 
-        		System.out.println(new PropertyValueFactory<NoeudBinaire,String>("stagiaire"));
-
-        TableColumn<NoeudBinaire, String> userNameCol //
-        		= new TableColumn<NoeudBinaire, String>("Prénom");
+        TableColumn<Stagiaire, String> userNameCol //
+        		= new TableColumn<Stagiaire, String>("Prénom");
         		userNameCol.prefWidthProperty().bind(table.widthProperty().divide(sizeParam ));
-        		userNameCol.setCellValueFactory(new PropertyValueFactory<NoeudBinaire,String>("prenom"));
+        		userNameCol.setCellValueFactory(new PropertyValueFactory<Stagiaire,String>("prenom"));
         
-        TableColumn<NoeudBinaire, String> DepCol//
-                = new TableColumn<NoeudBinaire, String>("Département");
+        TableColumn<Stagiaire, String> DepCol//
+                = new TableColumn<Stagiaire, String>("Département");
                 DepCol.prefWidthProperty().bind(table.widthProperty().divide(sizeParam ));
-                DepCol.setCellValueFactory(new PropertyValueFactory<NoeudBinaire,String>("departement"));
+                DepCol.setCellValueFactory(new PropertyValueFactory<Stagiaire,String>("departement"));
                           
-        TableColumn<NoeudBinaire, String> promoNameCol//
-                = new TableColumn<NoeudBinaire, String>("Promotion");
+        TableColumn<Stagiaire, String> promoNameCol//
+                = new TableColumn<Stagiaire, String>("Promotion");
                 promoNameCol.prefWidthProperty().bind(table.widthProperty().divide(sizeParam ));               
-                promoNameCol.setCellValueFactory(new PropertyValueFactory<NoeudBinaire,String>("promotion"));
+                promoNameCol.setCellValueFactory(new PropertyValueFactory<Stagiaire,String>("promotion"));
                 
-        TableColumn<NoeudBinaire, Integer> YearCol//
-                = new TableColumn<NoeudBinaire, Integer>("Année");
+        TableColumn<Stagiaire, Integer> YearCol//
+                = new TableColumn<Stagiaire, Integer>("Année");
                 YearCol.prefWidthProperty().bind(table.widthProperty().divide(sizeParam ));
-                YearCol.setCellValueFactory(new PropertyValueFactory<NoeudBinaire,Integer>("annee"));    
+                YearCol.setCellValueFactory(new PropertyValueFactory<Stagiaire,Integer>("annee"));    
                 YearCol.setStyle(
                 		"-fx-border: 0;"
                 		+ "-fx-box-shadow: none;"
@@ -280,16 +277,16 @@ public class ListUserPan extends BorderPane {
         
     	table.setOnMouseClicked(event -> {
     	    if (event.getClickCount() == 1) { // Clic simple
-    	        NoeudBinaire stagiaire = table.getSelectionModel().getSelectedItem();
+    	        Stagiaire stagiaire = table.getSelectionModel().getSelectedItem();
     	        if (stagiaire != null) {
     	        	
     	        	
     	        	root.afficher( 
-    	        			stagiaire.getStagiaire().getNom(),
-    	        			stagiaire.getStagiaire().getPrenom(),
-    	        			stagiaire.getStagiaire().getDepartement(),
-    	        			stagiaire.getStagiaire().getPromotion(),
-    	        			stagiaire.getStagiaire().getAnnee()
+    	        			stagiaire.getNom(),
+    	        			stagiaire.getPrenom(),
+    	        			stagiaire.getDepartement(),
+    	        			stagiaire.getPromotion(),
+    	        			stagiaire.getAnnee()
     	        			);
     	        	 scaleTransition.setToX(40);
     	        	scaleTransition.play();

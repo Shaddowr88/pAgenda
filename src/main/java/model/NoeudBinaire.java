@@ -288,10 +288,10 @@ public class NoeudBinaire {
 	}
 	
 	//Methode pour envoyer les informations du fichier binaire vers une arrayList transposable vers l'observableList (front)
-	public ArrayList<NoeudBinaire> fichierBinVersArrayList(RandomAccessFile raf) throws IOException 
+	public ArrayList<Stagiaire> fichierBinVersArrayList(RandomAccessFile raf) throws IOException 
 	{
 		//Je cree une nouvelle Arraylist de Noeud Binaires
-		ArrayList<NoeudBinaire> listeAffichageFichierBin = new ArrayList<NoeudBinaire>();
+		ArrayList<Stagiaire> listeAffichageFichierBin = new ArrayList<Stagiaire>();
 		
 		// Si c'est la première fois que la méthode se lance, on remet le curseur à 0 dans le fichier binaire
 		if (estDejaPasse == false)
@@ -300,7 +300,7 @@ public class NoeudBinaire {
 			estDejaPasse = true;
 			
 		}
-		//Je cree un nouveau noeud binaire temporaire pour stocker les finroamtions du noeud courant.
+		//Je cree un nouveau noeud binaire temporaire pour stocker les informations du noeud courant.
 		NoeudBinaire noeudCourant = new NoeudBinaire();	
 		//j'utilise la méthode LireNoeud pour traduire les informations du noeud, du binaire, vers le noeud courant provisoire.
 		noeudCourant = lireNoeudFichierBinVersObjetNoeudBinaire(raf);
@@ -323,7 +323,7 @@ public class NoeudBinaire {
 		}
 		
 		//Selon le parcours GND, j'ajoute maintenant le noeud courant à l'arrayList.
-		listeAffichageFichierBin.add(noeudCourant) ; //N
+		listeAffichageFichierBin.add(noeudCourant.getStagiaire()) ; //N
 		
 		//Puis je refais la même chose pour les fils Droits.
 		if (noeudCourant.filsDroit != -1)
@@ -339,6 +339,9 @@ public class NoeudBinaire {
 		}
 		return listeAffichageFichierBin;
 	}
+	
+	
+	
 	
 	/*public int taille() 
 	{
