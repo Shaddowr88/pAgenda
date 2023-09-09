@@ -1,6 +1,7 @@
 package views;
 
 import java.io.IOException;
+import java.io.RandomAccessFile;
 import java.util.ArrayList;
 
 import java.util.List;
@@ -43,6 +44,10 @@ public class ListUserPan extends BorderPane {
 	
 	private Label label = new Label(" liste d'utilisateur");
 	private int sizeParam = 5;
+	
+	ArbreBinaire arbreAnnuaire = new ArbreBinaire();
+	public ArrayList<Stagiaire> lUser;
+	
 	public ListUserPan() throws IOException {
 		super();
 		setPrefSize(400, 200);
@@ -63,10 +68,12 @@ public class ListUserPan extends BorderPane {
 		NoeudBinaire noeudVersArrayList = new NoeudBinaire();
 		noeudVersArrayList = noeudVersArrayList.lireNoeudFichierBinVersObjetNoeudBinaire(arbreAnnuaire.getRaf());
 		listeStagiaires = noeudVersArrayList.fichierBinVersArrayList(arbreAnnuaire.getRaf());
-		ObservableList<Stagiaire> obsListeStagiaires= FXCollections.observableArrayList(listeStagiaires);
-		obsListeStagiaires.setAll(listeStagiaires);
-		//arbreAnnuaire.testLecture();
 		
+		ObservableList<Stagiaire> obsListeStagiaires= FXCollections.observableArrayList(listeStagiaires);
+		
+		lUser =listeStagiaires;
+		
+		obsListeStagiaires.setAll(lUser);
 		
     	Label lblBottom = new Label(" ");
     	Label lblRight = new Label (" ");
@@ -80,8 +87,7 @@ public class ListUserPan extends BorderPane {
         
         Label el = new Label("ici");
         el.setPrefWidth(0);
-
-        
+  
  /**
   * Subs
   */    
@@ -139,22 +145,30 @@ public class ListUserPan extends BorderPane {
         		+ "-fx-box-shadow: none;"
         		+ "-fx-background-color: white;"
         		);       
- 
         
+        searchField.setOnMouseClicked(event -> {
+            if (event.getClickCount() == 1) {
+            	 searchField.clear();
+            }
+            obsListeStagiaires.setAll(lUser);
+        });
+ 
         searchField.setOnKeyPressed(e ->{
         	
         	ArrayList<String>  formatResearch2= new ArrayList<>();
         	
         	if (e.getCode()== KeyCode.ENTER) {
-        		
-        		String search = searchField.getText();
-        		String[] terms = search.split(" ");
 
+        		String search = searchField.getText();       		
+        		
+        		String[] terms = search.split(" ");
+        		 //System.out.println(search);
         		StringBuilder formatResearch = new StringBuilder();
 
                 for (String term : terms) {
                 	
                     if (formatResearch.length() > 0) {
+                    	System.out.println(term);
                     	
                     	formatResearch2.add(term);
                     	formatResearch.append(",");
@@ -169,38 +183,37 @@ public class ListUserPan extends BorderPane {
                     }
                  }
                 
-               // System.out.println(formatResearch2.toString());
-                
                 ArrayList<String> finds = formatResearch2;
-                //arrayList = stagiaires.convertirEnArrayList();
-                
-                //System.out.println(stringArray.toString());
                 Recherche r = new Recherche();
                 
-                // TO DO : fonction recherche
-    	        //List<NoeudBinaire> resultList = r.search(arbreAnnuaire,finds);
-
-    	       /* if (!resultList.isEmpty()) {
-    	        	
-    	        	String response = resultList.size() >= 2 ? "Contacts trouvés":"Contact trouvé";
-    	        	System.out.println(response);
-    	        	           
-    	            for (Stagiaire stagiaire : resultList) {
-    	                System.out.println(
-    	                		"Nom: " + stagiaire.nom 
-    	                		+ ", Prénom: "+ stagiaire.prenom+
-    	                		", Promotion: "+ stagiaire.promotion +
-    	                		", Département: "+ stagiaire.departement +
-    	                		", Année: " + stagiaire.annee);
-    	            }
-    	        } else {
-    	            //System.out.println("Aucun élément trouvé");
+                arbreAnnuaire.lectureFichierDon(arbreAnnuaire);
+            	
+            
+    	       List<Stagiaire> resultList = null;
+    	       try {
+    	    	   resultList = r.search(arbreAnnuaire.getRaf(),finds);
+    	    	   } catch (IOException e1) {
+    	    		   e1.printStackTrace();
+    	    		   }
+    	       if (!resultList.isEmpty()) {
+    	    	   String response = resultList.size() >= 2 ? "Contacts trouvés":"Contact trouvé";
+    	    	   System.out.println(response);
+    	    	   ArrayList<Stagiaire> listeStagiairesrecherche = new ArrayList<Stagiaire>();
+    	    	   for (Stagiaire stagiaire : resultList) {
+    	    		   listeStagiairesrecherche.add(stagiaire);
+    	    		   }
+    	    	   obsListeStagiaires.setAll(listeStagiairesrecherche );
+    	    	   } else 
+    	    	   {
     	            searchField.setText("Aucun élément trouvé");
-    	        }*/
-        		} 	
+    	             
+    	             return;
+    	            	
+    	            }
+    	       } 	
         	}
         ); 
-
+            
 /**
  * bouton Login
  */  
@@ -259,22 +272,14 @@ public class ListUserPan extends BorderPane {
                 		+ "-fx-font-size:1em;"
                 		);
                 
-               
-
         table.getColumns().addAll(userlastNameCol,userNameCol, DepCol, promoNameCol,YearCol); 
     	table.setItems(obsListeStagiaires);
-    	
-    	
      	
     	Card root = new Card();
     	root.setPrefWidth(1);
     	
    	 	TranslateTransition scaleTransition = new TranslateTransition(Duration.seconds(1),root); 
    	 	
-   	   
-     
-   	
-        
     	table.setOnMouseClicked(event -> {
     	    if (event.getClickCount() == 1) { // Clic simple
     	        Stagiaire stagiaire = table.getSelectionModel().getSelectedItem();
@@ -291,10 +296,6 @@ public class ListUserPan extends BorderPane {
     	        	 scaleTransition.setToX(40);
     	        	scaleTransition.play();
     	        	root.setPrefWidth(400);
-    	        	//scaleTransition.setByX(0); // Augmente le facteur d'échelle X
-    	            //scaleTransition.setByY(0);
-    	        // System.out.println("Stagiaire sélectionné : " + stagiaire.getNom() + " " + stagiaire.getPrenom());
-
     	            sizeParam = 1;
     	            
     	        }
@@ -303,10 +304,6 @@ public class ListUserPan extends BorderPane {
     	
 /**
  * Sections template
- * 
- * 
- * 		
- * 
  */  
         setTop(head);
         setCenter(table);
@@ -337,6 +334,8 @@ public class ListUserPan extends BorderPane {
 	public void setLabel(Label label) {
 		this.label = label;
 	}
+	
+	
 	
 	
 }
