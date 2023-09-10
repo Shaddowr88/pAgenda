@@ -1,45 +1,58 @@
 package views;
 
+import java.util.List;
+
+import cda26.projet1.agenda.App;
 import javafx.animation.ScaleTransition;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.Labeled;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.scene.transform.Rotate;
 import javafx.scene.transform.Scale;
 import javafx.util.Duration;
+import model.Personnel;
 
 public class Card extends VBox {
 	
-	String Title;
+	String Title;	
 	
 	private Label nom;
 	private Label premon;
 	private Label annee;
 	private Label depart;
 	private Label promo;
+	
 
-	
-	
-	
-	
-	
 	public Card () {
 		
-		
-		
-		
-		//this.Title = t;
-		
+		Boolean Log = LoginView.isAdmin;
+		BoutonSupprimer btns=new BoutonSupprimer();
+
 		this.nom = new Label("");
 		this.premon = new Label("");
 		this.annee = new Label("");
 		this.depart = new Label("");
 		this.promo = new Label("");
 		
+		btns.getTransforms().add(new Rotate(45, 50, 45));
 
+		this.getChildren().addAll(this.nom, this.premon,this.annee,this.depart, this.promo,btns);
 		
-		this.getChildren().addAll(this.nom, this.premon,this.annee,this.depart, this.promo);
+		 System.out.println(Log);
+		this.setStyle("-fx-background-color:cyan");
+		btns.setOnAction(new EventHandler<ActionEvent>() {
 		
-		
+			@Override
+            public void handle(ActionEvent event) {
+                // Réponse lorsque le bouton est cliqué
+                System.out.println("ajouter");
+            }
+		});
+
 	}
 
 
@@ -66,6 +79,10 @@ public class Card extends VBox {
 		 
 		 
 	 }
+
+
+
+
 
 
 

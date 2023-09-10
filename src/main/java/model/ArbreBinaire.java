@@ -21,6 +21,7 @@ public class ArbreBinaire {
 	private RandomAccessFile raf = null ;
 	static boolean premierNoeudCreeOuNon = false ;
 	private final String BIN_PATH = "src/Files/annuaire.bin";
+	private final String DON_PATH = ".\\src\\Files\\STAGIAIRESTEST.DON";
 	private static int calculIndex = 0 ; 
 	private static int indexPere = 0 ;
 	private static int indexFils = 0 ;
@@ -125,7 +126,7 @@ public class ArbreBinaire {
 			else
 			{
 				System.out.println("Je créé le fichier");
-				reader = new BufferedReader(new FileReader(".\\src\\Files\\STAGIAIRESTEST.DON"));
+				reader = new BufferedReader(new FileReader(DON_PATH ));
 
 				String line = reader.readLine();
 

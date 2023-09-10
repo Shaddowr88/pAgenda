@@ -7,7 +7,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import metier.Recherche;
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
 import javafx.animation.ScaleTransition;
+import javafx.animation.Timeline;
 import javafx.animation.TranslateTransition;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -34,6 +37,7 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import model.ArbreBinaire;
 import model.NoeudBinaire;
+import model.Personnel;
 import model.Stagiaire;
 import model.NoeudBinaire;
 
@@ -44,12 +48,20 @@ public class ListUserPan extends BorderPane {
 	
 	private Label label = new Label(" liste d'utilisateur");
 	private int sizeParam = 5;
-	
-	ArbreBinaire arbreAnnuaire = new ArbreBinaire();
 	public ArrayList<Stagiaire> lUser;
+	ArbreBinaire arbreAnnuaire = new ArbreBinaire();
+	
+//	private Personnel isAdmin;
+	private Pane screen;
+	public static boolean isAdmin;
+	
+	
+
+	
 	
 	public ListUserPan() throws IOException {
-		super();
+		super();	
+		this.isAdmin=false;
 		setPrefSize(400, 200);
 		//setAlignment(Pos.CENTER);
 		setStyle("-fx-background-color:white");
@@ -62,10 +74,12 @@ public class ListUserPan extends BorderPane {
 
 		ArbreBinaire arbreAnnuaire = new ArbreBinaire() ;
 		
+		
 		arbreAnnuaire.lectureFichierDon(arbreAnnuaire);
 
 		ArrayList<Stagiaire> listeStagiaires = new ArrayList<Stagiaire>();
 		NoeudBinaire noeudVersArrayList = new NoeudBinaire();
+		arbreAnnuaire.getRaf().seek(0);
 		noeudVersArrayList = noeudVersArrayList.lireNoeudFichierBinVersObjetNoeudBinaire(arbreAnnuaire.getRaf());
 		listeStagiaires = noeudVersArrayList.fichierBinVersArrayList(arbreAnnuaire.getRaf());
 		
@@ -76,8 +90,6 @@ public class ListUserPan extends BorderPane {
 		obsListeStagiaires.setAll(lUser);
 		
     	Label lblBottom = new Label(" ");
-    	Label lblRight = new Label (" ");
-    	Label lblCenter = new Label(" ");
         
     	Pane topPannel = new Pane();
         topPannel.setPrefSize(800, 100);
@@ -206,9 +218,7 @@ public class ListUserPan extends BorderPane {
     	    	   } else 
     	    	   {
     	            searchField.setText("Aucun élément trouvé");
-    	             
-    	             return;
-    	            	
+    	             return;     	
     	            }
     	       } 	
         	}
@@ -218,6 +228,10 @@ public class ListUserPan extends BorderPane {
  * bouton Login
  */  
         
+       
+
+        // Démarrer la transition
+      
         Button btnLog = new Button("| Log |"); 
         btnLog.setStyle(
                 "-fx-background-radius: 5em; " +
@@ -226,6 +240,26 @@ public class ListUserPan extends BorderPane {
                 "-fx-max-width: 30px; " +
                 "-fx-max-height: 30px;"
         );
+        
+        
+        LoginView logCard= new LoginView();
+        
+        
+        btnLog.setOnMouseClicked(event -> {		
+    		Pane newContent = logCard;
+    		//logCard.setPrefWidth(400);
+    		setRight(newContent);
+    		
+    		 Duration duration = Duration.seconds(0.33);
+    	        KeyValue keyValue = new KeyValue(logCard.prefWidthProperty(), 400);
+    	        KeyFrame keyFrame = new KeyFrame(duration, keyValue);
+    	        Timeline timeline = new Timeline(keyFrame);
+    				
+    	        timeline.play();
+    	        
+    	  
+    	});
+    	
         
 /**
  * Contenaire du menu-parametres
@@ -275,39 +309,47 @@ public class ListUserPan extends BorderPane {
         table.getColumns().addAll(userlastNameCol,userNameCol, DepCol, promoNameCol,YearCol); 
     	table.setItems(obsListeStagiaires);
      	
-    	Card root = new Card();
-    	root.setPrefWidth(1);
+    	Card carteStagiaire = new Card();
+    	TranslateTransition scaleTransition = new TranslateTransition(Duration.seconds(1),carteStagiaire); 
+    	carteStagiaire.setPrefWidth(1);
+    	table.setOnMouseClicked(event -> {		
     	
-   	 	TranslateTransition scaleTransition = new TranslateTransition(Duration.seconds(1),root); 
-   	 	
-    	table.setOnMouseClicked(event -> {
-    	    if (event.getClickCount() == 1) { // Clic simple
-    	        Stagiaire stagiaire = table.getSelectionModel().getSelectedItem();
-    	        if (stagiaire != null) {
-    	        	
-    	        	
-    	        	root.afficher( 
+    		KeyValue keyValue = new KeyValue(carteStagiaire.prefWidthProperty(), 400);
+    		Duration duration = Duration.seconds(0.33);
+    		KeyFrame keyFrame = new KeyFrame(duration, keyValue);
+    	    Timeline timeline = new Timeline(keyFrame);
+    	   
+    	    if (event.getClickCount() == 1) { 
+    	    	Stagiaire stagiaire = table.getSelectionModel().getSelectedItem();
+    	        if (stagiaire != null) {  	
+    	        	carteStagiaire.afficher( 
     	        			stagiaire.getNom(),
     	        			stagiaire.getPrenom(),
     	        			stagiaire.getDepartement(),
     	        			stagiaire.getPromotion(),
     	        			stagiaire.getAnnee()
     	        			);
-    	        	 scaleTransition.setToX(40);
+    	        	Pane newContent = carteStagiaire;
+    	    		setRight(newContent);
+    	    		scaleTransition.setToX(40);
     	        	scaleTransition.play();
-    	        	root.setPrefWidth(400);
+    	        	timeline.play();
     	            sizeParam = 1;
-    	            
-    	        }
+    	            carteStagiaire.setPrefWidth(400); 
+    	        } 
     	    }
     	});
     	
 /**
  * Sections template
  */  
+    	
+    	
         setTop(head);
         setCenter(table);
-        setRight(root);
+        
+        setRight(screen);
+        
         setBottom(lblBottom);
 
 		btn.setOnAction(new EventHandler<ActionEvent>() { 
@@ -334,6 +376,15 @@ public class ListUserPan extends BorderPane {
 	public void setLabel(Label label) {
 		this.label = label;
 	}
+
+	public static boolean isAdmin() {
+		return isAdmin;
+	}
+
+	public static void setAdmin(boolean isAdmin2) {
+		ListUserPan.isAdmin = isAdmin;
+	}
+
 	
 	
 	

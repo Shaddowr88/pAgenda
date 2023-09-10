@@ -4,12 +4,15 @@ public class Personnel {
 	
 	public String login;
 	public String motDePasse;
+	public boolean isAdmin=false;
 	
 	
-	public Personnel(String login, String motDePasse) {
+	
+	public Personnel(String login, String motDePasse, Boolean admin) {
 		
 		this.login = login;
 		this.motDePasse = motDePasse;
+		this.isAdmin = admin;
 	}
 	
 	//Getters & Setters
@@ -24,6 +27,14 @@ public class Personnel {
 	}
 	public void setMotDePasse(String motDePasse) {
 		this.motDePasse = motDePasse;
+	}
+
+	public boolean isAdmin() {
+		return isAdmin;
+	}
+
+	public void setAdmin(boolean isAdmin) {
+		this.isAdmin = isAdmin;
 	}
 	
 	
