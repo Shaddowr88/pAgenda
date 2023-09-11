@@ -3,7 +3,6 @@ package views;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
@@ -104,8 +103,7 @@ public class ListS extends Pane {
 			KeyFrame keyFrame = new KeyFrame(duration, keyValue);
 		    Timeline timeline = new Timeline(keyFrame);
 
-	
-		    
+		
 	    if (newValue != null) {
 	            
 	        c.showDetails(newValue);
@@ -132,24 +130,4 @@ public class ListS extends Pane {
 	public TableView<Stagiaire> getListS() {
 	        return table;
 	    }
-	
-	
-	
-	
-	
-	public void filterTable(String search) {
-	    // Filtrez la liste des stagiaires en fonction de la recherche
-	    List<Stagiaire> filteredList = listeStagiaires.stream()
-	            .filter(stagiaire ->
-	                    stagiaire.getNom().toLowerCase().contains(search.toLowerCase()) ||
-	                    stagiaire.getPrenom().toLowerCase().contains(search.toLowerCase()) ||
-	                    stagiaire.getDepartement().toLowerCase().contains(search.toLowerCase()) ||
-	                    stagiaire.getPromotion().toLowerCase().contains(search.toLowerCase()) ||
-	                    String.valueOf(stagiaire.getAnnee()).contains(search.toLowerCase()))
-	            .collect(Collectors.toList());
-
-	    // Mettez à jour le contenu du tableau avec les résultats de la recherche
-	    ObservableList<Stagiaire> obsListeStagiaires = FXCollections.observableArrayList(filteredList);
-	    table.setItems(obsListeStagiaires);
-	}
 }

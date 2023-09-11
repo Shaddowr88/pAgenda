@@ -61,7 +61,7 @@ public class ListUserPan extends BorderPane {
 	
 	public ListUserPan() throws IOException {
 		super();	
-		this.isAdmin=false;
+		this.isAdmin=true;
 		setPrefSize(400, 200);
 		//setAlignment(Pos.CENTER);
 		setStyle("-fx-background-color:white");

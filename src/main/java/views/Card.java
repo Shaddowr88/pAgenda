@@ -104,7 +104,7 @@ public class Card extends VBox {
 	        Button deleteInfoStagiaire = new Button("poubelle");
 	        HBox Validate = new HBox();
      
-	       // System.out.println(" "+nameLabel + premonLabel +yearLabel+promotionLabel+nameDepartement );
+	      //  System.out.println(" "+nameLabel + premonLabel +yearLabel+promotionLabel+nameDepartement );
 	       // this.getChildren().addAll(nameLabel, premonLabel ,yearLabel,nameDepartement, promotionLabel);
 	        
 	         if (!(Log == true)) {
@@ -115,7 +115,8 @@ public class Card extends VBox {
 		 	            if (event.getClickCount() == 1) {
 		 	            	Validate.getChildren().addAll();
 		 	            	this.getChildren().clear();
-		 	            	this.getChildren().addAll(Validate);
+		 	            	//this.getChildren().addAll(Validate);
+		 	            	//this.getChildren().addAll(nameLabel, premonLabel ,yearLabel,nameDepartement, promotionLabel);
 		 	            }
 		 	        });
 	        	 
