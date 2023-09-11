@@ -109,14 +109,17 @@ public class Card extends VBox {
 	        
 	         if (!(Log == true)) {
 	        	 
-	        	 
+	        	 this.getChildren().clear();
+	        		 this.getChildren().addAll(nameLabel, premonLabel ,yearLabel,nameDepartement, promotionLabel);
 	        	 deleteInfoStagiaire.setOnMouseClicked(event -> {
 	        		 this.getChildren().clear();
-		 	            if (event.getClickCount() == 1) {
+	        		 this.getChildren().addAll(nameLabel, premonLabel ,yearLabel,nameDepartement, promotionLabel);
+		 	            
+	        		 if (event.getClickCount() == 1) {
 		 	            	Validate.getChildren().addAll();
 		 	            	this.getChildren().clear();
 		 	            	//this.getChildren().addAll(Validate);
-		 	            	//this.getChildren().addAll(nameLabel, premonLabel ,yearLabel,nameDepartement, promotionLabel);
+		 	   
 		 	            }
 		 	        });
 	        	 
