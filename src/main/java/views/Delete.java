@@ -1,18 +1,23 @@
 package views;
 
+import java.io.IOException;
+import java.util.ArrayList;
+
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.FlowPane;
+import model.ArbreBinaire;
+import model.NoeudBinaire;
 import model.Stagiaire;
 
 public class Delete extends FlowPane {
 	private Stagiaire maPromo;
 	private TableView<Stagiaire> maTable;
 
-	public Delete(Card Card,Stagiaire item) {
+	public Delete(Card Card,Stagiaire item, ListUserPan root) {
 		super();
 
 		this.maPromo = maPromo;
@@ -45,12 +50,30 @@ public class Delete extends FlowPane {
 				 */
 				
 				deleteYes.setOnAction(new EventHandler<ActionEvent>() {
-
+				
+					ArbreBinaire arbreSuppression = new ArbreBinaire() ;
+					
 					public void handle(ActionEvent event) {
 						Stagiaire stagiaire = new Stagiaire(nomTf.getText(), prenomTf.getText(), departementTf.getText(),
 								promotionTf.getText(), Integer.valueOf(anneeTf.getText()));
-						Card.getChildren().addAll(deleteYes);
-					System.out.println("j'efface"+stagiaire);
+						System.out.println("j'efface"+stagiaire);
+						
+						NoeudBinaire noeudVersArrayList = new NoeudBinaire();
+						try {
+							arbreSuppression.supprimerStagiaire(stagiaire, ListUserPan.arbreAnnuaire.getRaf());
+							ListUserPan.arbreAnnuaire.getRaf().seek(0);
+						
+							noeudVersArrayList = noeudVersArrayList.lireNoeudFichierBinVersObjetNoeudBinaire(ListUserPan.arbreAnnuaire.getRaf());
+							ListUserPan.arbreAnnuaire.getRaf().seek(0);
+							ArrayList<Stagiaire> listeStagiaires = noeudVersArrayList.fichierBinVersArrayList(ListUserPan.arbreAnnuaire.getRaf());
+							//ObservableList<Stagiaire> obsListeStagiaires= FXCollections.observableArrayList(listeStagiaires);
+							ListS listS2 = new ListS(root, listeStagiaires);
+							root.setCenter(listS2);
+							
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
 
 					}
 				});

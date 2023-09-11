@@ -35,20 +35,21 @@ public class ListS extends Pane {
 	this.listUserPan = listUserPan;
 	
 	this.setStyle(
-			
-			
-			"-fx-widht: 500px;"+
-			"-fx-height: 600px;"
+			"-fx-background-color:#f1d278;"
 			);
-	//listUserPan.arbreAnnuaire.lectureFichierDon(listUserPan.arbreAnnuaire);
+	
+	table.setMinWidth(540);
+	table.setMinHeight(510);
+	table.setMaxWidth(540);
+	table.setMaxHeight(510);
+	
 	ObservableList<Stagiaire> obsListeStagiaires= FXCollections.observableArrayList(listeStagiaires);
-	//lUser =listeStagiaires;
 	
 	obsListeStagiaires.setAll(listeStagiaires);
 
     TableColumn<Stagiaire, String> userlastNameCol //
     		= new TableColumn<Stagiaire, String>("Nom");
-    		//userlastNameCol.prefWidthProperty().bind(table.widthProperty().divide(sizeParam ));
+    		userlastNameCol.prefWidthProperty().bind(table.widthProperty().divide(sizeParam ));
     		userlastNameCol.setCellValueFactory(new PropertyValueFactory<Stagiaire,String>("nom"));
     		userlastNameCol.setStyle(
              		"-fx-border: 0;"
@@ -58,7 +59,7 @@ public class ListS extends Pane {
 
     TableColumn<Stagiaire, String> userNameCol //
     		= new TableColumn<Stagiaire, String>("Prénom");
-    	//	userNameCol.prefWidthProperty().bind(table.widthProperty().divide(sizeParam ));
+    	    userNameCol.prefWidthProperty().bind(table.widthProperty().divide(sizeParam ));
     		userNameCol.setCellValueFactory(new PropertyValueFactory<Stagiaire,String>("prenom"));
     		userNameCol.setStyle(
              		"-fx-border: none;"
@@ -67,17 +68,17 @@ public class ListS extends Pane {
              		);
     TableColumn<Stagiaire, String> DepCol//
             = new TableColumn<Stagiaire, String>("Département");
-        //    DepCol.prefWidthProperty().bind(table.widthProperty().divide(sizeParam ));
+            DepCol.prefWidthProperty().bind(table.widthProperty().divide(sizeParam ));
             DepCol.setCellValueFactory(new PropertyValueFactory<Stagiaire,String>("departement"));
                       
     TableColumn<Stagiaire, String> promoNameCol//
             = new TableColumn<Stagiaire, String>("Promotion");
-         //   promoNameCol.prefWidthProperty().bind(table.widthProperty().divide(sizeParam ));               
+            promoNameCol.prefWidthProperty().bind(table.widthProperty().divide(sizeParam ));               
             promoNameCol.setCellValueFactory(new PropertyValueFactory<Stagiaire,String>("promotion"));
             
     TableColumn<Stagiaire, Integer> YearCol//
             = new TableColumn<Stagiaire, Integer>("Année");
-        //    YearCol.prefWidthProperty().bind(table.widthProperty().divide(sizeParam ));
+            YearCol.prefWidthProperty().bind(table.widthProperty().divide(sizeParam ));
             YearCol.setCellValueFactory(new PropertyValueFactory<Stagiaire,Integer>("annee"));    
             YearCol.setStyle(
             		"-fx-border: 0;"
@@ -87,19 +88,8 @@ public class ListS extends Pane {
             
     table.getColumns().addAll(userlastNameCol,userNameCol, DepCol, promoNameCol,YearCol); 
 	table.setItems(obsListeStagiaires);
-	
-	
-	
-	table.setStyle("    -fx-background-radius: 7px 7px 0px 0px;"
-			+ "    -fx-background-insets: 0 11px 0 0;"
-			+"-fx-widht: 500px;"+
-			"-fx-height: 600px;"
-			+"-fx-border: none;");
  	
 	table.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-		
-		
-	
 		
 		Card c = new Card(listUserPan); 
 		 TranslateTransition scaleTransition = new TranslateTransition(Duration.seconds(1),c); 
@@ -114,13 +104,10 @@ public class ListS extends Pane {
 	        c.showDetails(newValue);
 		    scaleTransition.setToX(-100);
         	
-            sizeParam = 1;
-            c.setPrefWidth(400); 
+            c.setPrefWidth(220); 
 	        listUserPan.setRight(c); // Mettre à jour le contenu du setRight
 	    }
-	  // scaleTransition.play();
-        //	timeline.play(); 
-	    
+
 	});
 	
 	

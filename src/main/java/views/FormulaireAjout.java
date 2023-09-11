@@ -37,7 +37,7 @@ public class FormulaireAjout extends VBox {
 				TextField departementTf = new TextField("département");
 				TextField promotionTf = new TextField("promotion");
 				TextField anneeTf = new TextField("annee");
-				
+				this.setStyle("-fx-background-color: #f1d278");
 
 				Button ajouterStagiaire = new Button("Ajouter");
 				formulaireAjout.getChildren().addAll(nomTf, prenomTf, departementTf,promotionTf,anneeTf,ajouterStagiaire );
@@ -50,7 +50,6 @@ public class FormulaireAjout extends VBox {
 						ArbreBinaire ajout = new ArbreBinaire();
 						Stagiaire nouveauStagiaire = new Stagiaire(nomTf.getText(), prenomTf.getText(),
 								departementTf.getText(),promotionTf.getText(),Integer.valueOf(anneeTf.getText()));
-							//System.out.println();
 					
 						try {
 							ajout.ajouterStagiaireDeFichierDonAFichierBin(nouveauStagiaire);

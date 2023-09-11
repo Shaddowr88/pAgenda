@@ -22,7 +22,8 @@ public class App extends Application {
     	
     	ListUserPan root = new ListUserPan();
         Scene scene = new Scene(root, 800, 600);
-        stage.setTitle("Caller");
+        stage.setResizable(false) ;
+        stage.setTitle("Annuaire ISIKA");
         stage.setScene(scene);
         stage.show();
     }

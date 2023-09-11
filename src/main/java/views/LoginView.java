@@ -37,46 +37,36 @@ public class LoginView extends VBox {
 	// VBox et les stylise respectivement
 	public LoginView(ListUserPan listUserPan ) {
 		super();
-
-		// Top pane
-		Pane topPannel = new Pane();
-		topPannel.setPrefSize(800, 200);
-		topPannel.setStyle("-fx-background-color: yellow");
-		Text titrePannel = new Text("ANNUAIRE STAGIAIRES");
-		titrePannel.setFont(Font.font(null, FontWeight.BOLD, 40));
-		titrePannel.setFill(Color.BLUE);
-		titrePannel.setX(100);
-		titrePannel.setY(110);
-		topPannel.getChildren().addAll(titrePannel);
-
+		
+		VBox vboxLogin = new VBox() ;
 		// HBox login
 		Label loginLb1 = new Label("Login");
 		TextField loginTxF1 = new TextField("Prenom");
 		HBox loginHBox = new HBox(5);
-		loginHBox.setPrefSize(250, 30);
+		loginHBox.setPrefSize(220, 30);
 		loginHBox.setAlignment(Pos.CENTER_RIGHT);
-		loginLb1.setStyle("-fx-background-color: red");
 		loginHBox.getChildren().addAll(loginLb1, loginTxF1);
 
 		// HBox password
 
-		Label passwordLb1 = new Label("password");
+		Label passwordLb1 = new Label("Mot de passe");
 		PasswordField passwordPWF = new PasswordField();
 		HBox passwordHBox = new HBox(5);
-		passwordHBox.setPrefSize(250, 30);
+		passwordHBox.setPrefSize(220, 30);
 		passwordHBox.setAlignment(Pos.CENTER_RIGHT);
-		passwordLb1.setStyle("-fx-background-color: red");
 		passwordHBox.getChildren().addAll(passwordLb1, passwordPWF);
 
 		// HBox valider
 
-		Button validerBtn = new Button("valider");
+		Button validerBtn = new Button("Valider");
 		HBox validerHBox = new HBox(validerBtn);
-		validerHBox.setPrefSize(220, 30);
+		validerHBox.setPrefSize(100, 30);
 		validerHBox.setAlignment(Pos.CENTER_RIGHT);
-		validerBtn.setStyle("-fx-background-color: violet");
 		
-		
+		vboxLogin.getChildren().addAll(loginHBox,passwordHBox,validerHBox);
+		vboxLogin.setAlignment(Pos.CENTER);
+		vboxLogin.setPrefSize(100, 100);
+		vboxLogin.setPadding(new Insets(0, 0, 0, 0));
 		
 		validerBtn.setOnAction(new EventHandler<ActionEvent>() {
 
@@ -103,11 +93,11 @@ public class LoginView extends VBox {
 
 		this.setSpacing(5);
 		this.setPadding(new Insets(5, 5, 5, 5));
-		this.setPrefSize(220, 240);
+		this.setPrefSize(260, 240);
 		this.setAlignment(Pos.CENTER);
-		this.setStyle("-fx-background-color: teal");
+		this.setStyle("-fx-background-color: #f1d278");
 
-		this.getChildren().addAll(topPannel, loginHBox, passwordHBox, validerHBox);
+		this.getChildren().addAll(vboxLogin);
 
 		// Je crée un évènement avec une methode Handle en parcourant la liste des
 		// administrateurs

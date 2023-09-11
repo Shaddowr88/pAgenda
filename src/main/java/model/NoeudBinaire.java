@@ -3,15 +3,53 @@ import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.util.ArrayList;
 
-
+/**
+ * NoeudBinaire est la classe qui définit l'objet Noeud Binaire utilisé par la classe ArbreBinaire dans le cas d'ajout d'objets "Stagiaire"
+ * au sein d'un fichier binaire stockant un arbre binaire. 
+ * Un NoeudBinaire possède ainsi : un objet (ici un Stagiaire) issu d'une autre classe, plus des index "FilsGauche" et "FilsDroit" situant les places des Noeuds Binaires dans l'arbre Binaire du fichier binaire.
+ * Cette classe est caractérisée par les informations suivantes :
+ * <ul>
+ * <li>Les attributs de le classe :</li>
+ * <li>L'attribut stagiaire permets de récupérer l'objet et ses attributs afin de les ajouter au Noeud Binaire</li>
+ * <li>L'attribut filsGauche indique l'emplacement (index) du fils gauche sur le fichier binaire.</li>
+ * <li>L'attribut filsGauche indique l'emplacement (index) du fils gauche sur le fichier binaire.</li>
+ * 
+ * <li>Les constantes de classe :</li>
+ * <li>Les constantes TAILLE_MAX_FILS et TAILLE_MAX_NOEUD fixent la taille maximum que peut utiliser un Noeud Binaire dsur le fichier binaire. Ces constantes réfèrent des tailles en octet à partir de constantes issues de la classe Objet Stagiaire. </li>
+ * </ul>
+ * Description des principales fonctionnalités de la classe :
+ *  - La méthode lireNoeudFichierBinVersObjetNoeudBinaire(RandomAccessFile raf), permets, à l'aide de la classe JAVA RandomAccessFile, de lire un Noeud Binaire depuis un fichier binaire et de le traduire en UTF_8.
+ *  - La méthode ecrireNoeudDansFichierBin(RandomAccessFile raf, Stagiaire stagiaire), permets l'écriture des Noeuds dans le fichier binaire.
+ *  - Les méthodes getNomLong, getPrenomLong, getDepartementLong, getPromoLong et getAnneeLong, permettent de formater les informations de chaque attribut de l'objet stagiaire en ajoutant des espaces ou en tronquant des caractères de manière à ce qu'ils soient adaptés à l'ajout dans le fichier binaire via les constantes TAILLE_MAX.
+ *  - La méthode fichierBinVersArrayList(RandomAccessFile raf) permets de récupérer les Noeuds Binaires présents sur le fichier binaire en une ArrayList d'objets Stagiaires, classée par ordre alphabétique en fonction des attributs "nom" de chaque Stagiaire, utilisable pour l'affichage sur le front.
+ * </p>
+ * Les attributs statiques :
+ * L'attribut : "estDejaPasse" , est de type boolean et est utilisé dans la méthode fichierBinVersArrayList pour gérer le curseur du RandomAccessFile.
+ * </p>
+ * @author Deltombe Floriane
+ * @author Difilippo Gabriel
+ * @version 1
+ */
 public class NoeudBinaire {
 	
 	//attributs
+	
+	/** 
+	 * L'attribut stagiaire permets de récupérer l'objet de type Stagiaire et ses attributs depuis sa classe dans le but de les ajouter à l'objet Noeud Binaire.
+	 */
 	private Stagiaire stagiaire;
+	 /** 
+     * L'attribut filsGauche est un entier qui détermine l'index d'un autre Noeud Binaire dans le fichier binaire. Dans la constitution de l'arbre binaire, cet index pointe vers le fils gauche.
+     */
 	private int filsGauche;
+	   /** 
+     * L'attribut filsDroit est un entier qui détermine l'index d'un autre Noeud Binaire dans le fichier binaire. Dans la constitution de l'arbre binaire, cet index pointe vers le fils droit.
+     */ 
 	private int filsDroit;
 	
-	
+	/** 
+	 * L'attribut static : "estDejaPasse" , est de type boolean et est utilisé dans la méthode fichierBinVersArrayList pour gérer le curseur du RandomAccessFile.
+	 */
 	private static boolean estDejaPasse = false;
 	
 	//constantes pour le fichier binaire
@@ -19,13 +57,36 @@ public class NoeudBinaire {
 	public final static int TAILLE_MAX_NOEUD = Stagiaire.TAILLE_OCTET_STAGIAIRE + 2 * TAILLE_MAX_FILS ;
 	
 	//Contructeur
+	/** 
+     * <b>Constructeur surchargé de NoeudBinaire</b> 
+     *  
+     * Construction d'un objet NoeudBinaire à partir d'un objet de type Stagiaire.
+     * 
+     * @param stagiaire 
+     *     L'attribut stagiaire permets de récupérer l'objet de type Stagiaire et ses attributs depuis sa classe dans le but de les ajouter à l'objet NoeudBinaire.
+     * @param filsGauche 
+     *     L'attribut filsGauche est un entier qui détermine l'index d'un autre Noeud Binaire dans le fichier binaire. Dans la constitution de l'arbre binaire, cet index pointe vers le fils gauche.
+     * @param filsDroit
+     * 	   L'attribut filsDroit est un entier qui détermine l'index d'un autre Noeud Binaire dans le fichier binaire. Dans la constitution de l'arbre binaire, cet index pointe vers le fils droit.
+     */ 
 	public NoeudBinaire(Stagiaire stagiaire, int filsGauche, int filsDroit) {
 		
 		this.stagiaire = stagiaire;
 		this.filsGauche = filsGauche;
 		this.filsDroit = filsDroit;
 	}
-	
+	/** 
+     * <b>Constructeur de NoeudBinaire</b> 
+     *  
+     * Construction d'un objet NoeudBinaire à partir d'un objet de type Stagiaire.
+     * 
+     * @param stagiaire 
+     *     L'attribut stagiaire permets de récupérer l'objet de type Stagiaire et ses attributs depuis sa classe dans le but de les ajouter à l'objet NoeudBinaire.
+     * @param filsGauche 
+     *     L'attribut filsGauche est initié à -1 avec ce constructeur.
+     * @param filsDroit
+     * 	   L'attribut filsDroit est initié à -1 avec ce constructeur.
+     */ 
 	public NoeudBinaire(Stagiaire stagiaire) {
 			
 			this.stagiaire = stagiaire;
@@ -61,12 +122,23 @@ public class NoeudBinaire {
 	public void setFilsDroit(int filsDroit) {
 		this.filsDroit = filsDroit;
 	}
-	
+	/**
+	 * La toString permets d'afficher dans une String tous les attributs de l'objet Stagiaire
+	 */
 	@Override
 	public String toString() {
 		return "NoeudBinaire [stagiaire=" + stagiaire + ", filsGauche=" + filsGauche + ", filsDroit=" + filsDroit + "]";
 	}
-
+	/**
+	 * ajouterNoeudDansFichierBin est une méthode appelée lors de l'ajout d'un stagiaire dans un fichier binaire en tant que NoeudBinaire. Dans le processus d'ajout, cette méthode fonctionne de manière récursive et permets de positionner le curseur du RandomAccessFile à l'endroit voulu et de modifier les index fils droits et fils gauches des Noeuds déjà placés dans le fichier binaire.
+	 * La méthode appelle deux autres méthodes : ecrireNoeudDansFichierBin et lireNoeudFichierBinVersObjetNoeudBinaire.
+	 * @param stagiaire
+	 * Donne en paramètre l'objet Stagiaire à ajouter au fichier binaire.
+	 * @param raf
+	 * Donne en paramètre le RandomAccessFile utilisé pour la lecture et l'écriture du fichier binaire.
+	 * @throws IOException
+	 * Possède une propagation de l'exception IOException liée au curseur du RandomAccessFile.
+	 */
 	public void ajouterNoeudDansFichierBin(Stagiaire stagiaire, RandomAccessFile raf) throws IOException 
 	{
 		if (stagiaire.getNom().compareTo(this.stagiaire.getNom()) < 0) //compare les 2 string dans l'ordre alphabetique 
@@ -126,7 +198,14 @@ public class NoeudBinaire {
 		}
 	}
 	
-	
+	/**
+	 * lireNoeudFichierBinVersObjetNoeudBinaire est une méthode qui permets de lire des informations contenues dans un fichier binaire, de les traduire en UTF-8 depuis le language binaire et de le retourner en tant qu'objet NoeudBinaire.
+	 * @param raf
+	 * Donne en paramètre le RandomAccessFile utilisé pour la lecture et l'écriture du fichier binaire.
+	 * @return les informations lues sur le fichier binaire en tant qu'objet NoeudBinaire
+	 * @throws IOException
+	 * Possède une propagation de l'exception IOException liée au curseur du RandomAccessFile.
+	 */
 	public NoeudBinaire lireNoeudFichierBinVersObjetNoeudBinaire(RandomAccessFile raf) throws IOException
 	{
 		
@@ -170,7 +249,16 @@ public class NoeudBinaire {
 		return noeudLu;
 		
 		}
-	
+	/**
+	 * ecrireNoeudDansFichierBin est une méthode permettant le placement spécifique et l'écriture d'informations contenues dans les attributs, préalablement formatés selon des tailles fixes, d'un objet Stagiaire dans un fichier binaire. L'écriture de deux "-1" successifs sert d'initialisation dans l'indexation des informations pour la construction d'un arbre binaire via le fichier binaire.
+	 * Cette méthode appelle les méthodes getNomLong, getPrenomLong, getDepartementLong et getPromoLong, permettant l'ajout ou la suppression de caractères selon des formats précis répondant à une taille maximale de place en octet à occuper dans le fichier binaire.
+	 * @param raf
+	 * Donne en paramètre le RandomAccessFile utilisé pour la lecture et l'écriture du fichier binaire.
+	 * @param stagiaire
+	 * Donne en paramètre l'objet Stagiaire à ajouter au fichier binaire.
+	 * @throws IOException
+	 * Possède une propagation de l'exception IOException liée au curseur du RandomAccessFile.
+	 */
 	public void ecrireNoeudDansFichierBin(RandomAccessFile raf, Stagiaire stagiaire) throws IOException
 	{
 		//je me place à la fin du fichier bin
@@ -185,7 +273,13 @@ public class NoeudBinaire {
 		raf.writeInt(-1);
 	}
 	
-	
+	/**
+	 * getNomLong est une méthode qui autorise l'ajout de caractères "espace" ou la suppression de caractères selon un format précis répondant à une taille maximale de place en octet à occuper dans le fichier binaire pour l'attribut "nom" de l'objet Stagiaire instancié.
+	 * @param stagiaire
+	 * Donne en paramètre l'objet Stagiaire à ajouter au fichier binaire.
+	 * @return la version formatée du nom.
+	 * 
+	 */
 	public static String getNomLong(Stagiaire stagiaire)
 	{
 		String nomLong = "" ; 
@@ -211,7 +305,13 @@ public class NoeudBinaire {
 		return nomLong ;
 	}
 	
-	
+	/**
+	 * getPrenomLong est une méthode qui autorise l'ajout de caractères "espace" ou la suppression de caractères selon un format précis répondant à une taille maximale de place en octet à occuper dans le fichier binaire pour l'attribut "prenom" de l'objet Stagiaire instancié.
+	 * @param stagiaire
+	 * Donne en paramètre l'objet Stagiaire à ajouter au fichier binaire.
+	 * @return la version formatée du prenom.
+	 * 
+	 */
 	public static String getPrenomLong(Stagiaire stagiaire)
 	{
 		String prenomLong = "" ; 
@@ -237,7 +337,13 @@ public class NoeudBinaire {
 		return prenomLong ;
 	}
 	
-	
+	/**
+	 * getDepartementLong est une méthode qui autorise l'ajout de caractères "espace" ou la suppression de caractères selon un format précis répondant à une taille maximale de place en octet à occuper dans le fichier binaire pour l'attribut "nom" de l'objet Stagiaire instancié.
+	 * @param stagiaire
+	 * Donne en paramètre l'objet Stagiaire à ajouter au fichier binaire.
+	 * @return la version formatée du département.
+	 * 
+	 */
 	public static String getDepartementLong(Stagiaire stagiaire)
 	{
 		String dptLong = "" ; 
@@ -263,7 +369,13 @@ public class NoeudBinaire {
 	}
 	
 	
-	
+	/**
+	 * getPromoLong est une méthode qui autorise l'ajout de caractères "espace" ou la suppression de caractères selon un format précis répondant à une taille maximale de place en octet à occuper dans le fichier binaire pour l'attribut "promotion" de l'objet Stagiaire instancié.
+	 * @param stagiaire
+	 * Donne en paramètre l'objet Stagiaire à ajouter au fichier binaire.
+	 * @return la version formatée de la promo.
+	 * 
+	 */
 	public static String getPromoLong(Stagiaire stagiaire)
 	{
 		String promoLong = "" ; 
@@ -288,6 +400,14 @@ public class NoeudBinaire {
 	}
 	
 	//Methode pour envoyer les informations du fichier binaire vers une arrayList transposable vers l'observableList (front)
+	/**
+	 * fichierBinVersArrayList est une methode permettant de récupérer les informations du fichier binaire pour les mettre en forme sur une arrayList transposable vers une observableList afin de les afficher sur le front.
+	 * @param raf
+	 * Donne en paramètre l'objet Stagiaire à ajouter au fichier binaire.
+	 * @return une liste d'objets Stagiaires comprenant tous les attributs.
+	 * @throws IOException
+	 * Possède une propagation de l'exception IOException liée au curseur du RandomAccessFile.
+	 */
 	public ArrayList<Stagiaire> fichierBinVersArrayList(RandomAccessFile raf) throws IOException 
 	{
 		//Je cree une nouvelle Arraylist de Noeud Binaires
@@ -340,54 +460,4 @@ public class NoeudBinaire {
 		return listeAffichageFichierBin;
 	}
 	
-	
-	
-	
-	/*public int taille() 
-	{
-		int resultat = 0 ; 
-		
-		//regle parcours infixe GND
-		if (this.filsGauche != null)
-		{
-			resultat += this.filsGauche.taille() ; //G
-		}
-		
-		resultat += 1 ; //N
-		
-		if (this.filsDroit != null)
-		{
-			resultat += this.filsDroit.taille() ; //D
-		}
-		
-		return resultat;
-	}
-	
-	
-	
-	public int hauteur()
-	{
-		//je suis une feuille -> cas de terminaison
-		if (this.filsGauche == null && this.filsDroit == null)
-		{
-			return 0 ;
-		}
-		//je n'ai qu'un fils gauche
-		else if (filsDroit == null && this.filsGauche != null)
-		{
-			return 1 + this.filsGauche.hauteur() ;
-		}
-		//je n'ai qu'un fils droit
-		else if (filsGauche == null && this.filsDroit != null)
-		{
-			return 1 + this.filsDroit.hauteur() ;
-		}
-		//j'ai deux fils, je garde le maximum entre les deux
-		else
-		{
-			return 1 + Math.max(this.filsGauche.hauteur() , this.filsDroit.hauteur()); 
-		}
-	}*/
-	
-
 }
