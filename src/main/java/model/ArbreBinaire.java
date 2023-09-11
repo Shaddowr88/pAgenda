@@ -8,8 +8,19 @@ import java.io.RandomAccessFile;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Cette classe represente un arbre binaire de recherche, compose d'objets de type NoeudBinaire.
+ * Cette classe est caractérisée par les informations suivantes :
+ *
+ * @author Gabriel D. 
+ * @author Floriane D.
+ * @author Vincent B. 
+ * 
+ */
+
 public class ArbreBinaire {
 	// attributs
+	
 	String nom = "";
 	String prenom= "";
 	String dpt = "";
@@ -21,18 +32,25 @@ public class ArbreBinaire {
 	private RandomAccessFile raf = null ;
 	static boolean premierNoeudCreeOuNon = false ;
 	private final String BIN_PATH = "src/Files/annuaire.bin";
-	private final String DON_PATH = "src/Files/STAGIAIRESTEST.DON";
+	private final String DON_PATH = "src/Files/STAGIAIRES.DON";
+	private BufferedReader reader;
 	private static int calculIndex = 0 ; 
 	private static int indexPere = 0 ;
 	private static int indexFils = 0 ;
 	
-	// contructeur
+	/**
+	 * Constructeur surcharge pour un ArbreBinaire 
+	 * 
+	 * @param premierNoeud le premierNoeud (racine) de l'arbre binaire de recherche
+	 */
 	public ArbreBinaire(NoeudBinaire premierNoeud) 
 	{
 		this.premierNoeud = premierNoeud;
 	}
 
-	// constructeur vide 
+	/**
+	 * Constructeur vide pour un ArbreBinaire 
+	 */
 	public ArbreBinaire() 
 	{
 		try 
@@ -47,25 +65,40 @@ public class ArbreBinaire {
 	}
 
 	// Getters & Setters
+	
+	/**
+	 * @return le premier noeud de l'arbre binaire de recherche
+	 */
 	public NoeudBinaire getPremierNoeud() 
 	{
 		return premierNoeud;
 	}
-
+	/**
+	  * @param premierNoeud le premierNoeud (racine) de l'arbre binaire de recherche
+	  */
 	public void setPremierNoeud(NoeudBinaire premierNoeud) {
 		this.premierNoeud = premierNoeud;
 	}
 
+	/**
+	 * @return le RandomAccessFile contenant l'arbre binaire de recherche
+	 */
 	public RandomAccessFile getRaf() 
 	{
 		return raf;
 	}
-
+	
+	/**
+	 * @param un RandomAccessFile 
+	 */
 	public void setRaf(RandomAccessFile raf) 
 	{
 		this.raf = raf;
 	}
-
+	
+	/**
+	 * @return le contenu du premier Noeud de l'arbre binaire de recherche
+	 */
 	@Override
 	public String toString() 
 	{
@@ -79,8 +112,13 @@ public class ArbreBinaire {
 		}
 	}
 
-	// Methode appelee dans LectureFichier pour ajouter chaque stagiaire lu dans le
-	// fichier DON au fichier binaire
+	/**
+	 * Methode permettant d'ajouter chaque stagiaire lu dans un fichier DON a un fichier binaire
+	 * 
+	 * @param un objet de type Stagiaire
+	 * 
+	 * @throws IOException si une exception de type Input ou Output arrive
+	 */
 	public void ajouterStagiaireDeFichierDonAFichierBin(Stagiaire stagiaire) throws IOException 
 	{
 
@@ -110,9 +148,16 @@ public class ArbreBinaire {
 	}
 
 
-	BufferedReader reader;
-
-
+	/**
+	 * Methode permettant de lire un fichier .DON contenant des informations sur des stagiaires. 
+	 * Lis ligne par ligne le fichier DON et recupere les informations de chaque ligne dans des variables 
+	 * correspondant aux attributs d'un objet de type Stagiaire puis appelle une autre methode permettant
+	 * de stocker les informations du stagiaire lu dans un fichier binaire.
+	 * 
+	 * @param un arbre binaire de recherche 
+	 * 
+	 * @throws IOException si une exception de type Input ou Output arrive
+	 */
 	public void lectureFichierDon(ArbreBinaire arbreAnnuaire)
 	{
 
@@ -121,18 +166,18 @@ public class ArbreBinaire {
 
 			if (raf.length() != 0)
 			{
-				System.out.println("Le fichier est déjà créé");
+				
 			}
 			else
 			{
-				System.out.println("Je créé le fichier");
+				
 				reader = new BufferedReader(new FileReader(DON_PATH ));
 
 				String line = reader.readLine();
 
 				while (line != null) 
 				{
-					//System.out.println(line);
+					
 					// si c'est la première ligne, alors remplir la variable nom;
 					if (compteurLigne == 1) 
 					{
@@ -183,6 +228,17 @@ public class ArbreBinaire {
 	}
 
 
+	/**
+	 * Methode permettant de chercher l'index d'un NoeudBinaire a supprimer dans un arbre binaire stocke dans un fichier binaire
+	 * 
+	 * @param un objet Stagiaire que l'on souhaite supprimer
+	 * 
+	 * @param un entier representant l'index du Noeud courant (egal a 0 au premier lancement de cette methode)
+	 * 
+	 * @throws IOException si une exception de type Input ou Output arrive
+	 * 
+	 * @return un entier correspondant a l'index du NoeudBinaire contenant le stagiaire a supprimer 
+	 */
 
 	public int rechercheNoeudASupprimer(Stagiaire stagiaire, int indexNoeudCourant) throws IOException //au debut, index à 0 quand on appelle la methode
 	{
@@ -198,7 +254,7 @@ public class ArbreBinaire {
 			//si l'indexFilsGauche est = -1, alors le stagiaire à supprimer n'existe pas
 			if (noeudCourant.getFilsGauche() == -1)
 			{
-				System.out.println("Le stagiaire à supprimer n'existe pas");
+				
 				calculIndex = -1 ;
 				return calculIndex;
 			}
@@ -215,7 +271,6 @@ public class ArbreBinaire {
 			//si l'indexFilsDroit est = -1, alors le stagiaire à supprimer n'existe pas
 			if (noeudCourant.getFilsDroit() == -1)
 			{
-				System.out.println("Le stagiaire à supprimer n'existe pas");
 				calculIndex = -1 ;
 				return calculIndex;
 			}
@@ -238,6 +293,17 @@ public class ArbreBinaire {
 		return calculIndex ;
 	}
 
+	/**
+	 * Methode permettant de chercher l'index du pere d'un NoeudBinaire a supprimer dans l'arbre binaire stocke dans un fichier binaire
+	 * 
+	 * @param un entier representant l'index du Noeud courant (egal a 0 au premier lancement de cette methode)
+	 * 
+	 * @param un entier representant l'index du Noeud a supprimer dans l'arbre binaire
+	 * 
+	 * @throws IOException si une exception de type Input ou Output arrive
+	 * 
+	 * @return un entier correspondant a l'index du pere du NoeudBinaire contenant le stagiaire a supprimer 
+	 */
 	public int rechercheIndexPereDuNoeudASupprimer(int indexNoeudCourant, int indexNoeudASupprimer) throws IOException //au debut, index à 0 quand on appelle la methode
 	{
 
@@ -270,7 +336,16 @@ public class ArbreBinaire {
 		return indexPere ;
 	}
 
-	//Methode supprimer(Stagiaire)
+	/**
+	 * Methode permettant de supprimer un NoeudBinaire dans un arbre binaire stocke dans un fichier binaire
+	 * 
+	 * @param un objet de type Stagiaire que l'on souhaite supprimer de l'arbre binaire
+	 * 
+	 * @param un RandomAccessFile contenant l'arbre binaire
+	 * 
+	 * @throws IOException si une exception de type Input ou Output arrive
+	 * 
+	 */
 	public void supprimerStagiaire(Stagiaire stagiaire, RandomAccessFile raf) throws IOException
 	{
 		//Appel rechercheNoeudASupprimer(Stagiaire stagiaire, 0)
@@ -351,7 +426,14 @@ public class ArbreBinaire {
 
 	}
 
-	//Methode nbDescendants() : donne le nombre d'enfants d'un noeud
+	/**
+	 * Methode donnant le nombre de descendants du NoeudBinaire (contenu dans un arbre binaire de recherche) que l'on souhaite supprimer afin de gerer les differents cas de suppression
+	 * 
+	 * @param le noeud que l'on souhaite supprimer de l'arbre binaire de recherche
+	 * 
+	 * @return un entier correspondant au nombre de descendants du noeud a supprimer
+	 * 
+	 */
 	public int nbDescendants(NoeudBinaire noeudASupprimer) {
 		// Je suis une feuille -> terminaison
 		if ((noeudASupprimer.getFilsGauche() == -1) && (noeudASupprimer.getFilsDroit() == -1)) {
@@ -367,6 +449,12 @@ public class ArbreBinaire {
 		}
 	}
 
+	/**
+	 * Methode permettant de retourner une liste de stagiaires pour affichage
+	 * 
+	 * @return une liste de Stagiaires
+	 * @throws IOException si une exception de type Input ou Output arrive
+	 */
 	public ArrayList<Stagiaire> afficherListe() throws IOException{
 		ArrayList<Stagiaire> liste = new ArrayList<>();
 		if (raf.length() == 0) {
@@ -374,13 +462,23 @@ public class ArbreBinaire {
 		} else {
 			raf.seek(0);
 			NoeudBinaire racine = new NoeudBinaire();
-				racine =	racine.lireNoeudFichierBinVersObjetNoeudBinaire(raf);
+				racine = racine.lireNoeudFichierBinVersObjetNoeudBinaire(raf);
 			liste = racine.fichierBinVersArrayList(raf);
 		}
 		return liste;
 	}
 	
-	
+	/**
+	 * Methode permettant de trouver le successeur le plus proche dans l'ordre alphabetique du noeud que l'on veut supprimer (ordre determine par le nom du stagiaire contenu dans le noeud)
+	 * Pour trouver le successeur, la methode va d'abord vers le fils droit du noeud a supprimer puis parcoure le sous arbre gauche de ce fils droit jusqu'a trouver un noeud sans fils gauche. 
+	 * C'est ce noeud qui sera le successeur.
+	 * 
+	 * @param le noeud que l'on souhaite supprimer de l'arbre binaire
+	 * 
+	 * @throws IOException si une exception de type Input ou Output arrive
+	 * 
+	 * @return le noeud correspondant au successeur le plus proche dans l'ordre alphabetique du noeud que l'on veut supprimer
+	 */
 	public NoeudBinaire rechercheSuccesseur(NoeudBinaire noeudASupprimer) throws IOException 
 	{
 		NoeudBinaire noeudCourant = noeudASupprimer ;
@@ -400,7 +498,15 @@ public class ArbreBinaire {
 		return noeudCourant;
 	}
 
-
+	/**
+	 * Methode permettant de recuperer un noeud contenu a une certaine position dans un fichier binaire de type RandomAccessFile
+	 * 
+	 * @param un entier correspondant à l'index du noeud que l'on veut trouver dans un fichier binaire 
+	 *  
+	 * @throws IOException si une exception de type Input ou Output arrive
+	 * 
+	 * @return le noeud que l'on cherchait dans le fichier binaire a une position donnee
+	 */
 	public NoeudBinaire getNoeud(int indexNoeud) throws IOException
 	{
 		//placer le curseur à la bonne position
@@ -412,23 +518,45 @@ public class ArbreBinaire {
 
 		return noeudCourant ;
 	}
-	//Methode pour modifier le nom d'un stagiaire depuis le front
+	
+	
+	/**
+	 * Methode permettant modifier le nom d'un stagiaire dans un fichier binaire
+	 * 
+	 * @param le stagiaire dont on veut modifier le nom
+	 * 
+	 * @param le nouveau nom que l'on souhaite donner au stagiaire
+	 * 
+	 * @param le fichier binaire de type RandomAccessFile dans lequel les informations du stagiaire sont stockees
+	 *  
+	 * @throws IOException si une exception de type Input ou Output arrive
+	 * 
+	 */
 		public void modifierNom(Stagiaire stagiaire, String newNom, RandomAccessFile raf) throws IOException
 		{
-	 //1ère étape : on récupère le stagiaire
-	 Stagiaire ancienStagiaire = new Stagiaire(stagiaire.getNom(), stagiaire.getPrenom(), stagiaire.getDepartement(), stagiaire.getPromotion(), stagiaire.getAnnee());
-	 System.out.println(ancienStagiaire);
-	 //2ème étape : on créé un nouveauStagiaire avec le nouveau nom souhaité
-	 Stagiaire nouveauStagiaire = new Stagiaire(newNom, stagiaire.getPrenom(), stagiaire.getDepartement(), stagiaire.getPromotion(), stagiaire.getAnnee());
-	// nouveauStagiaire.setNom(NoeudBinaire.getNomLong(nouveauStagiaire));
-	 System.out.println(nouveauStagiaire);
-	 //3ème étape : on applique la méthode de suppression au noeud concerné
-	 supprimerStagiaire(ancienStagiaire,raf);
-	 //4ème étape : on ajoute le stagiaire avec le nouveauNom dans le fichier bin en tant que noeudBinaire avec la méthode ajouterNoeud.
-	 ajouterStagiaireDeFichierDonAFichierBin(nouveauStagiaire);
+			 //1ère étape : on récupère le stagiaire
+			 Stagiaire ancienStagiaire = new Stagiaire(stagiaire.getNom(), stagiaire.getPrenom(), stagiaire.getDepartement(), stagiaire.getPromotion(), stagiaire.getAnnee());
+			 
+			 //2ème étape : on créé un nouveauStagiaire avec le nouveau nom souhaité
+			 Stagiaire nouveauStagiaire = new Stagiaire(newNom, stagiaire.getPrenom(), stagiaire.getDepartement(), stagiaire.getPromotion(), stagiaire.getAnnee());
+			 //3ème étape : on applique la méthode de suppression au noeud concerné
+			 supprimerStagiaire(ancienStagiaire,raf);
+			 //4ème étape : on ajoute le stagiaire avec le nouveauNom dans le fichier bin en tant que noeudBinaire avec la méthode ajouterNoeud.
+			 ajouterStagiaireDeFichierDonAFichierBin(nouveauStagiaire);
 		}
 
-		// Methode pour modifier le prenom d'un stagiaire depuis le front
+		/**
+		 * Methode permettant modifier le prenom d'un stagiaire dans un fichier binaire
+		 * 
+		 * @param le stagiaire dont on veut modifier le prenom
+		 * 
+		 * @param le nouveau prenom que l'on souhaite donner au stagiaire
+		 * 
+		 * @param le fichier binaire de type RandomAccessFile dans lequel les informations du stagiaire sont stockees
+		 *  
+		 * @throws IOException si une exception de type Input ou Output arrive
+		 * 
+		 */
 		public void modifierPrenom(Stagiaire stagiaire, String newPrenom, RandomAccessFile raf) throws IOException
 		{
 			//Je récupère le nouveau prenom du stagiaire et je lui impose la méthode PrenomLong pour le formater selon la taille max dans le fichier binaire
@@ -443,7 +571,18 @@ public class ArbreBinaire {
 		}
 
 
-		// Methode pour modifier le Departement d'un stagiaire depuis le front
+		/**
+		 * Methode permettant modifier le departement d'un stagiaire dans un fichier binaire
+		 * 
+		 * @param le stagiaire dont on veut modifier le departement
+		 * 
+		 * @param le nouveau departement que l'on souhaite donner au stagiaire
+		 * 
+		 * @param le fichier binaire de type RandomAccessFile dans lequel les informations du stagiaire sont stockees
+		 *  
+		 * @throws IOException si une exception de type Input ou Output arrive
+		 * 
+		 */
 		public void modifierDepartement(Stagiaire stagiaire, String newDepartement, RandomAccessFile raf) throws IOException
 		{
 			//Je récupère le nouveau departement du stagiaire et je lui impose la méthode DepartementLong pour le formater selon la taille max dans le fichier binaire
@@ -457,7 +596,18 @@ public class ArbreBinaire {
 			raf.writeChars(newDepartement);
 		}
 
-		// Methode pour modifier la Promotion d'un stagiaire depuis le front
+		/**
+		 * Methode permettant modifier la promotion d'un stagiaire dans un fichier binaire
+		 * 
+		 * @param le stagiaire dont on veut modifier la promotion
+		 * 
+		 * @param la nouvelle promotion que l'on souhaite donner au stagiaire
+		 * 
+		 * @param le fichier binaire de type RandomAccessFile dans lequel les informations du stagiaire sont stockees
+		 *  
+		 * @throws IOException si une exception de type Input ou Output arrive
+		 * 
+		 */
 		public void modifierPromotion(Stagiaire stagiaire, String newPromotion, RandomAccessFile raf) throws IOException
 		{
 			//Je récupère la nouvelle promotion du stagiaire et je lui impose la méthode PromotionLong pour le formater selon la taille max dans le fichier binaire
@@ -471,7 +621,18 @@ public class ArbreBinaire {
 			raf.writeChars(newPromotion);
 		}
 
-		// Methode pour modifier l'année d'un stagiaire depuis le front
+		/**
+		 * Methode permettant modifier l'annee d'un stagiaire dans un fichier binaire
+		 * 
+		 * @param le stagiaire dont on veut modifier l'annee
+		 * 
+		 * @param la nouvelle annee que l'on souhaite donner au stagiaire
+		 * 
+		 * @param le fichier binaire de type RandomAccessFile dans lequel les informations du stagiaire sont stockees
+		 *  
+		 * @throws IOException si une exception de type Input ou Output arrive
+		 * 
+		 */
 		public void modifierAnnee(Stagiaire stagiaire, int newAnnee, RandomAccessFile raf) throws IOException
 		{
 			//Je cherche le noeud contenant le stagiaire dans le fichier binaire
@@ -483,7 +644,11 @@ public class ArbreBinaire {
 		}
 
 
-		//methode test d'affichage console  
+		/**
+		 * Methode permettant d'afficher chaque noeud de l'arbre binaire dans la console
+		 * 
+		 * @throws IOException si une exception de type Input ou Output arrive
+		 */  
 		public void testLecture() throws IOException 
 		{
 			int nbNoeud = (int)raf.length()/NoeudBinaire.TAILLE_MAX_NOEUD;

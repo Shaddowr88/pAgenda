@@ -5,8 +5,27 @@ import model.Stagiaire;
 import model.NoeudBinaire;
 import java.io.IOException;
 import java.io.RandomAccessFile;
+
+/**
+ * Cette classe sert a effectuer des recherches dans une liste d'objets de type Stagiaire
+ *
+ * @author Loic S.
+ * @author Floriane D. 
+ */
 public class Recherche {
 	
+	/**
+	 * Methode permettant de retourner une liste contenant les stagiaires correspondant aux termes recherches par un utilisateur
+	 * 
+	 * @param le fichier de type RandomAccessFile dans lequel sont stockees les informations des stagiaires
+	 * 
+	 * @param la liste des termes recherches par l'utilisateur 
+	 * 
+	 * @throws IOException si une exception de type Input ou Output arrive
+	 * 
+	 * @return la liste contenant le/les stagiaires correspondant aux termes recherches par l'utilisateur
+	 * 
+	 */
 	public List<Stagiaire> search(RandomAccessFile raf, ArrayList<String> termsToFind) throws IOException {
         List<Stagiaire> resultList = new ArrayList<>();
         
@@ -21,6 +40,23 @@ public class Recherche {
         return resultList;
     }
 	
+	
+	/**
+	 * Methode permettant de creer une liste contenant les stagiaires correspondant a l'un des termes recherches par un utilisateur
+	 * 
+	 * @param le fichier de type RandomAccessFile dans lequel sont stockees les informations des stagiaires
+	 * 
+	 * @param le noeud de l'arbre binaire de recherche dans lequel on est positionnes (est egal a la racine a l'appel de la methode)
+	 * 
+	 * @param la liste des termes recherches par l'utilisateur 
+	 * 
+	 * @param la liste des resultats de la recherche, contenant les stagiaires correspondant a la recherche
+	 * 
+	 * @throws IOException si une exception de type Input ou Output arrive
+	 * 
+	 * @return la liste contenant le/les stagiaires correspondant aux termes recherches par l'utilisateur
+	 * 
+	 */
 	//Si on veut faire une recherche de n'importe quel stagiaire contenant n'importe quel element
 	//entré en recherche
     private static void searchRecursive(
@@ -75,6 +111,23 @@ public class Recherche {
         }
 	       
     }
+    
+    /**
+	 * Methode permettant de creer une liste contenant les stagiaires correspondant a tous les termes recherches par un utilisateur
+	 * 
+	 * @param le fichier de type RandomAccessFile dans lequel sont stockees les informations des stagiaires
+	 * 
+	 * @param le noeud de l'arbre binaire de recherche dans lequel on est positionnes (est egal a la racine a l'appel de la methode)
+	 * 
+	 * @param la liste des termes recherches par l'utilisateur 
+	 * 
+	 * @param la liste des resultats de la recherche, contenant les stagiaires correspondant a la recherche
+	 * 
+	 * @throws IOException si une exception de type Input ou Output arrive
+	 * 
+	 * @return la liste contenant le/les stagiaires correspondant aux termes recherches par l'utilisateur
+	 * 
+	 */
     //Si on veut faire une recherche pour le ou les elements contenant
     //TOUS les elements entrés en recherche
     private static void superSearchRecursive(

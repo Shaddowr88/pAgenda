@@ -27,6 +27,7 @@ public class ModificationScreen extends FlowPane {
 		this.maPromo = maPromo;
 		this.maTable = new TableView<Stagiaire>();
 		maTable.setEditable(true);
+		this.setStyle("-fx-background-color: #f1d278");
 
 		//j'ai fini de créer ma table
 
@@ -40,6 +41,11 @@ public class ModificationScreen extends FlowPane {
 				
 				this.getChildren().addAll(nomTf, prenomTf, departementTf,promotionTf,anneeTf,mofierInfoStagiaire);
 				
+				nomTf.setPrefWidth(260);
+				prenomTf.setPrefWidth(260);
+				departementTf.setPrefWidth(260);
+				promotionTf.setPrefWidth(260);
+				anneeTf.setPrefWidth(260);
 				mofierInfoStagiaire.setPrefWidth(260);
 
 				/*
@@ -60,18 +66,14 @@ public class ModificationScreen extends FlowPane {
 					public void handle(ActionEvent event) {
 						Stagiaire nouveauStagiaire = new Stagiaire(nomTf.getText(), prenomTf.getText(), departementTf.getText(),
 								promotionTf.getText(), Integer.valueOf(anneeTf.getText()));
-						//Card.getChildren().addAll(mofierInfoStagiaire);
-					//System.out.println(nouveauStagiaire);
-					
-					
-					
+
 					int validcount=0;
 					
-						if (nomTf.getText()==null) { nomTf.setText(" veuiller renseigner le Nom"); validcount++;}  
-						if (prenomTf.getText()==null) { prenomTf.setText(" veuiller renseigner le Prénom"); validcount++;}
-						if (departementTf.getText()==null) { departementTf.setText(" veuiller renseigner le Departement"); validcount++;}
-						if (promotionTf.getText()==null) { promotionTf.setText(" veuiller renseigner la Promotion"); validcount++;}
-						if (anneeTf.getText()==null) { anneeTf.setText(" veuiller renseigner le Année"); validcount++;}
+//						if (nomTf.getText()==null) { nomTf.setText(" veuiller renseigner le Nom"); validcount++;}  
+//						if (prenomTf.getText()==null) { prenomTf.setText(" veuiller renseigner le Prénom"); validcount++;}
+//						if (departementTf.getText()==null) { departementTf.setText(" veuiller renseigner le Departement"); validcount++;}
+//						if (promotionTf.getText()==null) { promotionTf.setText(" veuiller renseigner la Promotion"); validcount++;}
+//						if (anneeTf.getText()==null) { anneeTf.setText(" veuiller renseigner le Année"); validcount++;}
 					
 					if (validcount==0) {
 					
