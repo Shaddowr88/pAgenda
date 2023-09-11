@@ -4,7 +4,6 @@ package cda26.projet1.agenda;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import views.HomePan;
 import views.ListUserPan;
 
 

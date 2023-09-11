@@ -1,32 +1,21 @@
 
 package views;
 
-import java.util.List;
-
-import cda26.projet1.agenda.App;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
-import javafx.scene.text.Text;
-import javafx.stage.Stage;
-import model.Personnel;
 
-//Le premier panneau est la VBox
+
+
 public class LoginView extends VBox {
+	
 	// il possède en attribut :loginTxF,adminUsername,adminPassword ,isAdmin
 	private TextField loginTxF;
 	private final String[] ADMIN_USER = { "Loic", "Vincent", "Floriane", "Gabriel" };
@@ -41,7 +30,7 @@ public class LoginView extends VBox {
 		VBox vboxLogin = new VBox() ;
 		// HBox login
 		Label loginLb1 = new Label("Login");
-		TextField loginTxF1 = new TextField("Prenom");
+		TextField loginTxF1 = clean (new TextField("Prenom"));
 		HBox loginHBox = new HBox(5);
 		loginHBox.setPrefSize(220, 30);
 		loginHBox.setAlignment(Pos.CENTER_RIGHT);
@@ -68,6 +57,8 @@ public class LoginView extends VBox {
 		vboxLogin.setPrefSize(100, 100);
 		vboxLogin.setPadding(new Insets(0, 0, 0, 0));
 		
+		
+		//Submit Action
 		validerBtn.setOnAction(new EventHandler<ActionEvent>() {
 
 			@Override
@@ -82,11 +73,6 @@ public class LoginView extends VBox {
 				}
 				
 			}
-
-			private List<Node> getItems() {
-				// TODO Auto-generated method stub
-				return null;
-			}
 		});
 
 		// VBox root
@@ -96,14 +82,17 @@ public class LoginView extends VBox {
 		this.setPrefSize(260, 240);
 		this.setAlignment(Pos.CENTER);
 		this.setStyle("-fx-background-color: #f1d278");
-
 		this.getChildren().addAll(vboxLogin);
-
-		// Je crée un évènement avec une methode Handle en parcourant la liste des
-		// administrateurs
-
+	}
 	
-
+private TextField clean (TextField field) {
+		
+		field.setOnMouseClicked(event -> {
+			if (event.getClickCount() == 1) {
+				field.clear();
+			}
+		});
+		return field;
 	}
 
 }

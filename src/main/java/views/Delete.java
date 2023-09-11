@@ -53,6 +53,8 @@ public class Delete extends FlowPane {
 				
 					ArbreBinaire arbreSuppression = new ArbreBinaire() ;
 					
+			//Handle Submit
+					
 					public void handle(ActionEvent event) {
 						Stagiaire stagiaire = new Stagiaire(nomTf.getText(), prenomTf.getText(), departementTf.getText(),
 								promotionTf.getText(), Integer.valueOf(anneeTf.getText()));
@@ -78,8 +80,7 @@ public class Delete extends FlowPane {
 					}
 				});
 				
-	
-	        	 
+			//Handle Not Submit	
 	        	 deleteNo.setOnMouseClicked(event -> {
 		 	            if (event.getClickCount() == 1) {
 		 	            	this.getChildren().clear();

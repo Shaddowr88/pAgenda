@@ -11,6 +11,7 @@ import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TextFormatter;
 import javafx.scene.layout.FlowPane;
 import model.ArbreBinaire;
 import model.NoeudBinaire;
@@ -51,7 +52,30 @@ public class ModificationScreen extends FlowPane {
 				/*
 				 *  je crée un évènement afin de changer les infos du stagiaire avec une méthode handle
 				 */
+				
+				 TextFormatter<String> numberFormat = new TextFormatter<>(change -> {
+			            String newText = change.getControlNewText();
+			            if (newText.matches("\\d*")) { // Seuls les chiffres sont autorisés
+			                return change;
+			            }
+			            return null; // Bloque le changement s'il contient des caractères non numériques
+			        });
 				      
+				 /*
+				  *   Evènement  texte formatter Uppercase
+				  */
+				 
+				 nomTf.textProperty().addListener((observable, oldValue, newValue) -> {
+			            if (newValue != null) {
+			            	nomTf.setText(newValue.toUpperCase());
+			            }
+			        });
+				 
+				 /*
+				  *   Evènement  texte formatter integer
+				  */
+				
+				 anneeTf.setTextFormatter(numberFormat);
 						
 						anneeTf.textProperty().addListener((observable, oldValue, newValue) -> {
 						    if (!newValue.matches("\\d*")) {
@@ -60,7 +84,7 @@ public class ModificationScreen extends FlowPane {
 						    }
 						});
 						
-						
+			// Submit Action
 				mofierInfoStagiaire.setOnAction(new EventHandler<ActionEvent>() {
 
 					public void handle(ActionEvent event) {
@@ -69,17 +93,17 @@ public class ModificationScreen extends FlowPane {
 
 					int validcount=0;
 					
-//						if (nomTf.getText()==null) { nomTf.setText(" veuiller renseigner le Nom"); validcount++;}  
-//						if (prenomTf.getText()==null) { prenomTf.setText(" veuiller renseigner le Prénom"); validcount++;}
-//						if (departementTf.getText()==null) { departementTf.setText(" veuiller renseigner le Departement"); validcount++;}
-//						if (promotionTf.getText()==null) { promotionTf.setText(" veuiller renseigner la Promotion"); validcount++;}
-//						if (anneeTf.getText()==null) { anneeTf.setText(" veuiller renseigner le Année"); validcount++;}
+						if (nomTf.getText()==null) { nomTf.setText(" veuiller renseigner le Nom"); validcount++;}  
+						if (prenomTf.getText()==null) { prenomTf.setText(" veuiller renseigner le Prénom"); validcount++;}
+						if (departementTf.getText()==null) { departementTf.setText(" veuiller renseigner le Departement"); validcount++;}
+						if (promotionTf.getText()==null) { promotionTf.setText(" veuiller renseigner la Promotion"); validcount++;}
+						if (anneeTf.getText()==null) { anneeTf.setText(" veuiller renseigner le Année"); validcount++;}
 					
-					if (validcount==0) {
+					if (!(validcount>0)) {
 					
 					try {
 
-						if(!item.getPrenom().equals(prenomTf.getText())) {
+						if(!item.getPrenom().equals(prenomTf.getText().toUpperCase())) {
 							
 							ListUserPan.arbreAnnuaire.modifierPrenom(item, prenomTf.getText(),  ListUserPan.arbreAnnuaire.getRaf());
 						}
@@ -104,14 +128,9 @@ public class ModificationScreen extends FlowPane {
 						ListUserPan.arbreAnnuaire.getRaf().seek(0);
 						noeudVersArrayList = noeudVersArrayList.lireNoeudFichierBinVersObjetNoeudBinaire(ListUserPan.arbreAnnuaire.getRaf());
 						ListUserPan.arbreAnnuaire.getRaf().seek(0);
-						ArrayList<Stagiaire> listeStagiaires = noeudVersArrayList.fichierBinVersArrayList(ListUserPan.arbreAnnuaire.getRaf());
-						//ObservableList<Stagiaire> obsListeStagiaires= FXCollections.observableArrayList(listeStagiaires);
-						System.out.println("taille liste ap modif " + listeStagiaires.size());
+						ArrayList<Stagiaire> listeStagiaires = noeudVersArrayList.fichierBinVersArrayList(ListUserPan.arbreAnnuaire.getRaf());				
 						ListS listS2 = new ListS(root, listeStagiaires);
 						root.setCenter(listS2);
-						
-						//Card.getChildren().addAll(Card.nom);
-					
 					} catch (IOException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -119,6 +138,8 @@ public class ModificationScreen extends FlowPane {
 					}
 					}
 				});
+				
+				
 
 	}
 
