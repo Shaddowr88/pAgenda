@@ -44,20 +44,15 @@ import model.NoeudBinaire;
 
 public class ListUserPan extends BorderPane {
 	//private Button btn = new Button("Changer de scene");
-	ArrayList<String> finds;
-	List<NoeudBinaire> arrayList ;
-	
+	private ArrayList<String> finds;
+	private List<NoeudBinaire> arrayList ;
 	private Label label = new Label(" liste d'utilisateur");
-	private int sizeParam = 5;
+
 	public ArrayList<Stagiaire> lUser;
-	ArbreBinaire arbreAnnuaire = new ArbreBinaire();
-	
-//	private Personnel isAdmin;
+	static ArbreBinaire arbreAnnuaire;
 	private Pane screen;
 	public static boolean isAdmin;
-	
-	
-
+	public  ListS ls;
 	
 	
 	public ListUserPan() throws IOException {
@@ -73,25 +68,19 @@ public class ListUserPan extends BorderPane {
 		
 		//Attention, supprimer fichier bin des tests precedents avant de lancer ce main
 
-		ArbreBinaire arbreAnnuaire = new ArbreBinaire() ;
-		
-		
+		arbreAnnuaire = new ArbreBinaire() ;
 		arbreAnnuaire.lectureFichierDon(arbreAnnuaire);
-
 		ArrayList<Stagiaire> listeStagiaires = new ArrayList<Stagiaire>();
 		NoeudBinaire noeudVersArrayList = new NoeudBinaire();
 		arbreAnnuaire.getRaf().seek(0);
 		noeudVersArrayList = noeudVersArrayList.lireNoeudFichierBinVersObjetNoeudBinaire(arbreAnnuaire.getRaf());
 		listeStagiaires = noeudVersArrayList.fichierBinVersArrayList(arbreAnnuaire.getRaf());
-		
 		ObservableList<Stagiaire> obsListeStagiaires= FXCollections.observableArrayList(listeStagiaires);
-		
 		lUser =listeStagiaires;
-		
 		obsListeStagiaires.setAll(lUser);
 		
     	Label lblBottom = new Label(" ");
-        
+
     	Pane topPannel = new Pane();
         topPannel.setPrefSize(800, 100);
        
@@ -283,7 +272,7 @@ public class ListUserPan extends BorderPane {
         
         
         
-        FormulaireAjout addCard=new  FormulaireAjout();
+        FormulaireAjout addCard=new  FormulaireAjout(this);
         
         btnAdd.setOnMouseClicked(e->{
         	
@@ -304,8 +293,11 @@ public class ListUserPan extends BorderPane {
  * Tableau
  */            
         
-        ListS ls=new ListS(this,lUser );
-    	Card c = new Card();
+       ls=new ListS(this,lUser );
+        
+        ls.setMinHeight(100);
+        
+    	Card c = new Card(this);
   
 /**
  * Sections template

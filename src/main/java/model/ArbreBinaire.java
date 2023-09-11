@@ -367,6 +367,20 @@ public class ArbreBinaire {
 		}
 	}
 
+	public ArrayList<Stagiaire> afficherListe() throws IOException{
+		ArrayList<Stagiaire> liste = new ArrayList<>();
+		if (raf.length() == 0) {
+			return null;
+		} else {
+			raf.seek(0);
+			NoeudBinaire racine = new NoeudBinaire();
+				racine =	racine.lireNoeudFichierBinVersObjetNoeudBinaire(raf);
+			liste = racine.fichierBinVersArrayList(raf);
+		}
+		return liste;
+	}
+	
+	
 	public NoeudBinaire rechercheSuccesseur(NoeudBinaire noeudASupprimer) throws IOException 
 	{
 		NoeudBinaire noeudCourant = noeudASupprimer ;
