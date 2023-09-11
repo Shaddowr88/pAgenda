@@ -2,16 +2,13 @@ package views;
 
 
 import java.io.IOException;
-import java.io.RandomAccessFile;
 import java.util.ArrayList;
-
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.transform.Rotate;
 import model.NoeudBinaire;
@@ -70,8 +67,6 @@ public class Card extends VBox {
 		});
 
 	}
-
-
 
 	public String getTitle() {
 		return Title;
@@ -211,19 +206,15 @@ public class Card extends VBox {
 									ListUserPan.arbreAnnuaire.getRaf().seek(0);
 									noeudVersArrayList = noeudVersArrayList.lireNoeudFichierBinVersObjetNoeudBinaire(ListUserPan.arbreAnnuaire.getRaf());
 									ListUserPan.arbreAnnuaire.getRaf().seek(0);
-									ArrayList<Stagiaire> listeStagiaires = noeudVersArrayList.fichierBinVersArrayList(ListUserPan.arbreAnnuaire.getRaf());
-									//ObservableList<Stagiaire> obsListeStagiaires= FXCollections.observableArrayList(listeStagiaires);
+									ArrayList<Stagiaire> listeStagiaires = noeudVersArrayList.fichierBinVersArrayList(ListUserPan.arbreAnnuaire.getRaf());		
 									ListS listS2 = new ListS(root, listeStagiaires);
 									root.setCenter(listS2);
 							} catch (IOException e) {
-								// TODO Auto-generated catch block
+				
 								e.printStackTrace();
 							}
 	        			 
 		 	            	this.getChildren().addAll( nameLabel, premonLabel , vBoxSupprimer );
-		 	            	
-		 	            	//this.getChildren().addAll(Validate);
-		 	   
 		 	            }
 		 	        });
  

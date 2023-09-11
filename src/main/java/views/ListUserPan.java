@@ -2,49 +2,32 @@ package views;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.RandomAccessFile;
 import java.util.ArrayList;
-
 import java.util.List;
-
-
 import metier.Recherche;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
-import javafx.animation.ScaleTransition;
 import javafx.animation.Timeline;
-import javafx.animation.TranslateTransition;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
-import javafx.scene.shape.Rectangle;
-import javafx.scene.transform.Scale;
-import javafx.stage.Stage;
 import javafx.util.Duration;
 import model.ArbreBinaire;
 import model.NoeudBinaire;
-import model.Personnel;
+
 import model.Stagiaire;
-import model.NoeudBinaire;
+
 
 public class ListUserPan extends BorderPane {
 
@@ -63,7 +46,6 @@ public class ListUserPan extends BorderPane {
 		super();	
 		this.isAdmin=false;
 		setPrefSize(400, 200);
-		//setAlignment(Pos.CENTER);
 		setStyle("-fx-background-color:white");
 		label.setTextFill(Color.WHITE);
 		getChildren().add(label);
@@ -79,8 +61,6 @@ public class ListUserPan extends BorderPane {
 		lUser =listeStagiaires;
 		obsListeStagiaires.setAll(lUser);
 
-		Label lblBottom = new Label(" ");
-
 		Pane topPannel = new Pane();
 		topPannel.setPrefSize(800, 100);
 
@@ -93,6 +73,7 @@ public class ListUserPan extends BorderPane {
 		/**
 		 * Subs
 		 */    
+		
 		// logo Isika
 		File file = new File("src/Files/logo_isika_petit2.png");
 		// --> file:/C:/MyImages/myphoto.jpg
@@ -150,7 +131,10 @@ public class ListUserPan extends BorderPane {
 				"-fx-border: 0;"
 						+ "-fx-box-shadow: none;"
 						+ "-fx-background-color: white;"
-				);       
+				); 
+		
+		
+		// click event init Textfield
 
 		searchField.setOnMouseClicked(event -> {
 			if (event.getClickCount() == 1) {
@@ -158,6 +142,8 @@ public class ListUserPan extends BorderPane {
 			}
 			obsListeStagiaires.setAll(lUser);
 		});
+
+		// Enter Keyword event
 
 		searchField.setOnKeyPressed(e ->{
 
@@ -168,7 +154,9 @@ public class ListUserPan extends BorderPane {
 				String search = searchField.getText();       		
 
 				String[] terms = search.split(" ");
-				//System.out.println(search);
+		
+				
+		// system de recherche				
 				StringBuilder formatResearch = new StringBuilder();
 
 				for (String term : terms) {
@@ -189,6 +177,8 @@ public class ListUserPan extends BorderPane {
 					}
 				}
 
+				
+			
 				ArrayList<String> finds = formatResearch2;
 				Recherche r = new Recherche();
 
@@ -213,7 +203,7 @@ public class ListUserPan extends BorderPane {
 
 
 					} catch (IOException e1) {
-						// TODO Auto-generated catch block
+			
 						e1.printStackTrace();
 					}
 					;
@@ -251,7 +241,7 @@ public class ListUserPan extends BorderPane {
 						"-fx-max-height: 30px;"
 				);
 
-
+		// Login Screen
 		LoginView logCard= new LoginView(this);
 
 
@@ -271,7 +261,7 @@ public class ListUserPan extends BorderPane {
 		});
 
 
-
+		// AddStagiaire Screen
 		FormulaireAjout addCard=new  FormulaireAjout(this);
 
 		btnAdd.setOnMouseClicked(e->{
@@ -297,7 +287,7 @@ public class ListUserPan extends BorderPane {
 
 		ls=new ListS(this,lUser );
 
-		//ls.setMinHeight(100);
+		//instance de eéléments de droite;
 
 		Card c = new Card(this);
 
@@ -308,31 +298,10 @@ public class ListUserPan extends BorderPane {
 
 		setTop(head);
 		setCenter(ls);
-
 		setRight(c);
 
-		
-
+	
 	}
-
-	public Label getLabel() {
-		return label;
-	}
-
-	public void setLabel(Label label) {
-		this.label = label;
-	}
-
-	public static boolean isAdmin() {
-		return isAdmin;
-	}
-
-	public static void setAdmin(boolean isAdmin2) {
-		ListUserPan.isAdmin = isAdmin;
-	}
-
-
-
 
 
 }

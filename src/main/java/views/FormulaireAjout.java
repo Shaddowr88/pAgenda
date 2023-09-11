@@ -27,17 +27,21 @@ public class FormulaireAjout extends VBox {
 		this.maTable = new TableView<Stagiaire>();
 		maTable.setEditable(true);
 
-
-
 		//j'ai fini de créer ma table
 
 				VBox formulaireAjout = new VBox();
-				TextField nomTf = new TextField("nom");
-				TextField prenomTf = new TextField("prenom");
-				TextField departementTf = new TextField("département");
-				TextField promotionTf = new TextField("promotion");
-				TextField anneeTf = new TextField("annee");
+				TextField nomTf = clean (new TextField("nom"));
+				TextField prenomTf = clean (new TextField("prenom"));
+				TextField departementTf = clean (new TextField("département"));
+				TextField promotionTf =clean ( new TextField("promotion"));
+				TextField anneeTf =clean ( new TextField("annee"));
 				this.setStyle("-fx-background-color: #f1d278");
+				
+				nomTf.setOnMouseClicked(event -> {
+					if (event.getClickCount() == 1) {
+						nomTf .clear();
+					}
+				});
 
 				Button ajouterStagiaire = new Button("Ajouter");
 				formulaireAjout.getChildren().addAll(nomTf, prenomTf, departementTf,promotionTf,anneeTf,ajouterStagiaire );
@@ -58,7 +62,6 @@ public class FormulaireAjout extends VBox {
 							noeudVersArrayList = noeudVersArrayList.lireNoeudFichierBinVersObjetNoeudBinaire(ListUserPan.arbreAnnuaire.getRaf());
 							ListUserPan.arbreAnnuaire.getRaf().seek(0);
 							ArrayList<Stagiaire> listeStagiaires = noeudVersArrayList.fichierBinVersArrayList(ListUserPan.arbreAnnuaire.getRaf());
-							//ObservableList<Stagiaire> obsListeStagiaires= FXCollections.observableArrayList(listeStagiaires);
 							ListS listS2 = new ListS(root, listeStagiaires);
 							root.setCenter(listS2);
 							
@@ -70,6 +73,17 @@ public class FormulaireAjout extends VBox {
 					}
 				});
 
+	}
+	
+	
+	private TextField clean (TextField field) {
+		
+		field.setOnMouseClicked(event -> {
+			if (event.getClickCount() == 1) {
+				field.clear();
+			}
+		});
+		return field;
 	}
 
 
