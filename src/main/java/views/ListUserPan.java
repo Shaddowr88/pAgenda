@@ -6,8 +6,12 @@ import java.util.ArrayList;
 
 import java.util.List;
 
+
 import metier.Recherche;
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
 import javafx.animation.ScaleTransition;
+import javafx.animation.Timeline;
 import javafx.animation.TranslateTransition;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -34,22 +38,31 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import model.ArbreBinaire;
 import model.NoeudBinaire;
+import model.Personnel;
 import model.Stagiaire;
 import model.NoeudBinaire;
 
 public class ListUserPan extends BorderPane {
-	private Button btn = new Button("Changer de scene");
+	//private Button btn = new Button("Changer de scene");
 	ArrayList<String> finds;
 	List<NoeudBinaire> arrayList ;
 	
 	private Label label = new Label(" liste d'utilisateur");
 	private int sizeParam = 5;
-	
-	ArbreBinaire arbreAnnuaire = new ArbreBinaire();
 	public ArrayList<Stagiaire> lUser;
+	ArbreBinaire arbreAnnuaire = new ArbreBinaire();
+	
+//	private Personnel isAdmin;
+	private Pane screen;
+	public static boolean isAdmin;
+	
+	
+
+	
 	
 	public ListUserPan() throws IOException {
-		super();
+		super();	
+		this.isAdmin=false;
 		setPrefSize(400, 200);
 		//setAlignment(Pos.CENTER);
 		setStyle("-fx-background-color:white");
@@ -62,10 +75,12 @@ public class ListUserPan extends BorderPane {
 
 		ArbreBinaire arbreAnnuaire = new ArbreBinaire() ;
 		
+		
 		arbreAnnuaire.lectureFichierDon(arbreAnnuaire);
 
 		ArrayList<Stagiaire> listeStagiaires = new ArrayList<Stagiaire>();
 		NoeudBinaire noeudVersArrayList = new NoeudBinaire();
+		arbreAnnuaire.getRaf().seek(0);
 		noeudVersArrayList = noeudVersArrayList.lireNoeudFichierBinVersObjetNoeudBinaire(arbreAnnuaire.getRaf());
 		listeStagiaires = noeudVersArrayList.fichierBinVersArrayList(arbreAnnuaire.getRaf());
 		
@@ -76,8 +91,6 @@ public class ListUserPan extends BorderPane {
 		obsListeStagiaires.setAll(lUser);
 		
     	Label lblBottom = new Label(" ");
-    	Label lblRight = new Label (" ");
-    	Label lblCenter = new Label(" ");
         
     	Pane topPannel = new Pane();
         topPannel.setPrefSize(800, 100);
@@ -202,13 +215,22 @@ public class ListUserPan extends BorderPane {
     	    	   for (Stagiaire stagiaire : resultList) {
     	    		   listeStagiairesrecherche.add(stagiaire);
     	    		   }
-    	    	   obsListeStagiaires.setAll(listeStagiairesrecherche );
+    	    	   //obsListeStagiaires.setAll(listeStagiairesrecherche );
+    	    	   lUser = listeStagiairesrecherche;
+    	    	   try {
+					ListS searchResult= new ListS(this, lUser);
+					setCenter(searchResult);
+					
+					
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+    	    	   ;
     	    	   } else 
     	    	   {
     	            searchField.setText("Aucun élément trouvé");
-    	             
-    	             return;
-    	            	
+    	             return;     	
     	            }
     	       } 	
         	}
@@ -218,6 +240,8 @@ public class ListUserPan extends BorderPane {
  * bouton Login
  */  
         
+        // Démarrer la transition
+      
         Button btnLog = new Button("| Log |"); 
         btnLog.setStyle(
                 "-fx-background-radius: 5em; " +
@@ -227,104 +251,74 @@ public class ListUserPan extends BorderPane {
                 "-fx-max-height: 30px;"
         );
         
+        
+        Button btnAdd = new Button("+"); 
+        btnLog.setStyle(
+                "-fx-background-radius: 5em; " +
+                "-fx-min-width: 30px; " +
+                "-fx-min-height: 30px; " +
+                "-fx-max-width: 30px; " +
+                "-fx-max-height: 30px;"
+        );
+        
+        
+        
+        LoginView logCard= new LoginView(this);
+        
+        
+        btnLog.setOnMouseClicked(event -> {		
+    		Pane newContent = logCard;
+    		//logCard.setPrefWidth(400);
+    		setRight(newContent);
+    		
+    		 Duration duration = Duration.seconds(0.33);
+    	        KeyValue keyValue = new KeyValue(logCard.prefWidthProperty(), 400);
+    	        KeyFrame keyFrame = new KeyFrame(duration, keyValue);
+    	        Timeline timeline = new Timeline(keyFrame);
+    				
+    	        timeline.play();
+    	        
+    	  
+    	});
+        
+        
+        
+        FormulaireAjout addCard=new  FormulaireAjout();
+        
+        btnAdd.setOnMouseClicked(e->{
+        	
+        	Pane newContnent = addCard;
+        	setRight(newContnent);
+        	
+        });
+
 /**
  * Contenaire du menu-parametres
  */ 
         
-        head.getChildren().addAll(rectangle,searchContainer, btnLog);
+        head.getChildren().addAll(rectangle,searchContainer,btnAdd,btnLog);
         head.setAlignment(Pos.CENTER);
         head.setMinHeight(90);
         
 /**
  * Tableau
  */            
-      
-        TableView<Stagiaire> table = new TableView<Stagiaire>();
-
-        TableColumn<Stagiaire, String> userlastNameCol //
-        		= new TableColumn<Stagiaire, String>("Nom");
-        		userlastNameCol.prefWidthProperty().bind(table.widthProperty().divide(sizeParam ));
-        		userlastNameCol.setCellValueFactory(new PropertyValueFactory<Stagiaire,String>("nom"));
-
-        TableColumn<Stagiaire, String> userNameCol //
-        		= new TableColumn<Stagiaire, String>("Prénom");
-        		userNameCol.prefWidthProperty().bind(table.widthProperty().divide(sizeParam ));
-        		userNameCol.setCellValueFactory(new PropertyValueFactory<Stagiaire,String>("prenom"));
         
-        TableColumn<Stagiaire, String> DepCol//
-                = new TableColumn<Stagiaire, String>("Département");
-                DepCol.prefWidthProperty().bind(table.widthProperty().divide(sizeParam ));
-                DepCol.setCellValueFactory(new PropertyValueFactory<Stagiaire,String>("departement"));
-                          
-        TableColumn<Stagiaire, String> promoNameCol//
-                = new TableColumn<Stagiaire, String>("Promotion");
-                promoNameCol.prefWidthProperty().bind(table.widthProperty().divide(sizeParam ));               
-                promoNameCol.setCellValueFactory(new PropertyValueFactory<Stagiaire,String>("promotion"));
-                
-        TableColumn<Stagiaire, Integer> YearCol//
-                = new TableColumn<Stagiaire, Integer>("Année");
-                YearCol.prefWidthProperty().bind(table.widthProperty().divide(sizeParam ));
-                YearCol.setCellValueFactory(new PropertyValueFactory<Stagiaire,Integer>("annee"));    
-                YearCol.setStyle(
-                		"-fx-border: 0;"
-                		+ "-fx-box-shadow: none;"
-                		//+ "-fx-background-color: white;"
-                		+ "-fx-font-size:1em;"
-                		);
-                
-        table.getColumns().addAll(userlastNameCol,userNameCol, DepCol, promoNameCol,YearCol); 
-    	table.setItems(obsListeStagiaires);
-     	
-    	Card root = new Card();
-    	root.setPrefWidth(1);
-    	
-   	 	TranslateTransition scaleTransition = new TranslateTransition(Duration.seconds(1),root); 
-   	 	
-    	table.setOnMouseClicked(event -> {
-    	    if (event.getClickCount() == 1) { // Clic simple
-    	        Stagiaire stagiaire = table.getSelectionModel().getSelectedItem();
-    	        if (stagiaire != null) {
-    	        	
-    	        	
-    	        	root.afficher( 
-    	        			stagiaire.getNom(),
-    	        			stagiaire.getPrenom(),
-    	        			stagiaire.getDepartement(),
-    	        			stagiaire.getPromotion(),
-    	        			stagiaire.getAnnee()
-    	        			);
-    	        	 scaleTransition.setToX(40);
-    	        	scaleTransition.play();
-    	        	root.setPrefWidth(400);
-    	            sizeParam = 1;
-    	            
-    	        }
-    	    }
-    	});
-    	
+        ListS ls=new ListS(this,lUser );
+    	Card c = new Card();
+  
 /**
  * Sections template
  */  
+    	
+    	
         setTop(head);
-        setCenter(table);
-        setRight(root);
-        setBottom(lblBottom);
+        setCenter(ls);
+        
+        setRight(c);
+        
+   //  ((ListUserPan)ls.getScene().getRoot()).getS;
 
-		btn.setOnAction(new EventHandler<ActionEvent>() { 
-			@Override
-		public void handle(ActionEvent arg0) {
-		        
-		try {
-			ListUserPan secondPan = new ListUserPan();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		Stage stage = (Stage) ListUserPan.this.getScene().getWindow(); 
-		stage.setScene(getScene());
-		}
-			});
 	}
 
 	public Label getLabel() {
@@ -334,6 +328,15 @@ public class ListUserPan extends BorderPane {
 	public void setLabel(Label label) {
 		this.label = label;
 	}
+
+	public static boolean isAdmin() {
+		return isAdmin;
+	}
+
+	public static void setAdmin(boolean isAdmin2) {
+		ListUserPan.isAdmin = isAdmin;
+	}
+
 	
 	
 	

@@ -11,7 +11,11 @@ import views.ListUserPan;
 /**
  * JavaFX App
  */
+
+
 public class App extends Application {
+	
+	//public static boolean isAdmin=false;
 
     @Override
     public void start(Stage stage)throws Exception  {
@@ -21,6 +25,10 @@ public class App extends Application {
         stage.setTitle("Caller");
         stage.setScene(scene);
         stage.show();
+    }
+    
+    public void openMainWindow(Stage primaryStage) {
+        // Implémentez la logique de la fenêtre principale ici
     }
     
     public static void main(String[] args) {
