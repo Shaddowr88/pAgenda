@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 import java.util.List;
 
+
 import metier.Recherche;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
@@ -42,7 +43,7 @@ import model.Stagiaire;
 import model.NoeudBinaire;
 
 public class ListUserPan extends BorderPane {
-	private Button btn = new Button("Changer de scene");
+	//private Button btn = new Button("Changer de scene");
 	ArrayList<String> finds;
 	List<NoeudBinaire> arrayList ;
 	
@@ -214,7 +215,18 @@ public class ListUserPan extends BorderPane {
     	    	   for (Stagiaire stagiaire : resultList) {
     	    		   listeStagiairesrecherche.add(stagiaire);
     	    		   }
-    	    	   obsListeStagiaires.setAll(listeStagiairesrecherche );
+    	    	   //obsListeStagiaires.setAll(listeStagiairesrecherche );
+    	    	   lUser = listeStagiairesrecherche;
+    	    	   try {
+					ListS searchResult= new ListS(this, lUser);
+					setCenter(searchResult);
+					
+					
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+    	    	   ;
     	    	   } else 
     	    	   {
     	            searchField.setText("Aucun élément trouvé");
@@ -228,8 +240,6 @@ public class ListUserPan extends BorderPane {
  * bouton Login
  */  
         
-       
-
         // Démarrer la transition
       
         Button btnLog = new Button("| Log |"); 
@@ -242,7 +252,18 @@ public class ListUserPan extends BorderPane {
         );
         
         
-        LoginView logCard= new LoginView();
+        Button btnAdd = new Button("+"); 
+        btnLog.setStyle(
+                "-fx-background-radius: 5em; " +
+                "-fx-min-width: 30px; " +
+                "-fx-min-height: 30px; " +
+                "-fx-max-width: 30px; " +
+                "-fx-max-height: 30px;"
+        );
+        
+        
+        
+        LoginView logCard= new LoginView(this);
         
         
         btnLog.setOnMouseClicked(event -> {		
@@ -259,13 +280,12 @@ public class ListUserPan extends BorderPane {
     	        
     	  
     	});
-    	
-        
+
 /**
  * Contenaire du menu-parametres
  */ 
         
-        head.getChildren().addAll(rectangle,searchContainer, btnLog);
+        head.getChildren().addAll(rectangle,searchContainer,btnAdd,btnLog);
         head.setAlignment(Pos.CENTER);
         head.setMinHeight(90);
         
@@ -273,9 +293,7 @@ public class ListUserPan extends BorderPane {
  * Tableau
  */            
         
-        ListS ls=new ListS(this,listeStagiaires );
-        
-     	
+        ListS ls=new ListS(this,lUser );
     	Card c = new Card();
   
 /**
@@ -288,23 +306,8 @@ public class ListUserPan extends BorderPane {
         
         setRight(c);
         
-        setBottom(lblBottom);
+   //  ((ListUserPan)ls.getScene().getRoot()).getS;
 
-		btn.setOnAction(new EventHandler<ActionEvent>() { 
-			@Override
-		public void handle(ActionEvent arg0) {
-		        
-		try {
-			ListUserPan secondPan = new ListUserPan();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		Stage stage = (Stage) ListUserPan.this.getScene().getWindow(); 
-		stage.setScene(getScene());
-		}
-			});
 	}
 
 	public Label getLabel() {

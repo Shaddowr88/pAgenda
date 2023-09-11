@@ -35,7 +35,7 @@ public class LoginView extends VBox {
 
 	// Dans le constructeur je crée un panneau, Trois HBox que je range dans une
 	// VBox et les stylise respectivement
-	public LoginView() {
+	public LoginView(ListUserPan listUserPan ) {
 		super();
 
 		// Top pane
@@ -84,12 +84,9 @@ public class LoginView extends VBox {
 			public void handle(ActionEvent event) {
 				
 				for (int i = 0; i < ADMIN_USER.length; i++) {
-					if (loginTxF1.getText().equals(ADMIN_USER[i]) && passwordPWF.getText().equals("admin")) {
-						
-						isAdmin=true;
-						this.getItems().clear();
-						
-						
+					if (loginTxF1.getText().equals(ADMIN_USER[i]) && passwordPWF.getText().equals("admin")) {					
+						ListUserPan.isAdmin=true;
+						listUserPan.setRight(null);
 					} 
 
 				}

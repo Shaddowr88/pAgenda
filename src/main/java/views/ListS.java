@@ -40,7 +40,7 @@ public class ListS extends Pane {
 	this.listUserPan = listUserPan;
 	arbreAnnuaire.lectureFichierDon(arbreAnnuaire);
 	ObservableList<Stagiaire> obsListeStagiaires= FXCollections.observableArrayList(listeStagiaires);
-	lUser =listeStagiaires;
+	//lUser =listeStagiaires;
 	
 	obsListeStagiaires.setAll(listeStagiaires);
 

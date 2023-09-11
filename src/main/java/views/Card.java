@@ -102,7 +102,9 @@ public class Card extends VBox {
 	        ModificationScreen f = new ModificationScreen(this, item); 
 	        Button mofierInfoStagiaire = new Button("Modifier");
 	        Button deleteInfoStagiaire = new Button("poubelle");
+	        Button annulerInfoStagiaire = new Button("Annuler");
 	        HBox Validate = new HBox();
+	        
      
 	      //  System.out.println(" "+nameLabel + premonLabel +yearLabel+promotionLabel+nameDepartement );
 	       // this.getChildren().addAll(nameLabel, premonLabel ,yearLabel,nameDepartement, promotionLabel);
@@ -111,21 +113,20 @@ public class Card extends VBox {
 	        	 
 	        	 this.getChildren().clear();
 	        		 this.getChildren().addAll(nameLabel, premonLabel ,yearLabel,nameDepartement, promotionLabel);
-	        	 deleteInfoStagiaire.setOnMouseClicked(event -> {
+
+	        		 deleteInfoStagiaire.setOnMouseClicked(event -> {
 	        		 this.getChildren().clear();
 	        		 this.getChildren().addAll(nameLabel, premonLabel ,yearLabel,nameDepartement, promotionLabel);
 		 	            
 	        		 if (event.getClickCount() == 1) {
+	        			 	this.getChildren().clear();
 		 	            	Validate.getChildren().addAll();
-		 	            	this.getChildren().clear();
+		 	            	
 		 	            	//this.getChildren().addAll(Validate);
 		 	   
 		 	            }
 		 	        });
-	        	 
-	        	 
-	        	 
-	        	 
+	 
 	         } else {
 	        	 this.getChildren().addAll(nameLabel, premonLabel ,yearLabel,nameDepartement, promotionLabel,mofierInfoStagiaire, deleteInfoStagiaire);
 	        	 mofierInfoStagiaire.setOnMouseClicked(event -> {

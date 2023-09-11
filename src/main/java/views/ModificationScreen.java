@@ -76,14 +76,10 @@ public class ModificationScreen extends FlowPane {
 						if (anneeTf.getText()==null) { anneeTf.setText(" veuiller renseigner le Année"); validcount++;}
 					
 					System.out.println(validcount);
-					 nomTf.textProperty().addListener((observable, oldValue, newValue) -> {
-						    // Filtrer les espaces en remplaçant les espaces par une chaîne vide
-						    String filteredValue = newValue.replaceAll("\\s+", ""); // \\s+ correspond à un ou plusieurs espaces
-						    nomTf.setText(filteredValue); // Mettez à jour le contenu du TextField
-						});
+					 
 					try {
 						
-						//modif.modifierNom(item, nomTf.getText(),  modif.getRaf());
+						modif.modifierNom(item, nomTf.getText(),  modif.getRaf());
 						modif.modifierPrenom(item, prenomTf.getText(),  modif.getRaf());
 						modif.modifierDepartement(item, departementTf.getText() ,  modif.getRaf());
 						modif.modifierPromotion(item, promotionTf.getText(),  modif.getRaf());

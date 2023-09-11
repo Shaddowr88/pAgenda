@@ -406,7 +406,7 @@ public class ArbreBinaire {
 	 System.out.println(ancienStagiaire);
 	 //2ème étape : on créé un nouveauStagiaire avec le nouveau nom souhaité
 	 Stagiaire nouveauStagiaire = new Stagiaire(newNom, stagiaire.getPrenom(), stagiaire.getDepartement(), stagiaire.getPromotion(), stagiaire.getAnnee());
-	 nouveauStagiaire.setNom(NoeudBinaire.getNomLong(nouveauStagiaire));
+	// nouveauStagiaire.setNom(NoeudBinaire.getNomLong(nouveauStagiaire));
 	 System.out.println(nouveauStagiaire);
 	 //3ème étape : on applique la méthode de suppression au noeud concerné
 	 supprimerStagiaire(ancienStagiaire,raf);
