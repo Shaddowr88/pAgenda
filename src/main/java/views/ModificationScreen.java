@@ -75,24 +75,24 @@ public class ModificationScreen extends FlowPane {
 						if (promotionTf.getText()==null) { promotionTf.setText(" veuiller renseigner la Promotion"); validcount++;}
 						if (anneeTf.getText()==null) { anneeTf.setText(" veuiller renseigner le Année"); validcount++;}
 					
-					System.out.println(validcount);
+					
 					 
+					
+					if (validcount<0) {
+					
 					try {
 						
-						modif.modifierNom(item, nomTf.getText(),  modif.getRaf());
+						
 						modif.modifierPrenom(item, prenomTf.getText(),  modif.getRaf());
 						modif.modifierDepartement(item, departementTf.getText() ,  modif.getRaf());
 						modif.modifierPromotion(item, promotionTf.getText(),  modif.getRaf());
 						modif.modifierAnnee(item,Integer.valueOf(anneeTf.getText()),modif.getRaf());
-
+						modif.modifierNom(item, nomTf.getText(),  modif.getRaf());
 					} catch (IOException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
-					
-					
-					
-
+					}
 					}
 				});
 

@@ -280,6 +280,17 @@ public class ListUserPan extends BorderPane {
     	        
     	  
     	});
+        
+        
+        
+        FormulaireAjout addCard=new  FormulaireAjout();
+        
+        btnAdd.setOnMouseClicked(e->{
+        	
+        	Pane newContnent = addCard;
+        	setRight(newContnent);
+        	
+        });
 
 /**
  * Contenaire du menu-parametres

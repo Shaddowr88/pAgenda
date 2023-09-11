@@ -18,7 +18,7 @@ public class FormulaireAjout extends VBox {
 	private Stagiaire maPromo;
 	private TableView<Stagiaire> maTable;
 
-	public FormulaireAjout(Stagiaire stagiaire) {
+	public FormulaireAjout() {
 		super();
 
 		this.maPromo = maPromo;
@@ -48,7 +48,7 @@ public class FormulaireAjout extends VBox {
 						ArbreBinaire ajout = new ArbreBinaire();
 						Stagiaire nouveauStagiaire = new Stagiaire(nomTf.getText(), prenomTf.getText(),
 								departementTf.getText(),promotionTf.getText(),Integer.valueOf(anneeTf.getText()));
-							System.out.println();
+							//System.out.println();
 						try {
 							ajout.ajouterStagiaireDeFichierDonAFichierBin(nouveauStagiaire);
 						} catch (IOException e) {

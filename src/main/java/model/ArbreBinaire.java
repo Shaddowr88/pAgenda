@@ -21,11 +21,11 @@ public class ArbreBinaire {
 	private RandomAccessFile raf = null ;
 	static boolean premierNoeudCreeOuNon = false ;
 	private final String BIN_PATH = "src/Files/annuaire.bin";
-	private final String DON_PATH = ".\\src\\Files\\STAGIAIRESTEST.DON";
+	private final String DON_PATH = "src/Files/STAGIAIRESTEST.DON";
 	private static int calculIndex = 0 ; 
 	private static int indexPere = 0 ;
 	private static int indexFils = 0 ;
-
+	
 	// contructeur
 	public ArbreBinaire(NoeudBinaire premierNoeud) 
 	{
