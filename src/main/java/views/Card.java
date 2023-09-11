@@ -1,20 +1,15 @@
 package views;
 
-import java.util.List;
 
-import cda26.projet1.agenda.App;
-import javafx.animation.ScaleTransition;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.scene.Node;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.Labeled;
-import javafx.scene.layout.Pane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.transform.Rotate;
-import javafx.scene.transform.Scale;
-import javafx.util.Duration;
-import model.Personnel;
+
+import model.Stagiaire;
 
 public class Card extends VBox {
 	
@@ -25,11 +20,23 @@ public class Card extends VBox {
 	private Label annee;
 	private Label depart;
 	private Label promo;
-	
+    private ModificationScreen f; 
+    private Button mofierInfoStagiaire;
+    private Button deleteInfoStagiaire;
 
+    
+    HBox Validate = new HBox();
+	
+	 
+	
+	Boolean Log = ListUserPan.isAdmin;
 	public Card () {
 		
-		Boolean Log = LoginView.isAdmin;
+		
+		
+		
+		
+		///System.out.println(Log);
 		BoutonSupprimer btns=new BoutonSupprimer();
 
 		this.nom = new Label("");
@@ -37,15 +44,19 @@ public class Card extends VBox {
 		this.annee = new Label("");
 		this.depart = new Label("");
 		this.promo = new Label("");
+	    this.mofierInfoStagiaire = new Button("Modifier");
+	    this.deleteInfoStagiaire = new Button("poubelle");
+	     
+	     
+	     HBox Validate = new HBox();
+		
+		
 		
 		btns.getTransforms().add(new Rotate(45, 50, 45));
 
-		this.getChildren().addAll(this.nom, this.premon,this.annee,this.depart, this.promo,btns);
-		
-		 System.out.println(Log);
+		// System.out.println(Log);
 		this.setStyle("-fx-background-color:cyan");
 		btns.setOnAction(new EventHandler<ActionEvent>() {
-		
 			@Override
             public void handle(ActionEvent event) {
                 // Réponse lorsque le bouton est cliqué
@@ -60,13 +71,10 @@ public class Card extends VBox {
 	public String getTitle() {
 		return Title;
 	}
-
-
-
+	
 	public void setTitle(String title) {
 		this.Title = title;
 	}
-	
 	
 	 public void afficher(String nom, String prenom, String année, String dep, int i) {
 		
@@ -79,10 +87,61 @@ public class Card extends VBox {
 		 
 		 
 	 }
+	 
+	 
+	 public void showDetails(Stagiaire item) {
+	        // Effacez le contenu précédent de la carte
+	        this.getChildren().clear();
+
+	        // Affichez les détails de l'élément sélectionné dans la carte
+	        Label nameLabel = new Label(item.getNom());
+	        Label premonLabel = new Label(item.getPrenom());
+	        Label yearLabel = new Label(Integer.toString(item.getAnnee()));
+	        Label promotionLabel = new Label(item.getPromotion());
+	        Label nameDepartement = new Label(item.getDepartement());
+	        ModificationScreen f = new ModificationScreen(this, item); 
+	        Button mofierInfoStagiaire = new Button("Modifier");
+	        Button deleteInfoStagiaire = new Button("poubelle");
+	        HBox Validate = new HBox();
+     
+	       // System.out.println(" "+nameLabel + premonLabel +yearLabel+promotionLabel+nameDepartement );
+	       // this.getChildren().addAll(nameLabel, premonLabel ,yearLabel,nameDepartement, promotionLabel);
+	        
+	         if (!(Log == true)) {
+	        	 
+	        	 
+	        	 deleteInfoStagiaire.setOnMouseClicked(event -> {
+	        		 this.getChildren().clear();
+		 	            if (event.getClickCount() == 1) {
+		 	            	Validate.getChildren().addAll();
+		 	            	this.getChildren().clear();
+		 	            	this.getChildren().addAll(Validate);
+		 	            }
+		 	        });
+	        	 
+	        	 
+	        	 
+	        	 
+	         } else {
+	        	 this.getChildren().addAll(nameLabel, premonLabel ,yearLabel,nameDepartement, promotionLabel,mofierInfoStagiaire, deleteInfoStagiaire);
+	        	 mofierInfoStagiaire.setOnMouseClicked(event -> {
+	 	            if (event.getClickCount() == 1) {
+	 	            	this.getChildren().clear();
+	 	            	this.getChildren().addAll(f);
+	 	            }
+	 	           
+	 	        });
+ 
+	         }
+	        
+	        
+	        
+	        
+	    }
 
 
 
-
+	
 
 
 

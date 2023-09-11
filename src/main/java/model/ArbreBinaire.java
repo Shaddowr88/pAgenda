@@ -398,86 +398,89 @@ public class ArbreBinaire {
 
 		return noeudCourant ;
 	}
-
 	//Methode pour modifier le nom d'un stagiaire depuis le front
-	//1ère étape : on récupère le stagiaire
-	//2ème étape : on récupère l'emplacement du noeud à supprimer dans le fichier binaire
-	//3ème étape : on applique la méthode de suppression au noeud concerné
-	//4ème étape : on modifie le nom du stagiaire dans le stagiaire récupéré depuis le front avec le nouveau nom passé en argument
-	//5ème étape : on lui passe la méthode getNomLong()
-	//6ème étape : on ajoue le stagiaire dan sle fichier bin en tant que noeudBinaire avec la méthode ajouterNoeud.
+		public void modifierNom(Stagiaire stagiaire, String newNom, RandomAccessFile raf) throws IOException
+		{
+	 //1ère étape : on récupère le stagiaire
+	 Stagiaire ancienStagiaire = new Stagiaire(stagiaire.getNom(), stagiaire.getPrenom(), stagiaire.getDepartement(), stagiaire.getPromotion(), stagiaire.getAnnee());
+	 System.out.println(ancienStagiaire);
+	 //2ème étape : on créé un nouveauStagiaire avec le nouveau nom souhaité
+	 Stagiaire nouveauStagiaire = new Stagiaire(newNom, stagiaire.getPrenom(), stagiaire.getDepartement(), stagiaire.getPromotion(), stagiaire.getAnnee());
+	 nouveauStagiaire.setNom(NoeudBinaire.getNomLong(nouveauStagiaire));
+	 System.out.println(nouveauStagiaire);
+	 //3ème étape : on applique la méthode de suppression au noeud concerné
+	 supprimerStagiaire(ancienStagiaire,raf);
+	 //4ème étape : on ajoute le stagiaire avec le nouveauNom dans le fichier bin en tant que noeudBinaire avec la méthode ajouterNoeud.
+	 ajouterStagiaireDeFichierDonAFichierBin(nouveauStagiaire);
+		}
+
+		// Methode pour modifier le prenom d'un stagiaire depuis le front
+		public void modifierPrenom(Stagiaire stagiaire, String newPrenom, RandomAccessFile raf) throws IOException
+		{
+			//Je récupère le nouveau prenom du stagiaire et je lui impose la méthode PrenomLong pour le formater selon la taille max dans le fichier binaire
+			stagiaire.prenom = newPrenom;
+			newPrenom = NoeudBinaire.getPrenomLong(stagiaire);
+			//Je cherche le noeud contenant le stagiaire dans le fichier binaire
+			int indexNoeudAModifier = rechercheNoeudASupprimer(stagiaire, 0) ;
+			//Je place le curseur à l'endroit dans le noeud où est stocké le prenom du stagiaire
+			raf.seek((indexNoeudAModifier * NoeudBinaire.TAILLE_MAX_NOEUD) + (Stagiaire.TAILLE_OCTET_NOM));
+			//Je remplace le prenom actuel en écrivant le nouveau prenom donné en argument
+			raf.writeChars(newPrenom);
+		}
 
 
-	// Methode pour modifier le prenom d'un stagiaire depuis le front
-	public void modifierPrenom(Stagiaire stagiaire, String newPrenom, RandomAccessFile raf) throws IOException
-	{
-		//Je récupère le nouveau prenom du stagiaire et je lui impose la méthode PrenomLong pour le formater selon la taille max dans le fichier binaire
-		stagiaire.prenom = newPrenom;
-		newPrenom = NoeudBinaire.getPrenomLong(stagiaire);
-		//Je cherche le noeud contenant le stagiaire dans le fichier binaire
-		int indexNoeudAModifier = rechercheNoeudASupprimer(stagiaire, 0) ;
-		//Je place le curseur à l'endroit dans le noeud où est stocké le prenom du stagiaire
-		raf.seek((indexNoeudAModifier * NoeudBinaire.TAILLE_MAX_NOEUD) + (Stagiaire.TAILLE_OCTET_NOM));
-		//Je remplace le prenom actuel en écrivant le nouveau prenom donné en argument
-		raf.writeChars(newPrenom);
-	}
+		// Methode pour modifier le Departement d'un stagiaire depuis le front
+		public void modifierDepartement(Stagiaire stagiaire, String newDepartement, RandomAccessFile raf) throws IOException
+		{
+			//Je récupère le nouveau departement du stagiaire et je lui impose la méthode DepartementLong pour le formater selon la taille max dans le fichier binaire
+			stagiaire.departement = newDepartement;
+			newDepartement = NoeudBinaire.getDepartementLong(stagiaire);
+			//Je cherche le noeud contenant le stagiaire dans le fichier binaire
+			int indexNoeudAModifier = rechercheNoeudASupprimer(stagiaire, 0) ;
+			//Je place le curseur à l'endroit dans le noeud où est stocké le prenom du stagiaire
+			raf.seek((indexNoeudAModifier * NoeudBinaire.TAILLE_MAX_NOEUD) + (Stagiaire.TAILLE_OCTET_NOM*2));
+			//Je remplace le departement actuel en écrivant le nouveau departement donné en argument
+			raf.writeChars(newDepartement);
+		}
+
+		// Methode pour modifier la Promotion d'un stagiaire depuis le front
+		public void modifierPromotion(Stagiaire stagiaire, String newPromotion, RandomAccessFile raf) throws IOException
+		{
+			//Je récupère la nouvelle promotion du stagiaire et je lui impose la méthode PromotionLong pour le formater selon la taille max dans le fichier binaire
+			stagiaire.promotion = newPromotion;
+			newPromotion = NoeudBinaire.getPromoLong(stagiaire);
+			//Je cherche le noeud contenant le stagiaire dans le fichier binaire
+			int indexNoeudAModifier = rechercheNoeudASupprimer(stagiaire, 0) ;
+			//Je place le curseur à l'endroit dans le noeud où est stocké le prenom du stagiaire
+			raf.seek((indexNoeudAModifier * NoeudBinaire.TAILLE_MAX_NOEUD) + (Stagiaire.TAILLE_OCTET_NOM*2) + (Stagiaire.TAILLE_OCTET_DPT));
+			//Je remplace la promotion actuelle en écrivant la nouvelle donné en argument
+			raf.writeChars(newPromotion);
+		}
+
+		// Methode pour modifier l'année d'un stagiaire depuis le front
+		public void modifierAnnee(Stagiaire stagiaire, int newAnnee, RandomAccessFile raf) throws IOException
+		{
+			//Je cherche le noeud contenant le stagiaire dans le fichier binaire
+			int indexNoeudAModifier = rechercheNoeudASupprimer(stagiaire, 0) ;
+			//Je place le curseur à l'endroit dans le noeud où est stocké le prenom du stagiaire
+			raf.seek((indexNoeudAModifier * NoeudBinaire.TAILLE_MAX_NOEUD) + (Stagiaire.TAILLE_OCTET_NOM*2) + (Stagiaire.TAILLE_OCTET_DPT)+(Stagiaire.TAILLE_OCTET_PROMO));
+			//Je remplace l'année actuelle en écrivant la nouvelle donné en argument
+			raf.writeInt(newAnnee);
+		}
 
 
-	// Methode pour modifier le Departement d'un stagiaire depuis le front
-	public void modifierDepartement(Stagiaire stagiaire, String newDepartement, RandomAccessFile raf) throws IOException
-	{
-		//Je récupère le nouveau departement du stagiaire et je lui impose la méthode DepartementLong pour le formater selon la taille max dans le fichier binaire
-		stagiaire.departement = newDepartement;
-		newDepartement = NoeudBinaire.getDepartementLong(stagiaire);
-		//Je cherche le noeud contenant le stagiaire dans le fichier binaire
-		int indexNoeudAModifier = rechercheNoeudASupprimer(stagiaire, 0) ;
-		//Je place le curseur à l'endroit dans le noeud où est stocké le prenom du stagiaire
-		raf.seek((indexNoeudAModifier * NoeudBinaire.TAILLE_MAX_NOEUD) + (Stagiaire.TAILLE_OCTET_NOM*2));
-		//Je remplace le departement actuel en écrivant le nouveau departement donné en argument
-		raf.writeChars(newDepartement);
-	}
-
-	// Methode pour modifier la Promotion d'un stagiaire depuis le front
-	public void modifierPromotion(Stagiaire stagiaire, String newPromotion, RandomAccessFile raf) throws IOException
-	{
-		//Je récupère la nouvelle promotion du stagiaire et je lui impose la méthode PromotionLong pour le formater selon la taille max dans le fichier binaire
-		stagiaire.promotion = newPromotion;
-		newPromotion = NoeudBinaire.getPromoLong(stagiaire);
-		//Je cherche le noeud contenant le stagiaire dans le fichier binaire
-		int indexNoeudAModifier = rechercheNoeudASupprimer(stagiaire, 0) ;
-		//Je place le curseur à l'endroit dans le noeud où est stocké le prenom du stagiaire
-		raf.seek((indexNoeudAModifier * NoeudBinaire.TAILLE_MAX_NOEUD) + (Stagiaire.TAILLE_OCTET_NOM*2) + (Stagiaire.TAILLE_OCTET_DPT));
-		//Je remplace la promotion actuelle en écrivant la nouvelle donné en argument
-		raf.writeChars(newPromotion);
-	}
-
-	// Methode pour modifier l'année d'un stagiaire depuis le front
-	public void modifierAnnee(Stagiaire stagiaire, int newAnnee, RandomAccessFile raf) throws IOException
-	{
-		//Je cherche le noeud contenant le stagiaire dans le fichier binaire
-		int indexNoeudAModifier = rechercheNoeudASupprimer(stagiaire, 0) ;
-		//Je place le curseur à l'endroit dans le noeud où est stocké le prenom du stagiaire
-		raf.seek((indexNoeudAModifier * NoeudBinaire.TAILLE_MAX_NOEUD) + (Stagiaire.TAILLE_OCTET_NOM*2) + (Stagiaire.TAILLE_OCTET_DPT)+(Stagiaire.TAILLE_OCTET_PROMO));
-		//Je remplace l'année actuelle en écrivant la nouvelle donné en argument
-		raf.writeInt(newAnnee);
-	}
-
-
-	//methode test d'affichage console  
-	public void testLecture() throws IOException 
-	{
-		int nbNoeud = (int)raf.length()/NoeudBinaire.TAILLE_MAX_NOEUD;
-		NoeudBinaire noeud = new NoeudBinaire();
-		System.out.println("il y a " + nbNoeud + " noeuds") ;
-		raf.seek(0);
-		for(int i =0; i < nbNoeud; i++) {
-			NoeudBinaire courant = noeud.lireNoeudFichierBinVersObjetNoeudBinaire(raf);
-			System.out.println(courant);
+		//methode test d'affichage console  
+		public void testLecture() throws IOException 
+		{
+			int nbNoeud = (int)raf.length()/NoeudBinaire.TAILLE_MAX_NOEUD;
+			NoeudBinaire noeud = new NoeudBinaire();
+			System.out.println("il y a " + nbNoeud + " noeuds") ;
+			raf.seek(0);
+			for(int i =0; i < nbNoeud; i++) {
+				NoeudBinaire courant = noeud.lireNoeudFichierBinVersObjetNoeudBinaire(raf);
+				System.out.println(courant);
+			}
 		}
 	}
-}
-
-
-
 
 

@@ -272,83 +272,21 @@ public class ListUserPan extends BorderPane {
 /**
  * Tableau
  */            
-      
-        TableView<Stagiaire> table = new TableView<Stagiaire>();
-
-        TableColumn<Stagiaire, String> userlastNameCol //
-        		= new TableColumn<Stagiaire, String>("Nom");
-        		userlastNameCol.prefWidthProperty().bind(table.widthProperty().divide(sizeParam ));
-        		userlastNameCol.setCellValueFactory(new PropertyValueFactory<Stagiaire,String>("nom"));
-
-        TableColumn<Stagiaire, String> userNameCol //
-        		= new TableColumn<Stagiaire, String>("Prénom");
-        		userNameCol.prefWidthProperty().bind(table.widthProperty().divide(sizeParam ));
-        		userNameCol.setCellValueFactory(new PropertyValueFactory<Stagiaire,String>("prenom"));
         
-        TableColumn<Stagiaire, String> DepCol//
-                = new TableColumn<Stagiaire, String>("Département");
-                DepCol.prefWidthProperty().bind(table.widthProperty().divide(sizeParam ));
-                DepCol.setCellValueFactory(new PropertyValueFactory<Stagiaire,String>("departement"));
-                          
-        TableColumn<Stagiaire, String> promoNameCol//
-                = new TableColumn<Stagiaire, String>("Promotion");
-                promoNameCol.prefWidthProperty().bind(table.widthProperty().divide(sizeParam ));               
-                promoNameCol.setCellValueFactory(new PropertyValueFactory<Stagiaire,String>("promotion"));
-                
-        TableColumn<Stagiaire, Integer> YearCol//
-                = new TableColumn<Stagiaire, Integer>("Année");
-                YearCol.prefWidthProperty().bind(table.widthProperty().divide(sizeParam ));
-                YearCol.setCellValueFactory(new PropertyValueFactory<Stagiaire,Integer>("annee"));    
-                YearCol.setStyle(
-                		"-fx-border: 0;"
-                		+ "-fx-box-shadow: none;"
-                		//+ "-fx-background-color: white;"
-                		+ "-fx-font-size:1em;"
-                		);
-                
-        table.getColumns().addAll(userlastNameCol,userNameCol, DepCol, promoNameCol,YearCol); 
-    	table.setItems(obsListeStagiaires);
+        ListS ls=new ListS(this,listeStagiaires );
+        
      	
-    	Card carteStagiaire = new Card();
-    	TranslateTransition scaleTransition = new TranslateTransition(Duration.seconds(1),carteStagiaire); 
-    	carteStagiaire.setPrefWidth(1);
-    	table.setOnMouseClicked(event -> {		
-    	
-    		KeyValue keyValue = new KeyValue(carteStagiaire.prefWidthProperty(), 400);
-    		Duration duration = Duration.seconds(0.33);
-    		KeyFrame keyFrame = new KeyFrame(duration, keyValue);
-    	    Timeline timeline = new Timeline(keyFrame);
-    	   
-    	    if (event.getClickCount() == 1) { 
-    	    	Stagiaire stagiaire = table.getSelectionModel().getSelectedItem();
-    	        if (stagiaire != null) {  	
-    	        	carteStagiaire.afficher( 
-    	        			stagiaire.getNom(),
-    	        			stagiaire.getPrenom(),
-    	        			stagiaire.getDepartement(),
-    	        			stagiaire.getPromotion(),
-    	        			stagiaire.getAnnee()
-    	        			);
-    	        	Pane newContent = carteStagiaire;
-    	    		setRight(newContent);
-    	    		scaleTransition.setToX(40);
-    	        	scaleTransition.play();
-    	        	timeline.play();
-    	            sizeParam = 1;
-    	            carteStagiaire.setPrefWidth(400); 
-    	        } 
-    	    }
-    	});
-    	
+    	Card c = new Card();
+  
 /**
  * Sections template
  */  
     	
     	
         setTop(head);
-        setCenter(table);
+        setCenter(ls);
         
-        setRight(screen);
+        setRight(c);
         
         setBottom(lblBottom);
 
