@@ -1,8 +1,10 @@
 package views;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 
@@ -11,20 +13,20 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.FlowPane;
 import model.ArbreBinaire;
+import model.NoeudBinaire;
 import model.Stagiaire;
 
 public class ModificationScreen extends FlowPane {
 	private Stagiaire maPromo;
 	private TableView<Stagiaire> maTable;
 
-	public ModificationScreen(Card Card,Stagiaire item) {
+
+	public ModificationScreen(Card Card,Stagiaire item, ListUserPan root) {
 		super();
 
 		this.maPromo = maPromo;
 		this.maTable = new TableView<Stagiaire>();
 		maTable.setEditable(true);
-
-
 
 		//j'ai fini de créer ma table
 
@@ -34,9 +36,6 @@ public class ModificationScreen extends FlowPane {
 				TextField departementTf = new TextField(item.getDepartement());
 				TextField promotionTf = new TextField(item.getPromotion());
 				TextField anneeTf = new TextField(Integer.toString(item.getAnnee()));
-
-
-				
 				Button mofierInfoStagiaire = new Button("Modifier");
 				
 				this.getChildren().addAll(nomTf, prenomTf, departementTf,promotionTf,anneeTf,mofierInfoStagiaire);
@@ -56,16 +55,15 @@ public class ModificationScreen extends FlowPane {
 						});
 						
 						
-						
 				mofierInfoStagiaire.setOnAction(new EventHandler<ActionEvent>() {
 
 					public void handle(ActionEvent event) {
 						Stagiaire nouveauStagiaire = new Stagiaire(nomTf.getText(), prenomTf.getText(), departementTf.getText(),
 								promotionTf.getText(), Integer.valueOf(anneeTf.getText()));
-						Card.getChildren().addAll(mofierInfoStagiaire);
-					System.out.println(nouveauStagiaire);
+						//Card.getChildren().addAll(mofierInfoStagiaire);
+					//System.out.println(nouveauStagiaire);
 					
-					ArbreBinaire modif = new ArbreBinaire();
+					
 					
 					int validcount=0;
 					
@@ -75,19 +73,43 @@ public class ModificationScreen extends FlowPane {
 						if (promotionTf.getText()==null) { promotionTf.setText(" veuiller renseigner la Promotion"); validcount++;}
 						if (anneeTf.getText()==null) { anneeTf.setText(" veuiller renseigner le Année"); validcount++;}
 					
-					
-					 
-					
-					if (validcount<0) {
+					if (validcount==0) {
 					
 					try {
+
+						if(!item.getPrenom().equals(prenomTf.getText())) {
+							
+							ListUserPan.arbreAnnuaire.modifierPrenom(item, prenomTf.getText(),  ListUserPan.arbreAnnuaire.getRaf());
+						}
+						if(!item.getDepartement().equals(departementTf.getText())) {
+							
+							ListUserPan.arbreAnnuaire.modifierDepartement(item, departementTf.getText() ,  ListUserPan.arbreAnnuaire.getRaf());
+						}
+						if(!item.getPromotion().equals(promotionTf.getText())) {
+							
+							ListUserPan.arbreAnnuaire.modifierPromotion(item, promotionTf.getText(), ListUserPan.arbreAnnuaire.getRaf());
+						}
+						if(item.getAnnee()== Integer.valueOf(anneeTf.getText())) {
+							
+							ListUserPan.arbreAnnuaire.modifierAnnee(item,Integer.valueOf(anneeTf.getText()),ListUserPan.arbreAnnuaire.getRaf());
+						}
+						if(!item.getNom().equals(nomTf.getText())) {
+							
+							ListUserPan.arbreAnnuaire.modifierNom(item, nomTf.getText(),  ListUserPan.arbreAnnuaire.getRaf());
+						}
 						
+						NoeudBinaire noeudVersArrayList = new NoeudBinaire();
+						ListUserPan.arbreAnnuaire.getRaf().seek(0);
+						noeudVersArrayList = noeudVersArrayList.lireNoeudFichierBinVersObjetNoeudBinaire(ListUserPan.arbreAnnuaire.getRaf());
+						ListUserPan.arbreAnnuaire.getRaf().seek(0);
+						ArrayList<Stagiaire> listeStagiaires = noeudVersArrayList.fichierBinVersArrayList(ListUserPan.arbreAnnuaire.getRaf());
+						//ObservableList<Stagiaire> obsListeStagiaires= FXCollections.observableArrayList(listeStagiaires);
+						System.out.println("taille liste ap modif " + listeStagiaires.size());
+						ListS listS2 = new ListS(root, listeStagiaires);
+						root.setCenter(listS2);
 						
-						modif.modifierPrenom(item, prenomTf.getText(),  modif.getRaf());
-						modif.modifierDepartement(item, departementTf.getText() ,  modif.getRaf());
-						modif.modifierPromotion(item, promotionTf.getText(),  modif.getRaf());
-						modif.modifierAnnee(item,Integer.valueOf(anneeTf.getText()),modif.getRaf());
-						modif.modifierNom(item, nomTf.getText(),  modif.getRaf());
+						//Card.getChildren().addAll(Card.nom);
+					
 					} catch (IOException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();

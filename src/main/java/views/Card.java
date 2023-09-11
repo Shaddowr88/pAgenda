@@ -15,7 +15,7 @@ public class Card extends VBox {
 	
 	String Title;	
 	
-	private Label nom;
+	public Label nom;
 	private Label premon;
 	private Label annee;
 	private Label depart;
@@ -23,6 +23,7 @@ public class Card extends VBox {
     private ModificationScreen f; 
     private Button mofierInfoStagiaire;
     private Button deleteInfoStagiaire;
+    private ListUserPan root;
 
     
     HBox Validate = new HBox();
@@ -30,12 +31,12 @@ public class Card extends VBox {
 	 
 	
 	Boolean Log = ListUserPan.isAdmin;
-	public Card () {
+	public Card (ListUserPan root) {
 		
 		
 		
 		
-		
+		this.root =root;
 		///System.out.println(Log);
 		BoutonSupprimer btns=new BoutonSupprimer();
 
@@ -99,7 +100,7 @@ public class Card extends VBox {
 	        Label yearLabel = new Label(Integer.toString(item.getAnnee()));
 	        Label promotionLabel = new Label(item.getPromotion());
 	        Label nameDepartement = new Label(item.getDepartement());
-	        ModificationScreen f = new ModificationScreen(this, item); 
+	        ModificationScreen f = new ModificationScreen(this, item,this.root); 
 	        Button mofierInfoStagiaire = new Button("Modifier");
 	        Button deleteInfoStagiaire = new Button("poubelle");
 	        Button annulerInfoStagiaire = new Button("Annuler");

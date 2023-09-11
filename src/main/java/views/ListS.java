@@ -26,19 +26,21 @@ public class ListS extends Pane {
 	private Label label = new Label(" liste d'utilisateur");
 	private int sizeParam = 5;
 	public ArrayList<Stagiaire> lUser;
-	ArbreBinaire arbreAnnuaire = new ArbreBinaire();
-	
-	ArrayList<Stagiaire> listeStagiaires;
-	NoeudBinaire noeudVersArrayList = new NoeudBinaire();
-	TableView<Stagiaire> table = new TableView<Stagiaire>();
+	public ArrayList<Stagiaire> listeStagiaires;
+	public NoeudBinaire noeudVersArrayList = new NoeudBinaire();
+	public TableView<Stagiaire> table = new TableView<Stagiaire>();
 	private ListUserPan listUserPan;
 	
-	
-	
 	public ListS(ListUserPan listUserPan, ArrayList<Stagiaire> listeStagiaires) throws IOException {
-		
 	this.listUserPan = listUserPan;
-	arbreAnnuaire.lectureFichierDon(arbreAnnuaire);
+	
+	this.setStyle(
+			
+			
+			"-fx-widht: 500px;"+
+			"-fx-height: 600px;"
+			);
+	//listUserPan.arbreAnnuaire.lectureFichierDon(listUserPan.arbreAnnuaire);
 	ObservableList<Stagiaire> obsListeStagiaires= FXCollections.observableArrayList(listeStagiaires);
 	//lUser =listeStagiaires;
 	
@@ -46,38 +48,40 @@ public class ListS extends Pane {
 
     TableColumn<Stagiaire, String> userlastNameCol //
     		= new TableColumn<Stagiaire, String>("Nom");
-    		userlastNameCol.prefWidthProperty().bind(table.widthProperty().divide(sizeParam ));
+    		//userlastNameCol.prefWidthProperty().bind(table.widthProperty().divide(sizeParam ));
     		userlastNameCol.setCellValueFactory(new PropertyValueFactory<Stagiaire,String>("nom"));
     		userlastNameCol.setStyle(
              		"-fx-border: 0;"
              		+ "-fx-box-shadow: none;"
-             		+ "-fx-background-color: white;"
              		+ "-fx-font-size:1em;"
              		);
 
     TableColumn<Stagiaire, String> userNameCol //
     		= new TableColumn<Stagiaire, String>("Prénom");
-    		userNameCol.prefWidthProperty().bind(table.widthProperty().divide(sizeParam ));
+    	//	userNameCol.prefWidthProperty().bind(table.widthProperty().divide(sizeParam ));
     		userNameCol.setCellValueFactory(new PropertyValueFactory<Stagiaire,String>("prenom"));
-    
+    		userNameCol.setStyle(
+             		"-fx-border: none;"
+             		+ "-fx-box-shadow: none;"
+             		+ "-fx-font-size:1em;"
+             		);
     TableColumn<Stagiaire, String> DepCol//
             = new TableColumn<Stagiaire, String>("Département");
-            DepCol.prefWidthProperty().bind(table.widthProperty().divide(sizeParam ));
+        //    DepCol.prefWidthProperty().bind(table.widthProperty().divide(sizeParam ));
             DepCol.setCellValueFactory(new PropertyValueFactory<Stagiaire,String>("departement"));
                       
     TableColumn<Stagiaire, String> promoNameCol//
             = new TableColumn<Stagiaire, String>("Promotion");
-            promoNameCol.prefWidthProperty().bind(table.widthProperty().divide(sizeParam ));               
+         //   promoNameCol.prefWidthProperty().bind(table.widthProperty().divide(sizeParam ));               
             promoNameCol.setCellValueFactory(new PropertyValueFactory<Stagiaire,String>("promotion"));
             
     TableColumn<Stagiaire, Integer> YearCol//
             = new TableColumn<Stagiaire, Integer>("Année");
-            YearCol.prefWidthProperty().bind(table.widthProperty().divide(sizeParam ));
+        //    YearCol.prefWidthProperty().bind(table.widthProperty().divide(sizeParam ));
             YearCol.setCellValueFactory(new PropertyValueFactory<Stagiaire,Integer>("annee"));    
             YearCol.setStyle(
             		"-fx-border: 0;"
             		+ "-fx-box-shadow: none;"
-            		//+ "-fx-background-color: white;"
             		+ "-fx-font-size:1em;"
             		);
             
@@ -86,17 +90,18 @@ public class ListS extends Pane {
 	
 	
 	
-	table.setStyle(" -fx-background-color: linear-gradient(to bottom, #1dbbdd44, #93f9b944);"
-			+ "    -fx-background-radius: 7px 7px 0px 0px;"
+	table.setStyle("    -fx-background-radius: 7px 7px 0px 0px;"
 			+ "    -fx-background-insets: 0 11px 0 0;"
-			+ "    -fx-padding: 0 0 5px 0;");
+			+"-fx-widht: 500px;"+
+			"-fx-height: 600px;"
+			+"-fx-border: none;");
  	
 	table.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
 		
 		
 	
 		
-		Card c = new Card(); 
+		Card c = new Card(listUserPan); 
 		 TranslateTransition scaleTransition = new TranslateTransition(Duration.seconds(1),c); 
 		KeyValue keyValue = new KeyValue(this.prefWidthProperty(),200);
 			Duration duration = Duration.seconds(0.33);

@@ -98,7 +98,6 @@ public class LoginView extends VBox {
 				return null;
 			}
 		});
-		
 
 		// VBox root
 
