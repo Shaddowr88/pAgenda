@@ -1,6 +1,7 @@
 package views;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -12,13 +13,14 @@ import javafx.scene.control.TextField;
 
 import javafx.scene.layout.VBox;
 import model.ArbreBinaire;
+import model.NoeudBinaire;
 import model.Stagiaire;
 
 public class FormulaireAjout extends VBox {
 	private Stagiaire maPromo;
 	private TableView<Stagiaire> maTable;
 
-	public FormulaireAjout() {
+	public FormulaireAjout(ListUserPan root) {
 		super();
 
 		this.maPromo = maPromo;
@@ -49,8 +51,18 @@ public class FormulaireAjout extends VBox {
 						Stagiaire nouveauStagiaire = new Stagiaire(nomTf.getText(), prenomTf.getText(),
 								departementTf.getText(),promotionTf.getText(),Integer.valueOf(anneeTf.getText()));
 							//System.out.println();
+					
 						try {
 							ajout.ajouterStagiaireDeFichierDonAFichierBin(nouveauStagiaire);
+							NoeudBinaire noeudVersArrayList = new NoeudBinaire();
+							ListUserPan.arbreAnnuaire.getRaf().seek(0);
+							noeudVersArrayList = noeudVersArrayList.lireNoeudFichierBinVersObjetNoeudBinaire(ListUserPan.arbreAnnuaire.getRaf());
+							ListUserPan.arbreAnnuaire.getRaf().seek(0);
+							ArrayList<Stagiaire> listeStagiaires = noeudVersArrayList.fichierBinVersArrayList(ListUserPan.arbreAnnuaire.getRaf());
+							//ObservableList<Stagiaire> obsListeStagiaires= FXCollections.observableArrayList(listeStagiaires);
+							ListS listS2 = new ListS(root, listeStagiaires);
+							root.setCenter(listS2);
+							
 						} catch (IOException e) {
 							
 							e.printStackTrace();

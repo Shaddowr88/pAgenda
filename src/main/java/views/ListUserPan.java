@@ -47,7 +47,7 @@ public class ListUserPan extends BorderPane {
 	private ArrayList<String> finds;
 	private List<NoeudBinaire> arrayList ;
 	private Label label = new Label(" liste d'utilisateur");
-	private int sizeParam = 5;
+
 	public ArrayList<Stagiaire> lUser;
 	static ArbreBinaire arbreAnnuaire;
 	private Pane screen;
@@ -57,7 +57,7 @@ public class ListUserPan extends BorderPane {
 	
 	public ListUserPan() throws IOException {
 		super();	
-		this.isAdmin=true;
+		this.isAdmin=false;
 		setPrefSize(400, 200);
 		//setAlignment(Pos.CENTER);
 		setStyle("-fx-background-color:white");
@@ -272,7 +272,7 @@ public class ListUserPan extends BorderPane {
         
         
         
-        FormulaireAjout addCard=new  FormulaireAjout();
+        FormulaireAjout addCard=new  FormulaireAjout(this);
         
         btnAdd.setOnMouseClicked(e->{
         	

@@ -177,9 +177,6 @@ public class Card extends VBox {
 								e.printStackTrace();
 							}
 	        			 
-	        			 
-	        			
-	        			 
 		 	            	this.getChildren().addAll( nameLabel, premonLabel ,window );
 		 	            	
 		 	            	//this.getChildren().addAll(Validate);
